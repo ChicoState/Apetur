@@ -25,7 +25,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Import secret file
-from secret import *
+from .secrets import *
 
 # Application definition
 
