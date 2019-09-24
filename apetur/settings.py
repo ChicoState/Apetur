@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-18-189-26-53.us-east-2.compute.amazonaws.com', '18.189.26.53']
 
 # Import secret file
 from .secrets import *
@@ -107,5 +107,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-
-ALLOWED_HOSTS=['ec2-18-189-26-53.us-east-2.compute.amazonaws.com', '18.189.26.53']
