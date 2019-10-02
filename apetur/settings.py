@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+# Import secret file
 from .secrets import *
 import os
 
@@ -23,7 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Import secret file
 
 # Application definition
 
@@ -59,6 +58,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -106,7 +106,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SASS_PROCESSOR_ROOT = STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+# SASS_PROCESSOR_ROOT = STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static/")
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
