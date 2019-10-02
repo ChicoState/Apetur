@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+from .secrets import *
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -22,10 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-18-189-26-53.us-east-2.compute.amazonaws.com', '18.189.26.53']
-
 # Import secret file
-from .secrets import *
 
 # Application definition
 
@@ -37,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sass_processor',
+    'apeturProject.apps.ApeturprojectConfig',
 ]
 
 MIDDLEWARE = [
