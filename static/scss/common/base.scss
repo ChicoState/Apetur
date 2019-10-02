@@ -1,3 +1,16 @@
-body {
-    padding: 0;
+@import 'color.scss';
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar {
+    background-color: $light_gray !important;
+    opacity: 0.7;
+
+    .navbar-brand {
+        letter-spacing: 15px;
+        font-size: 30px;
+        color: $white;
+    }
 }

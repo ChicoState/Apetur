@@ -1,4 +1,16 @@
-/* line 1, ../../scss/common/base.scss */
-body {
-  padding: 0;
+/* line 3, ../../scss/common/base.scss */
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* line 7, ../../scss/common/base.scss */
+.navbar {
+  background-color: #C7C7C7 !important;
+  opacity: 0.7;
+}
+/* line 11, ../../scss/common/base.scss */
+.navbar .navbar-brand {
+  letter-spacing: 15px;
+  font-size: 30px;
+  color: #fff;
 }
