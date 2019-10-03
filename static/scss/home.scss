@@ -27,6 +27,20 @@
         bottom: 15px;
         left: 15px;
         display: flex;
+        text-decoration: none;
+
+        &:hover {
+
+            .featured-user-pic {
+                padding: 0;
+                border: none;
+                transition: 0.25s;
+            }
+
+            .featured-user-name {
+                font-weight: bold;
+            }
+        }
 
         .featured-user-pic {
             display: flex;
@@ -36,12 +50,6 @@
             border-radius: 50%;
             border: 1px solid $white;
             padding: 3px;
-            transition: 0.25s;
-
-            &:hover {
-                padding: 0;
-                border: none;
-            }
 
             img {
                 width: 100%;
@@ -54,7 +62,6 @@
         .featured-user-name {
             color: $white;
             margin: auto 15px;
-            text-shadow: 0 0 5px $gray;
         }
     }
 }
