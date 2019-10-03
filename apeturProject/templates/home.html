@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock title %}
-{% block site_css %}{{ STATIC_URL }}css/home.css{% endblock site_css %}
+{% block site_css %}
+<link href="{{ STATIC_URL }}css/home.css" media="screen" rel="stylesheet">
+{% endblock site_css %}
+
+
 
 {% block content %}
 <div id="featured">
@@ -77,4 +81,6 @@
 </ul>
 {% endblock content %}
 
-{% block site_js %}{{ STATIC_URL }}js/home.js{% endblock site_js %}
+{% block site_js %}
+<script src="{{ STATIC_URL }}js/home.js"></script>
+{% endblock site_js %}
