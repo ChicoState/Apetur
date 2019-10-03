@@ -5,12 +5,60 @@
 
 /* line 7, ../../scss/common/base.scss */
 .navbar {
-  background-color: #C7C7C7 !important;
-  opacity: 0.7;
+  background-color: #7C7C7C;
 }
-/* line 11, ../../scss/common/base.scss */
+/* line 10, ../../scss/common/base.scss */
 .navbar .navbar-brand {
   letter-spacing: 15px;
   font-size: 30px;
   color: #fff;
+}
+/* line 18, ../../scss/common/base.scss */
+.navbar .navbar-nav .nav-item .nav-link {
+  font-size: 20px;
+  padding: 0 30px;
+  transition: 0.25s;
+}
+/* line 26, ../../scss/common/base.scss */
+.navbar #logo_text {
+  color: #fff;
+  transition: 0.25s;
+}
+/* line 30, ../../scss/common/base.scss */
+.navbar #logo_text:hover {
+  text-shadow: 0 0 10px #7C7C7C;
+}
+/* line 35, ../../scss/common/base.scss */
+.navbar #signup_btn {
+  color: #3a9bfc;
+}
+/* line 38, ../../scss/common/base.scss */
+.navbar #signup_btn:hover {
+  color: #0578f5;
+  text-shadow: 0 0 10px #7C7C7C;
+}
+/* line 44, ../../scss/common/base.scss */
+.navbar #login_btn {
+  border: 2px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+}
+/* line 49, ../../scss/common/base.scss */
+.navbar #login_btn:hover {
+  background-color: #fff;
+  color: #7C7C7C;
+  box-shadow: 0 0 10px #7C7C7C;
+}
+
+/* line 57, ../../scss/common/base.scss */
+#footer {
+  display: flex;
+  height: 50px;
+  color: #fff;
+  background-color: #7C7C7C;
+  justify-content: center;
+}
+/* line 64, ../../scss/common/base.scss */
+#footer p {
+  margin: auto;
 }

@@ -1,0 +1,65 @@
+/* line 3, ../scss/home.scss */
+.navbar {
+  background: linear-gradient(to bottom, #7C7C7C, rgba(255, 255, 255, 0));
+  transition: 0.5s;
+}
+/* line 8, ../scss/home.scss */
+.navbar.show-color {
+  background: #7C7C7C;
+}
+
+/* line 13, ../scss/home.scss */
+#site-wrapper {
+  top: -71px;
+  position: relative;
+}
+
+/* line 18, ../scss/home.scss */
+#featured {
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  position: relative;
+}
+/* line 24, ../scss/home.scss */
+#featured img {
+  object-fit: cover;
+  width: 100%;
+  height: 100vh;
+}
+/* line 30, ../scss/home.scss */
+#featured .user-detail {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  display: flex;
+}
+/* line 36, ../scss/home.scss */
+#featured .user-detail .featured-user-pic {
+  display: flex;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  padding: 3px;
+  transition: 0.25s;
+}
+/* line 46, ../scss/home.scss */
+#featured .user-detail .featured-user-pic:hover {
+  padding: 0;
+  border: none;
+}
+/* line 51, ../scss/home.scss */
+#featured .user-detail .featured-user-pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/* line 59, ../scss/home.scss */
+#featured .user-detail .featured-user-name {
+  color: #fff;
+  margin: auto 15px;
+  text-shadow: 0 0 5px #7C7C7C;
+}
