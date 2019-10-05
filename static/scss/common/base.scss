@@ -14,63 +14,12 @@ body {
     min-height: 100%;
 }
 
-/* Navbar Styling - Start
-*********************************************************************/
-.navbar {
-
-    // navbar stays on top of everything and on the top of the screen
-    &.navstyle-fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-
-    // navbar become fixed ONCE scrolled past the navbar
-    &.navstyle-sticky {
-        position: sticky;
-        top: 0;
-    }
-
-    // white colored navbar with gray border on the bottom 
-    &.navstyle-line {
-        background-color: $white;
-        border-bottom: 1px solid $gray;
-    }
-
-    // semi transparent gradient background color
-    &.navstyle-semi-transparent {
-        background: linear-gradient(to bottom, $gray, rgba($white, 0));
-    }
-
-    // fully transparent background color
-    &.navstyle-transparent {
-        background-color: transparent;
-    }
-
-    // minimal design with ONLY the logo
-    &.navstyle-minimal {
-
-        .navbar-toggler,
-        #navbarNav {
-            display: none !important;
-        }
-    }
-
-    &.navstyle-dark-logo {
-        #logo_text {
-            color: $gray;
-        }
-    }
-}
-
-/* Navbar Styling - End
-*********************************************************************/
-
 // Navbar
 .navbar {
     background-color: $gray;
     z-index: 1020;
+    max-width: 1900px;
+    margin: auto;
 
     .navbar-brand {
         letter-spacing: 15px;
@@ -145,18 +94,6 @@ body {
     }
 }
 
-/* Site Styling - Start
-*********************************************************************/
-#site-wrapper {
-    &.sitestyle-no-space {
-        margin: auto;
-        min-height: calc(100vh - 140px);
-    }
-}
-
-/* Site Styling - End
-*********************************************************************/
-
 // site background
 #site-background {
     display: flex;
@@ -167,7 +104,7 @@ body {
 #site-wrapper {
     display: flex;
     flex-direction: column;
-    max-width: 1000px;
+    max-width: 1300px;
     width: 100%;
     min-height: calc(100vh - 180px);
     margin: 40px auto;

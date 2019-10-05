@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Signup{% endblock title %}
+{% block navbar_style %}navstyle-transparent navstyle-minimal navstyle-dark-logo{% endblock navbar_style %}
+{% block site_style %}sitestyle-no-space{% endblock site_style %}
+{% block site_css %}
+<link href="{{ STATIC_URL }}css/usermanagement/signup.css" media="screen" rel="stylesheet">
+{% endblock site_css %}
+
+{% block content %}
+<div class="signup-form-wrapper row m-0">
+    <div class="signup-form col">
+        <form>
+            <div class="row">
+                <div class="col-12 pb-4">
+                    <h1>Welcome to Apetur!</h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input type="text" class="form-control" id="signupFirstName" aria-describedby="emailHelp"
+                            placeholder="Enter first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" class="form-control" id="signupLastName" aria-describedby="emailHelp"
+                            placeholder="Enter last name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of birth</label>
+
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select class="form-control" id="signupMonth" required>
+                                    <option value="" disabled selected hidden>MM</option>
+                                    {% for i in month_range %}
+                                    <option>{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control" id="signupDate" required>
+                                    <option value="" disabled selected hidden>DD</option>
+                                    {% for i in date_range %}
+                                    <option>{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-control" id="signupYear" required>
+                                    <option value="" disabled selected hidden>YYYY</option>
+                                    {% for i in year_range reversed %}
+                                    <option>{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Email address</label>
+                        <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp"
+                            placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Repeat password</label>
+                        <input type="password" class="form-control" id="signupPasswordRepeat"
+                            placeholder="Repeat password" required>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Signup</button>
+                    <a href="/login"><small class="form-text">Already have an account?</small></a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block site_js %}
+{% comment %} <script src="{{ STATIC_URL }}js/home.js"></script> {% endcomment %}
+{% endblock site_js %}

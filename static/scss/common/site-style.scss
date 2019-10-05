@@ -1,6 +1,8 @@
 @import '_color';
 
-// generic tag
+/* Generic Tag - Start
+*********************************************************************/
+
 a {
     color: $blue;
 
@@ -10,14 +12,28 @@ a {
     }
 }
 
-// text tag
+/* Generic Tag - End
+*********************************************************************/
+
+
+/* Text Tag - Start
+*********************************************************************/
 h1 {
     font-size: 50px;
     font-weight: bold;
     color: $dark_blue;
+
+    @media(max-width: $sm) {
+        font-size: 40px;
+    }
 }
 
-// bootstrap class re-style
+/* Text Tag - End
+*********************************************************************/
+
+
+/* Bootstrap Restyle - Start
+*********************************************************************/
 .btn-primary {
     width: 100%;
     height: 50px;
@@ -39,3 +55,74 @@ h1 {
         height: 50px;
     }
 }
+
+/* Bootstrap Restyle - End
+*********************************************************************/
+
+
+
+/* Navbar Styling - Start
+*********************************************************************/
+.navbar {
+
+    // navbar stays on top of everything and on the top of the screen
+    &.navstyle-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    // navbar become fixed ONCE scrolled past the navbar
+    &.navstyle-sticky {
+        position: sticky;
+        top: 0;
+    }
+
+    // white colored navbar with gray border on the bottom 
+    &.navstyle-line {
+        background-color: $white;
+        border-bottom: 1px solid $gray;
+    }
+
+    // semi transparent gradient background color
+    &.navstyle-semi-transparent {
+        background: linear-gradient(to bottom, $gray, rgba($white, 0));
+    }
+
+    // fully transparent background color
+    &.navstyle-transparent {
+        background-color: transparent;
+    }
+
+    // minimal design with ONLY the logo
+    &.navstyle-minimal {
+
+        .navbar-toggler,
+        #navbarNav {
+            display: none !important;
+        }
+    }
+
+    &.navstyle-dark-logo {
+        #logo_text {
+            color: $gray;
+        }
+    }
+}
+
+/* Navbar Styling - End
+*********************************************************************/
+
+
+/* Site Styling - Start
+*********************************************************************/
+#site-wrapper {
+    &.sitestyle-no-space {
+        margin: auto;
+        min-height: calc(100vh - 140px);
+    }
+}
+
+/* Site Styling - End
+*********************************************************************/

@@ -3,23 +3,23 @@
 @import '../common/grid';
 
 #site-background {
-    background-image: url($site_img+'usermanagement/login/login-background.jpg');
+    background-image: url($site_img+'usermanagement/signup/signup-background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.login-form-wrapper {
+.signup-form-wrapper {
     flex: 1;
 }
 
-.login-form {
+.signup-form {
     display: flex;
     flex-direction: column;
     vertical-align: middle;
     justify-content: center;
     padding: 40px;
-    max-width: 450px;
+    max-width: 800px;
 
     @media (max-width: $md) {
         padding: 10px;
