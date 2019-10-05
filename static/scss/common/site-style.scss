@@ -1,0 +1,41 @@
+@import '_color';
+
+// generic tag
+a {
+    color: $blue;
+
+    &:hover {
+        color: $dark_blue;
+        text-decoration: none;
+    }
+}
+
+// text tag
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: $dark_blue;
+}
+
+// bootstrap class re-style
+.btn-primary {
+    width: 100%;
+    height: 50px;
+    background-color: $blue;
+    border: none;
+    font-size: 20px;
+
+    &:hover {
+        background-color: $dark_blue;
+    }
+}
+
+.form-group {
+    label {
+        font-size: 20px;
+    }
+
+    .form-control {
+        height: 50px;
+    }
+}

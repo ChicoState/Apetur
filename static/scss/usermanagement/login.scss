@@ -1,0 +1,60 @@
+@import '../common/color';
+@import '../common/url';
+@import '../common/grid';
+
+#site-wrapper {
+    @media (max-width: $md) {
+        margin: auto;
+    }
+}
+
+.side-banner,
+.login-form {
+    display: block;
+    float: left;
+}
+
+.side-banner {
+    flex: 1;
+    background-image: url($site_img+'usermanagement/login/login_side_banner.jpg');
+    background-size: cover;
+    background-position: center;
+
+    @media (min-width: $md) {
+        box-shadow: 0 5px 15px rgba($gray, 0.7);
+    }
+
+    @media (max-width: $md) {
+        height: 200px;
+        background-position-y: 40%;
+    }
+
+    h1 {
+        margin: 60px 0;
+        color: white;
+        font-size: 60px;
+
+        @media (max-width: $md) {
+            margin: 20px auto;
+            text-align: center;
+        }
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
+    padding: 40px;
+
+    @media (max-width: $md) {
+        padding: 20px;
+    }
+}

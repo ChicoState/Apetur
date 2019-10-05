@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block navbar_style %}navstyle-transparent navstyle-minimal navstyle-dark-logo{% endblock navbar_style %}
+{% block site_css %}
+<link href="{{ STATIC_URL }}css/usermanagement/login.css" media="screen" rel="stylesheet">
+{% endblock site_css %}
+
+{% block content %}
+<div class="row flex-grow-1 m-0">
+    <div class="side-banner col-md-5">
+        <h1>Welcome Back!</h1>
+    </div>
+
+    <div class="login-form col-md-7">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <a href="#"><small id="emailHelp" class="form-text">Reset password</small></a>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+
+            <a href="#"><small id="emailHelp" class="form-text">Create an account</small></a>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block site_js %}
+{% comment %} <script src="{{ STATIC_URL }}js/home.js"></script> {% endcomment %}
+{% endblock site_js %}

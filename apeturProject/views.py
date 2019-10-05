@@ -1,13 +1,20 @@
 from django.shortcuts import render
 from .models import Photographer
 
-# Create your views here.
 
+# homepage
 def home(request):
     return render(request, 'home.html')
 
+
+# log in
+def login(request):
+    return render(request, 'login.html')
+
+
+# browse
 def browse(request):
     data = {
-        'photographers' : Photographer.objects.all()
+        'photographers': Photographer.objects.all()
     }
-    return render(request,'browse.html',data)
+    return render(request, 'browse.html', data)
