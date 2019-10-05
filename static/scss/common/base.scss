@@ -145,12 +145,30 @@ body {
     }
 }
 
+/* Site Styling - Start
+*********************************************************************/
+#site-wrapper {
+    &.sitestyle-no-space {
+        margin: auto;
+        min-height: calc(100vh - 140px);
+    }
+}
+
+/* Site Styling - End
+*********************************************************************/
+
+// site background
+#site-background {
+    display: flex;
+    flex-direction: column;
+}
+
 // site wrapper
 #site-wrapper {
     display: flex;
     flex-direction: column;
     max-width: 1000px;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 180px);
     margin: 40px auto;
 
     @media (max-width: $md) {
@@ -163,7 +181,7 @@ body {
     height: 75px;
     color: $white;
     background-color: $gray;
-    margin: 20px 0 0;
+    margin: auto;
 
     div {
         text-align: center;
