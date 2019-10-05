@@ -14,12 +14,11 @@ body {
     min-height: 100%;
 }
 
-// Navbar
+/* Navbar Styling - Start
+*********************************************************************/
 .navbar {
-    background-color: $gray;
-    z-index: 1020;
 
-    // navbar styles - start
+    // navbar stays on top of everything and on the top of the screen
     &.navstyle-fixed {
         position: fixed;
         top: 0;
@@ -27,19 +26,29 @@ body {
         right: 0;
     }
 
+    // navbar become fixed ONCE scrolled past the navbar
     &.navstyle-sticky {
         position: sticky;
         top: 0;
     }
 
+    // white colored navbar with gray border on the bottom 
+    &.navstyle-line {
+        background-color: $white;
+        border-bottom: 1px solid $gray;
+    }
+
+    // semi transparent gradient background color
     &.navstyle-semi-transparent {
         background: linear-gradient(to bottom, $gray, rgba($white, 0));
     }
 
+    // fully transparent background color
     &.navstyle-transparent {
         background-color: transparent;
     }
 
+    // minimal design with ONLY the logo
     &.navstyle-minimal {
 
         .navbar-toggler,
@@ -53,8 +62,15 @@ body {
             color: $gray;
         }
     }
+}
 
-    // navbar styles - end
+/* Navbar Styling - End
+*********************************************************************/
+
+// Navbar
+.navbar {
+    background-color: $gray;
+    z-index: 1020;
 
     .navbar-brand {
         letter-spacing: 15px;
