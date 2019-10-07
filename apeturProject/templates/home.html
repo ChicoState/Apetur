@@ -8,10 +8,10 @@
 {% block content %}
 <div id="featured">
     <div class="featured-item">
-        <img src="{{ STATIC_URL }}files/user_files/0/featured-photo-reduced.jpg" />
+        <img src="{{ USER_FILE_URL }}0/featured-photo-reduced.jpg" />
         <a class="user-detail" href="#">
             <div class="featured-user-pic">
-                <img src="{{ STATIC_URL }}files/user_files/0/temp-profile-pic-reduced.jpg" />
+                <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" />
             </div>
             <div class="featured-user-name">
                 BobJoe
@@ -19,7 +19,7 @@
         </a>
     </div>
 </div>
-
+<p>code here: {{ GOOGLE_API_KEY }}</p>
 <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam,
     feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies
     mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat
