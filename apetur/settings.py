@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 from .secrets import *
 import os
 
+# Google API key
+GOOGLE_API_KEY = 'AIzaSyDbrmzjD0BGvMIZMtwVjc8_LVt_vqXHj50'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -61,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apeturProject.context_processors.global_settings'
             ],
         },
     },
@@ -105,6 +108,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_FILE_URL = STATIC_URL + 'files/'
+SITE_FILE_URL = STATIC_FILE_URL + 'site/'
+USER_FILE_URL = STATIC_FILE_URL + 'user_files/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

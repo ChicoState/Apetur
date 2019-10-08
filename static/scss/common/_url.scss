@@ -1,7 +1,7 @@
 // static url
 $static_url: '/static/';
 
-// img
-$img_directory: $static_url+'img/';
-$site_img: $img_directory+'site/';
-$user_img: $img_directory+'user_files';
+// files
+$file_directory: $static_url+'files/';
+$site_file: $file_directory+'site/';
+$user_file: $file_directory+'user_files';

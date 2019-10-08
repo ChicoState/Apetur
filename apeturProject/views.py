@@ -1,5 +1,14 @@
 from django.shortcuts import render
 from .models import Photographer
+from django.conf import settings
+
+
+def global_settings(request):
+    # return any necessary values
+    return {
+        'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
+    }
+
 
 # homepage
 
