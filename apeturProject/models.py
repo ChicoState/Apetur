@@ -7,8 +7,7 @@ class Address(models.Model):
     city_sn = models.TextField()
     latitude = models.DecimalField(max_digits = 9, decimal_places = 6)
     longitude = models.DecimalField(max_digits = 9, decimal_places = 6)
-   
-	 def __str__(self):
+    def __str__(self):
         return self.city_sn + ", " + self.state_sn + ", " + self.country_sn
     
 class Client(models.Model):
@@ -36,6 +35,5 @@ class Photographer(models.Model):
     bio = models.CharField(max_length=500)
     radius = models.PositiveIntegerField(default=25)
     tags = models.TextField()
-    
-	def __str__(self):
+    def __str__(self):
         return self.client.user.username

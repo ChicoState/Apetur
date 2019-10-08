@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Client, Photographer, City
+from .models import Client, Photographer
 # Register your models here.
 
 admin.site.register(Client)
