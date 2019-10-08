@@ -1,33 +1,30 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
+class Address(models.Model):
+    country_sn = models.TextField()
+    state_sn = models.TextField()
+    city_sn = models.TextField()
+    latitude = models.DecimalField(max_digits = 9, decimal_places = 6)
+    longitude = models.DecimalField(max_digits = 9, decimal_places = 6)
+    def __str__(self):
+        return self.city_sn + ", " + self.state_sn + ", " + self.country_sn
+    
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    cityID = models.IntegerField()
-    stateID = models.IntegerField()
-    countryID = models.IntegerField()
-    def getFullName(self):
-        return self.user.first_name + " " + self.user.last_name
+    address = models.ForeignKey(Address, on_delete = models.CASCADE)
     
     def getCity(self):
-        if self.cityID == 1:
-            return 'Chico'
-        return '' 
+        return
+        
     def getState(self):
-        if self.stateID == 1:
-            return 'CA'
-        return ''  
+        return
 
     def getCountry(self):
-        if self.countryID == 1:
-            return 'US'
-        return ''
-    def getLocation(self):
-        return self.getCity() + ', ' + self.getState()
+        return
 
-    def getEmail(self):
-        return self.user.email
+    def getLocation(self): 
+        return
         
     def __str__(self):
         return self.user.username
@@ -42,3 +39,4 @@ class Photographer(models.Model):
 
         def __str__(self):
             return self.client.user.username
+
