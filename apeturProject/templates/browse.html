@@ -3,25 +3,38 @@
 
 {% block content%}
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Chico, CA" aria-label="" aria-describedby="basic-addon1">
-        <div class="input-group-append">
-        <button class="btn btn-success" type="button">Search</button>
-        </div>
+        <input type="text" class="form-control" id = "searchTextField" placeholder="Search" aria-label="" aria-describedby="basic-addon1">
+        <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places" type="text/javascript"></script>
+        <script type="text/javascript">
+            var options = {
+                types: ['(cities)'],
+                componentRestrictions: {country: "us"}
+            };
+            var input = document.getElementById('searchTextField');
+            var autocomplete = new google.maps.places.Autocomplete(input,options);
+            
+            google.maps.event.addListener(autocomplete, 'place_changed', function(){
+                var data = {'lat' :autocomplete.getPlace().geometry.location.lat(),
+                            'lng' : autocomplete.getPlace().geometry.location.lng()
+                };
+                location.replace(window.location.origin + "/browse?lat=" + data["lat"]+"&lng=" + data["lng"]);  
+                
+            })
+        </script>
     </div>
+    <h1>lat: {{lat}} long: {{lng}}</h1>
     {% for p in photographers %}
-        {% if p.client.getCity == 'Chico'%}
             <div clas = "container" id = "card-test">
                 <div class="card text-black {% cycle 'bg-light'} " style="max-width: 40rem;" >
-                    <div class="card-header"> {{p.client.getLocation}}</div>
+                    <div class="card-header"> {{p.client.address}}</div>
                         <div class="card-body">
-                            <h4 class="card-title">{{p.client.getFullName}}</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">{{p.client.getEmail}}</h6>
+                            <h4 class="card-title">{{p.client.user.get_full_name}}</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">{{p.client.get_email}}</h6>
                             <span class="badge badge-primary">Weddings</span>
                             <span class="badge badge-primary">Birthdays</span>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">{{p.bio}}</p>
                         </div>
                 </div>
             </div>
-        {% endif %}
     {% endfor %}
 {% endblock content%}

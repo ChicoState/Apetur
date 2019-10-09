@@ -12,7 +12,7 @@ class Address(models.Model):
     
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    address = models.ForeignKey(Address, on_delete = models.CASCADE)
+    address = models.ForeignKey(Address, on_delete = models.CASCADE, null = True)
     
     def getCity(self):
         return
@@ -26,6 +26,8 @@ class Client(models.Model):
     def getLocation(self): 
         return
         
+    def get_email(self):
+        return self.user.email
     def __str__(self):
         return self.user.username
 

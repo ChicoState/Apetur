@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Photographer
 from django.conf import settings
+from decimal import Decimal
 
 
 def global_settings(request):
@@ -38,7 +39,18 @@ def signup(request):
 
 
 def browse(request):
-    data = {
-        'photographers': Photographer.objects.all()
-    }
-    return render(request, 'browse.html', data)
+    if request.method == "GET":
+        latitude = request.GET.get("lat",False)
+        longitude = request.GET.get("lng",False)
+        if latitude:
+            latitude = round(Decimal(latitude),6)
+        if longitude:
+            longitude = round(Decimal(longitude),6)
+        data = {
+            "photographers" : Photographer.objects.all().filter(client__address__longitude = longitude, client__address__latitude = latitude),
+            "lat" : latitude,
+            "lng" : longitude
+        }
+
+    return render(request, 'browse.html',data)
+
