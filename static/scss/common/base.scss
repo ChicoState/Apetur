@@ -92,6 +92,63 @@ body {
             box-shadow: 0 2px 10px rgba($gray, 0.5);
         }
     }
+
+    .dropdown {
+        @media (max-width: $sm) {
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            color: $white;
+
+            @media (max-width: $sm) {
+                display: block;
+                padding: 5px 10px;
+            }
+        }
+
+        .dropdown-menu {
+            top: 37px;
+            left: -100%;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            text-align: right;
+
+            @media (max-width: $sm) {
+                margin: auto -26px;
+                padding: 5px 20px;
+                background-color: $light_gray;
+            }
+
+            li {
+                background-color: $gray;
+                border-radius: 25px;
+                text-align: center;
+                margin: 10px 0;
+
+                &:hover {
+                    transition: 0.25s;
+                    background-color: $dark_gray;
+                    box-shadow: 0 2px 10px rgba($gray, 0.5);
+                }
+
+                &.logout {
+                    background-color: $red;
+
+                    &:hover {
+                        background-color: $dark_red;
+                    }
+                }
+            }
+
+            a {
+                color: $white;
+                padding: 5px 20px;
+                display: block;
+            }
+        }
+    }
 }
 
 // site background

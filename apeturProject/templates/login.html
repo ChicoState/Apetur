@@ -9,16 +9,17 @@
 {% block content %}
 <div class="login-form-wrapper row m-0">
     <div class="login-form col">
-        <form>
+        <form method="POST">
+            {% csrf_token %}
             <h1 class="pb-4">Welcome Back!</h1>
             <div class="form-group">
                 <label>Email address</label>
-                <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp"
+                <input type="email" name="email" class="form-control" aria-describedby="emailHelp"
                     placeholder="Enter email" required>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
                 <a href="#"><small class="form-text">Reset password</small></a>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>

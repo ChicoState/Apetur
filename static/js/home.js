@@ -13,8 +13,6 @@ $('.navbar-toggler').click(function () {
 });
 
 $(document).scroll(function () {
-
-
     // navbar background transition when scroll pass fetured section
     $scrollHeight = $('.navbar').height();
 
@@ -25,4 +23,14 @@ $(document).scroll(function () {
         $('.navbar').removeClass('show-color');
         $nav_show = false;
     }
+});
+
+// Add slideDown animation to Bootstrap dropdown when expanding.
+$('.dropdown').on('show.bs.dropdown', function () {
+    $(this).find('.dropdown-menu').first().stop(true, true).slideDown(250);
+});
+
+// Add slideUp animation to Bootstrap dropdown when collapsing.
+$('.dropdown').on('hide.bs.dropdown', function () {
+    $(this).find('.dropdown-menu').first().stop(true, true).slideUp(250);
 });

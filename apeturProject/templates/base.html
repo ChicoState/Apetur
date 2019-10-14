@@ -37,12 +37,31 @@
         {% comment %} <div id="navbarNav" class="navbar-nav flex-row ml-sm-auto d-none d-sm-flex"> {% endcomment %}
             <div id="navbarNav" class="navbar-collapse collapse">
                 <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            {{ user.get_short_name }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/profile">my profile</a>
+                            </li>
+                            <li>
+                                <a href="/settings">settings</a>
+                            </li>
+                            <li class="logout">
+                                <a href="/logout">logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a id="signup_btn" class="nav-link" href="/signup">signup</a>
                     </li>
                     <li class="nav-item">
                         <a id="login_btn" class="nav-link" href="/login">login</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
     </nav>
