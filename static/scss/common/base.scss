@@ -109,7 +109,8 @@ body {
 
         .dropdown-menu {
             top: 37px;
-            left: calc(-100% - 10px);
+            left: initial;
+            right: 0;
             background-color: transparent;
             border: none;
             border-radius: 0;
