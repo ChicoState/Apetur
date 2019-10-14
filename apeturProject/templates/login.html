@@ -22,6 +22,12 @@
                 <input type="password" name="password" class="form-control" placeholder="Password" required>
                 <a href="#"><small class="form-text">Reset password</small></a>
             </div>
+            {% if loginerror %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Incorect email or password
+            </div>
+            {% endif %}
             <button type="submit" class="btn btn-primary">Login</button>
 
             <a href="/signup"><small class="form-text">Create an account</small></a>
@@ -32,5 +38,4 @@
 {% endblock content %}
 
 {% block site_js %}
-{% comment %} <script src="{{ STATIC_URL }}js/home.js"></script> {% endcomment %}
 {% endblock site_js %}

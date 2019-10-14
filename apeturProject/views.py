@@ -47,9 +47,9 @@ def login_user(request):
                 login(request, user)
                 return redirect('/')
             else:
-                return render(request, 'login.html')
+                return render(request, 'login.html', {'loginerror': True})
         else:
-            return render(request, 'login.html')
+            return render(request, 'login.html', {'loginerror': True})
     elif request.user.is_authenticated:
         return redirect('/')
     else:
@@ -75,6 +75,34 @@ def signup_user(request):
         year = request.POST['year']
         email = request.POST['email']
         password = request.POST['password']
+        repeatPassword = request.POST['repeatPassword']
+
+        if password != repeatPassword:
+            return render(
+                request,
+                'signup.html',
+                {
+                    'month_range': range(1, 13),
+                    'date_range': range(1, 32),
+                    'year_range': range(1950, 2020),
+                    'signuperror': True,
+                    'passnotmatch': True
+                },
+            )
+
+        username = get_user(email)
+        if username is not None:
+            return render(
+                request,
+                'signup.html',
+                {
+                    'month_range': range(1, 13),
+                    'date_range': range(1, 32),
+                    'year_range': range(1950, 2020),
+                    'signuperror': True,
+                    'emailexists': True
+                },
+            )
 
         # creating the new user
         user = User.objects.create_user(email, email, password)
