@@ -38,10 +38,38 @@
             <div id="navbarNav" class="navbar-collapse collapse">
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
+                    {% comment %} <li class="nav-item">
+                        <a id="user_notification" class="nav-link">
+                            <i class="fas fa-bell icon"></i>
+                            <span class="text">notifications</span>
+                            <div id="notification_count">15</div>
+                        </a>
+                    </li> {% endcomment %}
+                    <li class="dropdown">
+                        <a id="user_notification" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fas fa-bell icon"></i>
+                            <span class="text">notifications</span>
+                            {% if notification_count %}
+                            <div id="notification_count">{{ notification_count }}</div>
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if notification_count %}
+                            <li>
+                                <a>{{ notification_count }} messages</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a>no notifications</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             {{ user.get_short_name }}
-                            <span class="caret"></span></a>
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="/profile">my profile</a>

@@ -32,7 +32,8 @@ def global_settings(request):
 
 # homepage
 def home(request):
-    return render(request, 'home.html')
+    notification_count = 14
+    return render(request, 'home.html', {'notification_count': notification_count})
 
 
 # log in
