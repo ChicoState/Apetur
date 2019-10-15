@@ -125,7 +125,7 @@ def signup_user(request):
             {
                 'month_range': range(1, 13),
                 'date_range': range(1, 32),
-                'year_range': range(1950, 2020)
+                'year_range': range(1950, 2020),
             },
         )
 

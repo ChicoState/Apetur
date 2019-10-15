@@ -9,7 +9,7 @@
 {% block content %}
 <div class="signup-form-wrapper row m-0">
     <div class="signup-form col">
-        <form method="POST">
+        <form id="signupForm" method="POST">
             {% csrf_token %}
             <div class="row">
                 <div class="col-12 pb-4">
@@ -67,27 +67,29 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        <input id="password" type="password" name="password" class="form-control" placeholder="Password"
+                            required>
                     </div>
                     <div class="form-group">
                         <label>Repeat password</label>
-                        <input type="password" name="repeatPassword" class="form-control" placeholder="Repeat password"
-                            required>
+                        <input id="repeatPassword" type="password" name="repeatPassword" class="form-control"
+                            placeholder="Repeat password" required>
                     </div>
                 </div>
                 <div class="col-12">
-                    {% if signuperror %}
-                    <div class="alert alert-danger alert-dismissible">
+                    <div id="errorMsgCont"
+                        class="alert alert-danger alert-dismissible{% if not signuperror %} d-none{% endif %}">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        {% if emailexists %}
-                        This email is already in use
-                        {% elif passnotmatch %}
-                        Passwords do not match
-                        {% else %}
-                        Signup failed
-                        {% endif %}
+                        <div id="errormsg">
+                            {% if emailexists %}
+                            This email is already in use
+                            {% elif passnotmatch %}
+                            Passwords do not match
+                            {% else %}
+                            Signup failed
+                            {% endif %}
+                        </div>
                     </div>
-                    {% endif %}
                     <button type="submit" class="btn btn-primary">Signup</button>
                     <a href="/login"><small class="form-text">Already have an account?</small></a>
                 </div>
@@ -99,5 +101,5 @@
 {% endblock content %}
 
 {% block site_js %}
-{% comment %} <script src="{{ STATIC_URL }}js/home.js"></script> {% endcomment %}
+<script src="{{ STATIC_URL }}js/usermanagement/signup.js"></script>
 {% endblock site_js %}
