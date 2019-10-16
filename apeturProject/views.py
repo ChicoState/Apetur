@@ -48,13 +48,13 @@ def login_user(request):
                 login(request, user)
                 return redirect('/')
             else:
-                return render(request, 'login.html', {'loginerror': True})
+                return render(request, 'usermanagement/login.html', {'loginerror': True})
         else:
-            return render(request, 'login.html', {'loginerror': True})
+            return render(request, 'usermanagement/login.html', {'loginerror': True})
     elif request.user.is_authenticated:
         return redirect('/')
     else:
-        return render(request, 'login.html')
+        return render(request, 'usermanagement/login.html')
 
 
 # log out
@@ -81,7 +81,7 @@ def signup_user(request):
         if password != repeatPassword:
             return render(
                 request,
-                'signup.html',
+                'usermanagement/signup.html',
                 {
                     'month_range': range(1, 13),
                     'date_range': range(1, 32),
@@ -95,7 +95,7 @@ def signup_user(request):
         if username is not None:
             return render(
                 request,
-                'signup.html',
+                'usermanagement/signup.html',
                 {
                     'month_range': range(1, 13),
                     'date_range': range(1, 32),
@@ -122,7 +122,7 @@ def signup_user(request):
     else:
         return render(
             request,
-            'signup.html',
+            'usermanagement/signup.html',
             {
                 'month_range': range(1, 13),
                 'date_range': range(1, 32),
