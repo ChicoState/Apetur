@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock title %}
+
+{% block site_css %}
+<link href="{{ STATIC_URL }}css/profile.css" media="screen" rel="stylesheet">
+{% endblock site_css %}
+
+{% block content%}
+    <div>
+        <h1>
+            {{user.get_full_name}}
+        </h1>
+        <div class="userbox">
+            <div class="profile_picture">
+                <div class="picture">
+
+                </div>
+
+            </div>
+
+           <p> Welcome to {{user.first_name}}'s Profile </p>
+        </div>
+    </div>
+    
+
+
+{% endblock content%}

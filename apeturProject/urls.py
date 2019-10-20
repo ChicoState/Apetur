@@ -15,5 +15,8 @@ urlpatterns = [
     path('signup', views.signup_user),
 
     # browse
-    path('browse', views.browse)
+    path('browse', views.browse),
+
+    # profile
+    path('profile', views.profile)
 ]

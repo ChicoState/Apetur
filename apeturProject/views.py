@@ -147,3 +147,9 @@ def browse(request):
         }
 
     return render(request, 'browse.html', data)
+
+
+# profile
+
+def profile(request):
+    return render(request, 'profile.html')
