@@ -237,9 +237,8 @@ body {
 // footer
 #footer {
     height: 75px;
-    color: $white;
-    background-color: $gray;
-    margin: auto;
+    color: $dark_gray;
+    border-top: 1px solid rgba($gray, 0.5);
 
     div {
         text-align: center;
