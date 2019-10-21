@@ -1,4 +1,5 @@
 @import '_color';
+@import '_grid';
 
 /* Generic Tag - Start
 *********************************************************************/
@@ -63,7 +64,7 @@ h1 {
 
 /* Navbar Styling - Start
 *********************************************************************/
-.navbar {
+.navbar-container {
 
     // navbar stays on top of everything and on the top of the screen
     &.navstyle-fixed {
@@ -85,8 +86,13 @@ h1 {
         border-bottom: 1px solid $gray;
     }
 
-    // semi transparent gradient background color
+    // semi transparent background color
     &.navstyle-semi-transparent {
+        background: rgba($gray, 0.5);
+    }
+
+    // semi transparent gradient background color
+    &.navstyle-semi-transparent-gradient {
         background: linear-gradient(to bottom, $gray, rgba($white, 0));
     }
 
@@ -122,6 +128,24 @@ h1 {
         margin: auto;
         min-height: calc(100vh - 140px);
     }
+}
+
+.site-btn-round {
+    background-color: $blue;
+    color: $white;
+    border-radius: 25px;
+    padding: 5px 30px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $dark_blue;
+        box-shadow: 0 2px 10px rgba($gray, 0.5);
+    }
+}
+
+.text-logo {
+    font-weight: bold;
+    color: $white;
 }
 
 /* Site Styling - End
