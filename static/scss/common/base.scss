@@ -18,6 +18,11 @@ body {
 .navbar-container {
     z-index: 1021;
     width: 100%;
+    transition: 0.5s;
+
+    &.show-color {
+        background: $gray;
+    }
 }
 
 .navbar {

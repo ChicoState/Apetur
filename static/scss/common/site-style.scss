@@ -104,8 +104,7 @@ h1 {
     // minimal design with ONLY the logo
     &.navstyle-minimal {
 
-        .navbar-toggler,
-        #navbarNav {
+        .navbar-nav {
             display: none !important;
         }
     }

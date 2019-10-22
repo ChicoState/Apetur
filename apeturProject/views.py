@@ -12,6 +12,7 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 import datetime
 
+
 def get_user(email):
     try:
         return User.objects.get(email=email.lower())

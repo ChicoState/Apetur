@@ -1,13 +1,5 @@
 @import 'common/_color.scss';
 
-.navbar-container {
-    transition: 0.5s;
-
-    &.show-color {
-        background: $gray;
-    }
-}
-
 #site-wrapper {
     position: relative;
     max-width: none;
@@ -23,7 +15,7 @@
     img {
         object-fit: cover;
         width: 100%;
-        height: calc(100vh - 70px);
+        height: 100vh;
     }
 
     .user-detail {

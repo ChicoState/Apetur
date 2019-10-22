@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock title %}
-{% block navbar_style %}navstyle-sticky navstyle-semi-transparent{% endblock navbar_style %}
+{% block navbar_style %}navstyle-fixed navstyle-semi-transparent{% endblock navbar_style %}
 {% block site_css %}
 <link href="{{ STATIC_URL }}css/home.css" media="screen" rel="stylesheet">
 <style>
@@ -33,7 +33,6 @@
 {% endblock content %}
 
 {% block site_js %}
-<script src="{{ STATIC_URL }}js/home.js"></script>
 <script>
     var map;
 
