@@ -14,13 +14,13 @@ $('.navbar-toggler').click(function () {
 
 $(document).scroll(function () {
     // navbar background transition when scroll pass fetured section
-    $scrollHeight = $('.navbar').height();
+    $scrollHeight = $('.navbar-container').height();
 
     if ($(document).scrollTop() > $scrollHeight && !$nav_show) {
-        $('.navbar').addClass('show-color');
+        $('.navbar-container').addClass('show-color');
         $nav_show = true;
     } else if ($(document).scrollTop() < $scrollHeight && $nav_show) {
-        $('.navbar').removeClass('show-color');
+        $('.navbar-container').removeClass('show-color');
         $nav_show = false;
     }
 });
