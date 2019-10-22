@@ -72,6 +72,10 @@ body {
 
     #signup_btn {
         color: $white;
+
+        @media (max-width: $sm) {
+            display: none;
+        }
     }
 
     #login_btn {
