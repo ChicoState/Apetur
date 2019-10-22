@@ -10,7 +10,7 @@ from .models import Photographer
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
-
+import datetime
 
 def get_user(email):
     try:
@@ -85,7 +85,7 @@ def signup_user(request):
                 {
                     'month_range': range(1, 13),
                     'date_range': range(1, 32),
-                    'year_range': range(1930, 2020),
+                    'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
                     'signuperror': True,
                     'passnotmatch': True
                 },
@@ -99,7 +99,7 @@ def signup_user(request):
                 {
                     'month_range': range(1, 13),
                     'date_range': range(1, 32),
-                    'year_range': range(1930, 2020),
+                    'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
                     'signuperror': True,
                     'emailexists': True
                 },
@@ -126,7 +126,7 @@ def signup_user(request):
             {
                 'month_range': range(1, 13),
                 'date_range': range(1, 32),
-                'year_range': range(1950, 2020),
+                'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
             },
         )
 

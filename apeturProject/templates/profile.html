@@ -5,23 +5,35 @@
 <link href="{{ STATIC_URL }}css/profile.css" media="screen" rel="stylesheet">
 {% endblock site_css %}
 
+
 {% block content%}
-    <div>
-        <h1>
-            {{user.get_full_name}}
-        </h1>
-        <div class="userbox">
+
+<div>
+    <h1>
+        {{user.get_full_name}}
+    </h1>
+    <div class="userbox">
+        <div class="profile_picture_border">
             <div class="profile_picture">
                 <div class="picture">
-
+                    <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" />
                 </div>
-
             </div>
-
-           <p> Welcome to {{user.first_name}}'s Profile </p>
+        </div>
+        <p> Welcome to {{user.first_name}}'s Profile </p>
+    </div>
+</div>
+<div class="gallery_container">
+    <h2>Gallery</h2>
+    <div class="gallery">
+        <div class="tags">
+            <h3>All</h3>
+        </div>
+        <div class="gallery_photos">
+            <div class="picture">
+            </div>
         </div>
     </div>
-    
-
+</div>
 
 {% endblock content%}
