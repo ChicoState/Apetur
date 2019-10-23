@@ -114,6 +114,14 @@ h1 {
             color: $gray;
         }
     }
+
+    &.navstyle-dark-text {
+
+        #logo_text,
+        #signup_btn {
+            color: $gray;
+        }
+    }
 }
 
 /* Navbar Styling - End
