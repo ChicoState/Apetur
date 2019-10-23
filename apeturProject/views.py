@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from decimal import Decimal
 from django.shortcuts import redirect
+from pathlib import Path
 # User
 from django.contrib.auth.models import User
 from .models import Client
@@ -10,6 +11,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 import datetime
+
 
 def get_user(email):
     try:
@@ -20,20 +22,19 @@ def get_user(email):
 
 def global_settings(request):
     if request.user.is_authenticated:
+        notification_count = 0
+
         return {
-            'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
-            'USER_FIRST_NAME': request.user.get_short_name()
+            "NOTIFICATION_COUNT": notification_count,
         }
     else:
         return {
-            'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
         }
 
 
 # homepage
 def home(request):
-    notification_count = 14
-    return render(request, 'home.html', {'notification_count': notification_count})
+    return render(request, 'home.html')
 
 
 # log in

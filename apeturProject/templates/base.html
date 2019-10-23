@@ -28,71 +28,77 @@
 
 <body>
     {# Navigation Menu #}
-    <nav class="navbar navbar-expand-sm navbar-dark {% block navbar_style %}{% endblock navbar_style %}">
-        <a id="logo_text" class="navbar-brand" href="/">Apetur</a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-        {% comment %} <div id="navbarNav" class="navbar-nav flex-row ml-sm-auto d-none d-sm-flex"> {% endcomment %}
-            <div id="navbarNav" class="navbar-collapse collapse">
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                    {% comment %} <li class="nav-item">
-                        <a id="user_notification" class="nav-link">
-                            <i class="fas fa-bell icon"></i>
-                            <span class="text">notifications</span>
-                            <div id="notification_count">15</div>
-                        </a>
-                    </li> {% endcomment %}
-                    <li class="dropdown">
-                        <a id="user_notification" class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fas fa-bell icon"></i>
-                            <span class="text">notifications</span>
-                            {% if notification_count %}
-                            <div id="notification_count">{{ notification_count }}</div>
-                            {% endif %}
-                        </a>
-                        <ul class="dropdown-menu">
-                            {% if notification_count %}
-                            <li>
-                                <a>{{ notification_count }} messages</a>
-                            </li>
+    <div class="navbar-container {% block navbar_style %}{% endblock navbar_style %}">
+        <nav class="navbar navbar-expand-sm navbar-dark">
+            <a id="logo_text" class="text-logo navbar-brand" href="/">Apetur.</a>
+            {% comment %} <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button> {% endcomment %}
+            <ul class="navbar-nav ml-auto">
+                {% comment %} USER PROFILE {% endcomment %}
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <div id="user-profile-dropdown" data-toggle="dropdown">
+                        <div class="dropdown-toggle{% if NOTIFICATION_COUNT %} have-alert{% endif %}">
+                            {% if user.client.profile_pic %}
+                            <img class="user-profile-pic" src="{{ user.client.profile_pic }}" />
                             {% else %}
-                            <li>
-                                <a>no notifications</a>
-                            </li>
+                            <span class="user-profile-text">{{ user.get_short_name|make_list|first }}</span>
                             {% endif %}
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            {{ user.get_short_name }}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="/profile">my profile</a>
-                            </li>
-                            <li>
-                                <a href="/settings">settings</a>
-                            </li>
-                            <li class="logout">
-                                <a href="/logout">logout</a>
-                            </li>
-                        </ul>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a id="signup_btn" class="nav-link" href="/signup">signup</a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="login_btn" class="nav-link" href="/login">login</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-    </nav>
+                        </div>
+                        {% if NOTIFICATION_COUNT %}
+                        <div class="notification-badge">
+                            {{ NOTIFICATION_COUNT }}
+                        </div>
+                        {% endif %}
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/profile">my profile</a>
+                        </li>
+                        <li class="notification">
+                            <a href="/notification">notification</a>
+                            {% if NOTIFICATION_COUNT %}
+                            <div class="notification-badge">
+                                {{ NOTIFICATION_COUNT }}
+                            </div>
+                            {% endif %}
+                        </li>
+                        <li class="logout">
+                            <a href="/logout">logout</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {% comment %} SETTING {% endcomment %}
+                <li class="dropdown">
+                    <div id="setting-dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/profile">setting</a>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                {% comment %} SIGNUP {% endcomment %}
+                <li class="nav-item">
+                    <a id="signup_btn" class="nav-link" href="/signup">signup</a>
+                </li>
+
+                {% comment %} LOGIN {% endcomment %}
+                <li class="nav-item">
+                    <a id="login_btn" class="site-btn-round nav-link" href="/login">login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 
     {# The Document Body #}
     <div id="site-background" class="{% block site_style %}{% endblock site_style %}">
@@ -107,22 +113,22 @@
     <div id="footer" class="row no-gutters m-5">
         <div class="col-12 col-lg-7">
             <div class="row">
-                <a class="col-12 col-md-2 p-1">
+                <a class="col-12 col-md-2 p-1" href="/">
                     Home
                 </a>
-                <a class="col-12 col-md-2 p-1">
+                <a class="col-12 col-md-2 p-1" href="#">
                     About
                 </a>
-                <a class="col-12 col-md-2 p-1">
+                <a class="col-12 col-md-2 p-1" href="#">
                     Our Works
                 </a>
-                <a class="col-12 col-md-2 p-1">
+                <a class="col-12 col-md-2 p-1" href="#">
                     Services
                 </a>
-                <a class="col-12 col-md-2 p-1">
+                <a class="col-12 col-md-2 p-1" href="#">
                     Blog
                 </a>
-                <a class="col-12 col-md-2 p-1">
+                <a class="col-12 col-md-2 p-1" href="#">
                     Contacts
                 </a>
             </div>
@@ -131,8 +137,8 @@
             <div class="row justify-content-center justify-content-lg-end">
                 <a class="col-8">
                     <div class="row">
-                        <div class="col-12">
-                            Apetur
+                        <div class="text-logo col-12">
+                            Apetur.
                         </div class="col-12">
                         <small class="col-12">
                             Copyright &copy; 2019 Apetur.com
@@ -153,6 +159,7 @@
 </script>
 <script src="{{ STATIC_URL }}js/lib/bootstrap-4.3.1-dist/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/941a2b004e.js" crossorigin="anonymous"></script>
+<script src="{{ STATIC_URL }}js/common/base.js"></script>
 {% block site_js %}{% endblock site_js %}
 {% endblock footer_javascript_site %}
 {% block footer_javascript_section %}{% endblock footer_javascript_section %}

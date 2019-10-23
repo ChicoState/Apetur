@@ -18,6 +18,7 @@ class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True)
     dob = models.DateField(null=False, blank=False)
+    profile_pic = models.TextField(null=True, blank=True)
 
     def getCity(self):
         return
