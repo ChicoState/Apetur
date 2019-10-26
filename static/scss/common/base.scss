@@ -19,6 +19,7 @@ body {
     z-index: 1021;
     width: 100%;
     transition: 0.5s;
+    background-color: $gray;
 
     &.show-color {
         background: $gray;
@@ -168,9 +169,43 @@ body {
             margin: 0;
         }
 
+        &.show {
+            .fa-bars {
+                display: none;
+            }
+
+            .fa-times {
+                display: block;
+            }
+        }
+
+        .fas {
+            width: 20px;
+        }
+
+        .fa-times {
+            display: none;
+        }
+
         .dropdown-toggle {
             &::after {
                 display: none;
+            }
+
+            +.dropdown-menu {
+                width: 250px;
+                display: block;
+                position: fixed;
+                height: 100%;
+                right: -250px;
+                top: 71px;
+                margin: 0;
+                z-index: -1;
+
+                @media (max-width: $sm) {
+                    width: 100%;
+                    right: -100%;
+                }
             }
         }
     }
