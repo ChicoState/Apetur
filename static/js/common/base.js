@@ -24,11 +24,25 @@ $(document).scroll(function () {
  ********************************************/
 
 // Add slideDown animation to Bootstrap dropdown when expanding.
-$('.dropdown').on('show.bs.dropdown', function () {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideDown(250);
+$('.dropdown').on('show.bs.dropdown', function (e) {
+    var dropdown_menu = $(this).find('.dropdown-menu').first();
+    if (dropdown_menu.hasClass('slide')) {
+        dropdown_menu.stop(true, true).animate({
+            right: '0'
+        }, 250);
+    } else {
+        dropdown_menu.stop(true, true).slideDown(250);
+    }
 });
 
 // Add slideUp animation to Bootstrap dropdown when collapsing.
 $('.dropdown').on('hide.bs.dropdown', function () {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideUp(250);
+    var dropdown_menu = $(this).find('.dropdown-menu').first();
+    if (dropdown_menu.hasClass('slide')) {
+        dropdown_menu.stop(true, true).animate({
+            right: '-' + dropdown_menu.css('width')
+        }, 250);
+    } else {
+        dropdown_menu.stop(true, true).slideUp(250);
+    }
 });

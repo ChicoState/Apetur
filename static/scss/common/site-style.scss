@@ -66,6 +66,34 @@ h1 {
 *********************************************************************/
 .navbar-container {
 
+    // light color themed navbar
+    &.navstyle-light {
+        background-color: $white;
+
+        #logo_text,
+        #signup_btn {
+            color: $gray;
+        }
+
+        .navbar-nav {
+            #user-profile-dropdown {
+                .dropdown-toggle {
+                    border-color: $gray;
+                }
+
+                .fa-angle-down {
+                    color: $gray;
+                }
+            }
+
+            #setting-dropdown {
+                .dropdown-toggle {
+                    color: $gray;
+                }
+            }
+        }
+    }
+
     // navbar stays on top of everything and on the top of the screen
     &.navstyle-fixed {
         position: fixed;

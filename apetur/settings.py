@@ -129,3 +129,5 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     os.path.join(BASE_DIR, 'extra-styles/scss'),
     os.path.join(BASE_DIR, 'node_modules'),
 ]
+
+LOGIN_URL = '/login'

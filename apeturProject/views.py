@@ -47,7 +47,11 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('/')
+                nextParam = request.GET.get('next')
+                if nextParam:
+                    return redirect(nextParam)
+                else:
+                    return redirect('/')
             else:
                 return render(request, 'usermanagement/login.html', {'loginerror': True})
         else:
@@ -61,7 +65,7 @@ def login_user(request):
 # log out
 def logout_user(request):
     logout(request)
-    return render(request, 'home.html')
+    return redirect('/')
 
 
 # sign up
@@ -130,6 +134,13 @@ def signup_user(request):
                 'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
             },
         )
+
+
+def photographer_signup(request):
+    if request.user.is_authenticated:
+        return render(request, 'usermanagement/photographer-signup.html')
+    else:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
 # browse
