@@ -14,6 +14,9 @@ urlpatterns = [
     # sign up
     path('signup', views.signup_user),
 
+    # photographer sign up
+    path('photographer-signup', views.photographer_signup),
+
     # browse
     path('browse', views.browse),
 

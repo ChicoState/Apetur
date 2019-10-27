@@ -1,13 +1,5 @@
 @import 'common/_color.scss';
 
-.navbar {
-    transition: 0.5s;
-
-    &.show-color {
-        background: $gray;
-    }
-}
-
 #site-wrapper {
     position: relative;
     max-width: none;

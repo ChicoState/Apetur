@@ -55,6 +55,7 @@ class Client(models.Model):
                                    on_delete=models.CASCADE,
                                    null=True)
     dob = models.DateField(null=False, blank=False)
+    profile_pic = models.TextField(null=True, blank=True)
 
     def get_city(self):
         if (self.address == None):

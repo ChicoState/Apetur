@@ -63,7 +63,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'apeturProject.context_processors.global_settings'
+                'apeturProject.context_processors.global_settings',
+                'apeturProject.views.global_settings'
             ],
         },
     },
@@ -128,3 +129,5 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     os.path.join(BASE_DIR, 'extra-styles/scss'),
     os.path.join(BASE_DIR, 'node_modules'),
 ]
+
+LOGIN_URL = '/login'
