@@ -6,9 +6,12 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .models import Client
 from .models import Photographer
+from .models import find_photographer_in_radius
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
+
+convert_to_miles = 1.609
 
 
 def get_user(email):
@@ -136,14 +139,16 @@ def browse(request):
     if request.method == "GET":
         latitude = request.GET.get("lat", False)
         longitude = request.GET.get("lng", False)
+        r = request.GET.get("r", False)
+        r = float(r) * convert_to_miles
         if latitude:
             latitude = round(Decimal(latitude), 6)
         if longitude:
             longitude = round(Decimal(longitude), 6)
         data = {
-            "photographers": Photographer.objects.all().filter(client__address__longitude=longitude, client__address__latitude=latitude),
-            "lat": latitude,
-            "lng": longitude
+            "photographers" : find_photographer_in_radius(latitude,longitude,r),
+            "lat" : latitude,
+            "lng" : longitude
         }
 
     return render(request, 'browse.html', data)
