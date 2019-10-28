@@ -15,8 +15,9 @@
 
 {% block content %}
 <div id="featured">
-    <div class="featured-item">
-        <img src="{{ USER_FILE_URL }}0/featured-photo-reduced.jpg" />
+    {% comment %} Currently featured {% endcomment %}
+    <div id="featuringItem">
+        <img class="featuring-image" src="{{ featured_images|last }}" />
         <a class="user-detail" href="#">
             <div class="featured-user-pic">
                 <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" />
@@ -26,25 +27,38 @@
             </div>
         </a>
     </div>
+
+    {% comment %} Queue control {% endcomment %}
+    <div id="featureControl">
+        <div class="feature-control-next">
+            <i class="fas fa-angle-right"></i>
+        </div>
+
+        <div class="feature-control-selector">
+            {% for image_url in featured_images %}
+            <div class="feature-control-circle {% if forloop.first %} current{% endif %}"
+                data-image-url="{{ image_url }}"></div>
+            {% endfor %}
+        </div>
+
+        <div class="feature-control-previous">
+            <i class="fas fa-angle-left"></i>
+        </div>
+    </div>
+
+    {% comment %} Featured item queue {% endcomment %}
+    <div id="featuredQueue">
+        {% for image_url in featured_images %}
+        <div id="" class="featured-queue-item{% if forloop.first %} next-image{% endif %}"
+            style="order: {{forloop.counter}}">
+            <img src="{{ image_url }}" data-image-url="{{ image_url }}" />
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
-<div id="map">
-</div>
 {% endblock content %}
 
 {% block site_js %}
-<script>
-    var map;
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {
-                lat: -34.397,
-                lng: 150.644
-            },
-            zoom: 8
-        });
-    }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap" async defer></script>
+<script src="{{ STATIC_URL }}js/home.js"></script>
 {% endblock site_js %}

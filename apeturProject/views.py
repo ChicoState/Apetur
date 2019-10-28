@@ -34,7 +34,18 @@ def global_settings(request):
 
 # homepage
 def home(request):
-    return render(request, 'home.html')
+    featured_images = [
+        settings.SITE_FILE_URL + "featured/birthday.jpg",
+        settings.SITE_FILE_URL + "featured/wedding.jpg",
+        settings.SITE_FILE_URL + "featured/graduation.jpg",
+        settings.SITE_FILE_URL + "featured/wedding2.jpg"
+    ]
+    return render(
+        request,
+        'home.html',
+        {
+            'featured_images': featured_images
+        })
 
 
 # log in
