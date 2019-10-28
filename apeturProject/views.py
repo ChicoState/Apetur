@@ -3,6 +3,7 @@ from django.conf import settings
 from decimal import Decimal
 from django.shortcuts import redirect
 from pathlib import Path
+import simplejson as json
 # User
 from django.contrib.auth.models import User
 from .models import Client
@@ -176,10 +177,16 @@ def browse(request):
             longitude = round(Decimal(longitude), 6)
         if latitude != False and longitude != False:
             photographers = find_photographer_in_radius(latitude, longitude, r)
+
         else:
-            photographers = []
+            photographers = (
+                [], []
+            )  #tuple of empty lists if nothing is returned from search
         data = {
-            "photographers": photographers,
+            "photographers":
+            photographers[0],  #first element in tuple is photographer objects
+            "json_data":
+            photographers[1],  # second element in tuple is json data
             "lat": latitude,
             "lng": longitude
         }

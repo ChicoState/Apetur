@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from math import pi as pi
 import math
+import simplejson as json
 from django.db import connection
 from decimal import Decimal
 
@@ -117,7 +118,12 @@ class Photographer(models.Model):
 
 
 """ Given a latitude, longitude, and radius (IN KM) we can find the surround addresses.
-Using these addresses photographers can be found. """
+Using these addresses photographers can be found.
+Return type is a tuple. The first element in the tuple will be a list of Photographer objects that were
+found during the query. 
+The second element in the tuple is a list of JSON serialized photographer data to alow for google map markers to be placed.
+As of now it just contains latitude and longtitude, but may be changed the future.
+ """
 
 
 def find_photographer_in_radius(input_lat, input_lng, radius):
@@ -127,6 +133,7 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
     MAX_LNG = math.radians(180)
 
     photographer_list = []
+    json_data = []
     radius_of_earth = 6371  #approximate in KM
 
     #First convert the input lat and lng to radians
@@ -180,10 +187,19 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
         current_address_id = current_address[0]
         query = Photographer.objects.all().filter(
             client__address__id=current_address_id).first(
-            )  # Query based on the addresds id
+            )  # Query based on the addresss id
         if query != None:  #If a result exists (its possible the address belongs to a client, we do not want to return that)
             photographer_list.append(
                 Photographer.objects.all().filter(
                     client__address__id=current_address_id).first()
             )  #will always be unique value since 1 to 1 relationship. we can just grab the first value
-    return photographer_list
+
+            #Now that we have the photographer object, we need to create the JSON data
+            photographer_data = {
+                "name": photographer_list[-1].get_full_name(),
+                "lat": photographer_list[-1].client.address.get_latitude(),
+                "lng": photographer_list[-1].client.address.get_longitude()
+            }
+            json_data.append(photographer_data)
+    #print(json.dumps(json_data))
+    return (photographer_list, json.dumps(json_data))
