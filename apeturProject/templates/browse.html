@@ -1,40 +1,60 @@
 {% extends 'base.html' %}
 {% block title %}Browse{% endblock title %}
+{% block site_css %}
+<style>
+    #map {
+        min-height: 500px;
+        height: 100%;
+    }
+</style>
+{% endblock site_css %}
 
 {% block content%}
-    <div class="input-group">
-        <input type="text" class="form-control" id = "searchTextField" placeholder="Search" aria-label="" aria-describedby="basic-addon1">
-        <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places" type="text/javascript"></script>
-        <script type="text/javascript">
-            var options = {
-                types: ['(cities)'],
-                componentRestrictions: {country: "us"}
-            };
-            var input = document.getElementById('searchTextField');
-            var autocomplete = new google.maps.places.Autocomplete(input,options);
-            
-            google.maps.event.addListener(autocomplete, 'place_changed', function(){
-                var data = {'lat' :autocomplete.getPlace().geometry.location.lat(),
-                            'lng' : autocomplete.getPlace().geometry.location.lng()
-                };
-                location.replace(window.location.origin + "/browse?lat=" + data["lat"]+"&lng=" + data["lng"]);  
-                
-            })
-        </script>
-    </div>
-    <h1>lat: {{lat}} long: {{lng}}</h1>
-    {% for p in photographers %}
-            <div clas = "container" id = "card-test">
-                <div class="card text-black {% cycle 'bg-light'} " style="max-width: 40rem;" >
-                    <div class="card-header"> {{p.client.address}}</div>
-                        <div class="card-body">
-                            <h4 class="card-title">{{p.client.user.get_full_name}}</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">{{p.client.get_email}}</h6>
-                            <span class="badge badge-primary">Weddings</span>
-                            <span class="badge badge-primary">Birthdays</span>
-                            <p class="card-text">{{p.bio}}</p>
-                        </div>
+<div class="input-group">
+    <input type="text" class="form-control" id="searchTextField" placeholder="Search" aria-label=""
+        aria-describedby="basic-addon1">
+    <select id="radius">
+        <option value=25>25 mi</option>
+        <option value=50>50 mi</option>
+        <option value=75>75 mi</option>
+    </select>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        {% for p in photographers %}
+        <div clas="container" id="card-test">
+            <div class="card text-black" style="max-width: 40rem;">
+                <div class="card-header"> {{p.get_address}}</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{p.get_full_name}}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    {% for tag in p.get_tags %}
+                    <span class=" badge badge-primary">{{tag}}</span>
+                    {% endfor %}
+                    <p class="card-text">{{p.get_bio}}</p>
                 </div>
             </div>
-    {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div id="map"></div>
+    </div>
+</div>
 {% endblock content%}
+{% block site_js %}
+<script>
+    // Store the latitude and longtitue of the city that was returned from the search
+    // This allows for centering of map around the city.
+    var city_lat = parseFloat("{{lat}}");
+    var city_lng = parseFloat("{{lng}}");
+
+    // Grab the json data to create markers
+    var json_data = JSON.parse("{{json_data|escapejs}}");
+</script>
+<script src="{{ STATIC_URL }}js/map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places&callback=initMap">
+</script>
+<script src="{{ STATIC_URL }}js/autocomplete_search.js"></script>
+{% endblock site_js %}
