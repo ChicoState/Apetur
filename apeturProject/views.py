@@ -31,8 +31,7 @@ def global_settings(request):
             "NOTIFICATION_COUNT": notification_count,
         }
     else:
-        return {
-        }
+        return {}
 
 
 # homepage
@@ -56,9 +55,11 @@ def login_user(request):
                 else:
                     return redirect('/')
             else:
-                return render(request, 'usermanagement/login.html', {'loginerror': True})
+                return render(request, 'usermanagement/login.html',
+                              {'loginerror': True})
         else:
-            return render(request, 'usermanagement/login.html', {'loginerror': True})
+            return render(request, 'usermanagement/login.html',
+                          {'loginerror': True})
     elif request.user.is_authenticated:
         return redirect('/')
     else:
@@ -91,11 +92,17 @@ def signup_user(request):
                 request,
                 'usermanagement/signup.html',
                 {
-                    'month_range': range(1, 13),
-                    'date_range': range(1, 32),
-                    'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
-                    'signuperror': True,
-                    'passnotmatch': True
+                    'month_range':
+                    range(1, 13),
+                    'date_range':
+                    range(1, 32),
+                    'year_range':
+                    range(datetime.datetime.now().year - 122,
+                          datetime.datetime.now().year),
+                    'signuperror':
+                    True,
+                    'passnotmatch':
+                    True
                 },
             )
 
@@ -105,11 +112,17 @@ def signup_user(request):
                 request,
                 'usermanagement/signup.html',
                 {
-                    'month_range': range(1, 13),
-                    'date_range': range(1, 32),
-                    'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
-                    'signuperror': True,
-                    'emailexists': True
+                    'month_range':
+                    range(1, 13),
+                    'date_range':
+                    range(1, 32),
+                    'year_range':
+                    range(datetime.datetime.now().year - 122,
+                          datetime.datetime.now().year),
+                    'signuperror':
+                    True,
+                    'emailexists':
+                    True
                 },
             )
 
@@ -132,9 +145,13 @@ def signup_user(request):
             request,
             'usermanagement/signup.html',
             {
-                'month_range': range(1, 13),
-                'date_range': range(1, 32),
-                'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
+                'month_range':
+                range(1, 13),
+                'date_range':
+                range(1, 32),
+                'year_range':
+                range(datetime.datetime.now().year - 122,
+                      datetime.datetime.now().year),
             },
         )
 
@@ -157,16 +174,21 @@ def browse(request):
             latitude = round(Decimal(latitude), 6)
         if longitude:
             longitude = round(Decimal(longitude), 6)
+        if latitude != False and longitude != False:
+            photographers = find_photographer_in_radius(latitude, longitude, r)
+        else:
+            photographers = []
         data = {
-            "photographers" : find_photographer_in_radius(latitude,longitude,r),
-            "lat" : latitude,
-            "lng" : longitude
+            "photographers": photographers,
+            "lat": latitude,
+            "lng": longitude
         }
 
     return render(request, 'browse.html', data)
 
 
 # profile
+
 
 def profile(request):
     return render(request, 'profile.html')

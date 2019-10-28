@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from math import pi as pi
+import math
 from django.db import connection
 from decimal import Decimal
 
@@ -76,8 +77,9 @@ class Client(models.Model):
         if (self.address == None):
             return None
         return self.address.get_street_address()
+
     def get_full_address(self):
-        if(self.address == None):
+        if (self.address == None):
             return ""
         return self.address
 
@@ -86,27 +88,6 @@ class Client(models.Model):
 
     def get_email(self):
         return self.user.email
-
-    def find_photographer_in_radius(self, radius):
-        photographer_list = []
-        lat = self.address.get_latitude() * Decimal(pi / 180)
-        lng = self.address.get_longitude() * Decimal(pi / 180)
-        data_dict = {
-            'lat': lat,
-            'lng': lng,
-            'r': radius,
-            'convert_radians': pi / 180
-        }
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT id FROM apeturProject_address WHERE acos(sin(%(lat)s) * \
-                sin(latitude * %(convert_radians)s) + cos(%(lat)s) * cos(latitude * %(convert_radians)s) * \
-                    cos(longitude * %(convert_radians)s - (%(lng)s))) * 6371 <= %(r)s',data_dict)
-            row = cursor.fetchall()
-        for address in row:
-            current_address_id = address[0]
-            if (current_address_id != self.address.id):
-                photographer_list.append(Photographer.objects.all().filter(client__address__id=current_address_id))
-        return photographer_list
 
     def __str__(self):
         return self.user.username
@@ -117,15 +98,20 @@ class Photographer(models.Model):
     bio = models.CharField(max_length=500)
     radius = models.PositiveIntegerField(default=25)
     tags = models.TextField()
+
     def get_address(self):
         return self.client.get_full_address()
+
     """ Test function """
     def get_tags(self):
-        return ["Tag1","Tag2"]
+        return ["Tag1", "Tag2"]
+
     def get_full_name(self):
         return self.client.get_full_name()
+
     def get_bio(self):
         return self.bio
+
     def __str__(self):
         return self.client.user.username
 
@@ -135,27 +121,66 @@ Using these addresses photographers can be found. """
 
 
 def find_photographer_in_radius(input_lat, input_lng, radius):
+    MIN_LAT = math.radians(-90)
+    MAX_LAT = math.radians(90)
+    MIN_LNG = math.radians(-180)
+    MAX_LNG = math.radians(180)
+
     photographer_list = []
-    #First convert lat and lng to radians
-    lat = input_lat * Decimal(pi / 180)
-    lng = input_lng * Decimal(pi / 180)
+    radius_of_earth = 6371  #approximate in KM
+
+    #First convert the input lat and lng to radians
+    lat = input_lat * Decimal(math.pi / 180)
+    lng = input_lng * Decimal(math.pi / 180)
+
+    #Find lat_min & lat_max in order to optimize query (source: http://janmatuschek.de/LatitudeLongitudeBoundingCoordinates)
+    r = Decimal(
+        radius / radius_of_earth
+    )  #angular radius of circle [this will also be used in the query]
+    lat_min = lat - r
+    lat_max = lat + r
+    #Find lng_min & lng_max
+    if lat_min > MIN_LAT and lat_max < MAX_LAT:
+        lat_delta = Decimal(math.asin(math.sin(r) / math.cos(lat)))
+
+        lng_min = lng - lat_delta
+        if lng_min < MIN_LNG:
+            lng_min += 2 * math.pi
+        lng_max = lng + lat_delta
+        if lng_max > MAX_LNG:
+            lng_max -= 2 * math.pi
+    else:
+        lat_min = max(lat_min, MIN_LAT)
+        lat_max = min(lat_max, MAX_LAT)
+        lng_min = MIN_LNG
+        lng_max = MAX_LNG
+
     data_dict = {
-        'lat': lat,
-        'lng': lng,
-        'r': radius,
-        'convert_radians': pi / 180
+        'input_lat': lat,
+        'input_lng': lng,
+        'lat_min': lat_min,
+        'lat_max': lat_max,
+        'lng_min': lng_min,
+        'lng_max': lng_max,
+        'r': r,  #angular radius of the circle
+        'rad_earth': radius_of_earth,
+        'convert_radians': math.pi / 180
     }
     with connection.cursor() as cursor:
         cursor.execute(
-            'SELECT id FROM apeturProject_address WHERE acos(sin(%(lat)s) *\
-             sin(latitude * %(convert_radians)s) + cos(%(lat)s) * cos(latitude *\
-                 %(convert_radians)s) * cos(longitude * %(convert_radians)s - (%(lng)s))) * 6371 <= %(r)s',
+            'SELECT id FROM apeturProject_address WHERE\
+                 (latitude * %(convert_radians)s >= %(lat_min)s AND latitude * %(convert_radians)s <= %(lat_max)s)\
+                 AND (longitude * %(convert_radians)s >= %(lng_min)s AND longitude * %(convert_radians)s <= %(lng_max)s)\
+            AND\
+                acos(sin(%(input_lat)s) * sin(latitude * %(convert_radians)s) + cos(%(input_lat)s) * \
+                    cos(latitude * %(convert_radians)s) * cos(longitude * %(convert_radians)s - (%(input_lng)s))) <= %(r)s',
             data_dict)
         row = cursor.fetchall()
     for current_address in row:
         current_address_id = current_address[0]
         query = Photographer.objects.all().filter(
-            client__address__id=current_address_id).first()  # Query based on the addresds id
+            client__address__id=current_address_id).first(
+            )  # Query based on the addresds id
         if query != None:  #If a result exists (its possible the address belongs to a client, we do not want to return that)
             photographer_list.append(
                 Photographer.objects.all().filter(

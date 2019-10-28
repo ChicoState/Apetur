@@ -44,46 +44,8 @@
 </div>
 {% endblock content%}
 {% block site_js %}
-
-<script type="text/javascript">
-    data_from_django = "{{photographers}}";
-    console.log(data_from_django);
-
-    function initMap() {
-        default_latitude = 39.728494;
-        default_longitude = -121.837478;
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {
-                lat: default_latitude,
-                lng: default_longitude
-            },
-            zoom: 14
-        });
-    }
-</script>
+<script src="{{ STATIC_URL }}js/map.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places&callback=initMap">
 </script>
-
-<script type="text/javascript">
-    var options = {
-        types: ['(cities)'],
-        componentRestrictions: {
-            country: "us"
-        }
-    };
-    var input = document.getElementById('searchTextField');
-    var autocomplete = new google.maps.places.Autocomplete(input, options);
-
-
-    google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        var data = {
-            'lat': autocomplete.getPlace().geometry.location.lat(),
-            'lng': autocomplete.getPlace().geometry.location.lng(),
-            'r': document.getElementById("radius").value
-        };
-        location.replace(window.location.origin + "/browse?lat=" + data["lat"] + "&lng=" + data["lng"] +
-            "&r=" +
-            data["r"]);
-    })
-</script>
+<script src="{{ STATIC_URL }}js/autocomplete_search.js"></script>
 {% endblock site_js %}
