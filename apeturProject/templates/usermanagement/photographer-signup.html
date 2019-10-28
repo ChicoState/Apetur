@@ -1,13 +1,66 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock title %}
-{% block navbar_style %}navstyle-dark{% endblock navbar_style %}
+{% block navbar_style %}navstyle-light navstyle-minimal{% endblock navbar_style %}
 {% block site_style %}sitestyle-no-space{% endblock site_style %}
 {% block site_css %}
-<link href="{{ STATIC_URL }}css/usermanagement/login.css" media="screen" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/usermanagement/photographer-signup.css" media="screen" rel="stylesheet">
 {% endblock site_css %}
 
 {% block content %}
+<div class="signup-form-wrapper row m-0">
+    <div class="signup-form col">
+        <form id="signupForm" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 pb-4">
+                    <h1>Welcome to Apetur!</h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input type="text" name="firstname" class="form-control" aria-describedby="emailHelp"
+                            placeholder="Enter first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" name="lastname" class="form-control" aria-describedby="emailHelp"
+                            placeholder="Enter last name" required>
+                    </div>
+                </div>
 
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Adrress</label>
+                        <input type="text" name="address" class="form-control" placeholder="Address" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Adrress 2</label>
+                        <input type="text" name="address2" class="form-control" placeholder="Apt, Unit, P.O. Box"
+                            required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label>City</label>
+                            <input type="text" name="city" class="form-control" placeholder="City" required>
+                        </div>
+                        <div class="form-group col-2">
+                            <label>State</label>
+                            <input type="text" name="state" class="form-control" placeholder="State" required>
+                        </div>
+                        <div class="form-group col-5">
+                            <label>Zip Code</label>
+                            <input type="text" name="zipcode" class="form-control" placeholder="Zip Code" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Signup</button>
+                    <a href="#"><small class="form-text">Need Help?</small></a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock content %}
 
 {% block site_js %}
