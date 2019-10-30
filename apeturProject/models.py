@@ -132,6 +132,7 @@ class File(models.Model):
     in_gallery = models.BooleanField()
     adult_content = models.BooleanField()
     upload_date = models.DateField(auto_now=True)
+    likes = models.PositiveIntegerField(default=0)
 
 
 """ Given a latitude, longitude, and radius (IN KM) we can find the surround addresses.
