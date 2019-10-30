@@ -124,7 +124,7 @@ class Event_Type(models.Model):
     adult_content = models.BooleanField()
 
 
-class Image(models.Model):
+class File(models.Model):
     photographer = models.ForeignKey(Photographer, on_delete=models.CASCADE)
     location = models.OneToOneField(Address, on_delete=models.CASCADE)
     path = models.CharField(max_length=500)
