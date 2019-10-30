@@ -3,14 +3,18 @@ from django.conf import settings
 from decimal import Decimal
 from django.shortcuts import redirect
 from pathlib import Path
+import simplejson as json
 # User
 from django.contrib.auth.models import User
 from .models import Client
 from .models import Photographer
+from .models import find_photographer_in_radius
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 import datetime
+
+convert_to_miles = 1.609
 
 
 def get_user(email):
@@ -28,13 +32,23 @@ def global_settings(request):
             "NOTIFICATION_COUNT": notification_count,
         }
     else:
-        return {
-        }
+        return {}
 
 
 # homepage
 def home(request):
-    return render(request, 'home.html')
+    featured_images = [
+        settings.SITE_FILE_URL + "featured/birthday.jpg",
+        settings.SITE_FILE_URL + "featured/wedding.jpg",
+        settings.SITE_FILE_URL + "featured/graduation.jpg",
+        settings.SITE_FILE_URL + "featured/wedding2.jpg"
+    ]
+    return render(
+        request,
+        'home.html',
+        {
+            'featured_images': featured_images
+        })
 
 
 # log in
@@ -53,9 +67,11 @@ def login_user(request):
                 else:
                     return redirect('/')
             else:
-                return render(request, 'usermanagement/login.html', {'loginerror': True})
+                return render(request, 'usermanagement/login.html',
+                              {'loginerror': True})
         else:
-            return render(request, 'usermanagement/login.html', {'loginerror': True})
+            return render(request, 'usermanagement/login.html',
+                          {'loginerror': True})
     elif request.user.is_authenticated:
         return redirect('/')
     else:
@@ -88,11 +104,17 @@ def signup_user(request):
                 request,
                 'usermanagement/signup.html',
                 {
-                    'month_range': range(1, 13),
-                    'date_range': range(1, 32),
-                    'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
-                    'signuperror': True,
-                    'passnotmatch': True
+                    'month_range':
+                    range(1, 13),
+                    'date_range':
+                    range(1, 32),
+                    'year_range':
+                    range(datetime.datetime.now().year - 122,
+                          datetime.datetime.now().year),
+                    'signuperror':
+                    True,
+                    'passnotmatch':
+                    True
                 },
             )
 
@@ -102,11 +124,17 @@ def signup_user(request):
                 request,
                 'usermanagement/signup.html',
                 {
-                    'month_range': range(1, 13),
-                    'date_range': range(1, 32),
-                    'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
-                    'signuperror': True,
-                    'emailexists': True
+                    'month_range':
+                    range(1, 13),
+                    'date_range':
+                    range(1, 32),
+                    'year_range':
+                    range(datetime.datetime.now().year - 122,
+                          datetime.datetime.now().year),
+                    'signuperror':
+                    True,
+                    'emailexists':
+                    True
                 },
             )
 
@@ -129,9 +157,13 @@ def signup_user(request):
             request,
             'usermanagement/signup.html',
             {
-                'month_range': range(1, 13),
-                'date_range': range(1, 32),
-                'year_range': range(datetime.datetime.now().year - 122, datetime.datetime.now().year),
+                'month_range':
+                range(1, 13),
+                'date_range':
+                range(1, 32),
+                'year_range':
+                range(datetime.datetime.now().year - 122,
+                      datetime.datetime.now().year),
             },
         )
 
@@ -148,12 +180,24 @@ def browse(request):
     if request.method == "GET":
         latitude = request.GET.get("lat", False)
         longitude = request.GET.get("lng", False)
+        r = request.GET.get("r", False)
+        r = float(r) * convert_to_miles
         if latitude:
             latitude = round(Decimal(latitude), 6)
         if longitude:
             longitude = round(Decimal(longitude), 6)
+        if latitude != False and longitude != False:
+            photographers = find_photographer_in_radius(latitude, longitude, r)
+
+        else:
+            photographers = (
+                [], []
+            )  #tuple of empty lists if nothing is returned from search
         data = {
-            "photographers": Photographer.objects.all().filter(client__address__longitude=longitude, client__address__latitude=latitude),
+            "photographers":
+            photographers[0],  #first element in tuple is photographer objects
+            "json_data":
+            photographers[1],  # second element in tuple is json data
             "lat": latitude,
             "lng": longitude
         }
@@ -162,6 +206,7 @@ def browse(request):
 
 
 # profile
+
 
 def profile(request):
     return render(request, 'profile.html')
