@@ -48,7 +48,8 @@ class Address(models.Model):
 
     def __str__(self):
         return self.get_street_address() + " " + self.get_street_address_2() +\
-            " " + self.get_city() + ", " + self.get_state() + ", " + self.get_country() + " " + self.get_zip_code()
+            " " + self.get_city() + ", " + self.get_state() + ", " + \
+            self.get_country() + " " + self.get_zip_code()
 
 
 class Client(models.Model):
@@ -104,6 +105,7 @@ class Photographer(models.Model):
         return self.client.get_full_address()
 
     """ Test function """
+
     def get_tags(self):
         return ["Tag1", "Tag2"]
 
@@ -115,6 +117,21 @@ class Photographer(models.Model):
 
     def __str__(self):
         return self.client.user.username
+
+
+class Event_Type(models.Model):
+    name = models.CharField(max_length=500)
+    adult_content = models.BooleanField()
+
+
+class Image(models.Model):
+    photographer = models.ForeignKey(Photographer, on_delete=models.CASCADE)
+    location = models.OneToOneField(Address, on_delete=models.CASCADE)
+    path = models.CharField(max_length=500)
+    is_featured = models.BooleanField()
+    in_gallery = models.BooleanField()
+    adult_content = models.BooleanField()
+    upload_date = models.DateField(auto_now=True)
 
 
 """ Given a latitude, longitude, and radius (IN KM) we can find the surround addresses.
@@ -134,19 +151,19 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
 
     photographer_list = []
     json_data = []
-    radius_of_earth = 6371  #approximate in KM
+    radius_of_earth = 6371  # approximate in KM
 
-    #First convert the input lat and lng to radians
+    # First convert the input lat and lng to radians
     lat = input_lat * Decimal(math.pi / 180)
     lng = input_lng * Decimal(math.pi / 180)
 
-    #Find lat_min & lat_max in order to optimize query (source: http://janmatuschek.de/LatitudeLongitudeBoundingCoordinates)
+    # Find lat_min & lat_max in order to optimize query (source: http://janmatuschek.de/LatitudeLongitudeBoundingCoordinates)
     r = Decimal(
         radius / radius_of_earth
-    )  #angular radius of circle [this will also be used in the query]
+    )  # angular radius of circle [this will also be used in the query]
     lat_min = lat - r
     lat_max = lat + r
-    #Find lng_min & lng_max
+    # Find lng_min & lng_max
     if lat_min > MIN_LAT and lat_max < MAX_LAT:
         lat_delta = Decimal(math.asin(math.sin(r) / math.cos(lat)))
 
@@ -169,7 +186,7 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
         'lat_max': lat_max,
         'lng_min': lng_min,
         'lng_max': lng_max,
-        'r': r,  #angular radius of the circle
+        'r': r,  # angular radius of the circle
         'rad_earth': radius_of_earth,
         'convert_radians': math.pi / 180
     }
@@ -187,19 +204,20 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
         current_address_id = current_address[0]
         query = Photographer.objects.all().filter(
             client__address__id=current_address_id).first(
-            )  # Query based on the addresss id
-        if query != None:  #If a result exists (its possible the address belongs to a client, we do not want to return that)
+        )  # Query based on the addresss id
+        # If a result exists (its possible the address belongs to a client, we do not want to return that)
+        if query != None:
             photographer_list.append(
                 Photographer.objects.all().filter(
                     client__address__id=current_address_id).first()
-            )  #will always be unique value since 1 to 1 relationship. we can just grab the first value
+            )  # will always be unique value since 1 to 1 relationship. we can just grab the first value
 
-            #Now that we have the photographer object, we need to create the JSON data
+            # Now that we have the photographer object, we need to create the JSON data
             photographer_data = {
                 "name": photographer_list[-1].get_full_name(),
                 "lat": photographer_list[-1].client.address.get_latitude(),
                 "lng": photographer_list[-1].client.address.get_longitude()
             }
             json_data.append(photographer_data)
-    #print(json.dumps(json_data))
+    # print(json.dumps(json_data))
     return (photographer_list, json.dumps(json_data))
