@@ -42,7 +42,7 @@
                     <div id="user-profile-dropdown" data-toggle="dropdown">
                         <div class="dropdown-toggle{% if NOTIFICATION_COUNT %} have-alert{% endif %}">
                             {% if user.client.profile_pic %}
-                            <img class="user-profile-pic" src="{{ user.client.profile_pic }}" />
+                            <img class="user-profile-pic" src="{{ USER_FILE_URL }}{{ user.client.profile_pic }}" />
                             {% else %}
                             <span class="user-profile-text">{{ user.get_short_name|make_list|first }}</span>
                             {% endif %}

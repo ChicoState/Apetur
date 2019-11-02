@@ -120,8 +120,11 @@ class Photographer(models.Model):
 
 
 class Event_Type(models.Model):
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=255, unique=True)
     adult_content = models.BooleanField()
+
+    def __str__(self):
+        return self.name
 
 
 class File(models.Model):
