@@ -17,7 +17,7 @@
 <div id="featured">
     {% comment %} Currently featured {% endcomment %}
     <div id="featuringItem">
-        <img class="featuring-image" src="{{ featured_images|last }}" />
+        <img class="featuring-image" src="{{ featured_images|first }}" />
         <a class="user-detail" href="#">
             <div class="featured-user-pic">
                 <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" />
@@ -30,26 +30,44 @@
 
     {% comment %} Queue control {% endcomment %}
     <div id="featureControl">
-        <div class="feature-control-next">
+        <div class="progress blue feature-control-button feature-control-next" onclick="featureRotation('next')">
+            <span class="progress-left progress-end">
+                <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right progress-start">
+                <span class="progress-bar"></span>
+            </span>
             <i class="fas fa-angle-right"></i>
         </div>
 
         <div class="feature-control-selector">
             {% for image_url in featured_images %}
-            <div class="feature-control-circle {% if forloop.first %} current{% endif %}"
+            <div class="feature-control-circle {% if forloop.first %} current-circle-control{% endif %}"
                 data-image-url="{{ image_url }}"></div>
             {% endfor %}
         </div>
 
-        <div class="feature-control-previous">
+        <div class="progress no-loading blue feature-control-button feature-control-previous"
+            onclick="featureRotation('previous')">
+            <span class="progress-left">
+                <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                <span class="progress-bar"></span>
+            </span>
             <i class="fas fa-angle-left"></i>
         </div>
+
+        {% comment %} <div class="feature-control-button feature-control-previous"
+            onclick="featureRotation('previous')">
+            <i class="fas fa-angle-left"></i>
+        </div> {% endcomment %}
     </div>
 
     {% comment %} Featured item queue {% endcomment %}
     <div id="featuredQueue">
         {% for image_url in featured_images %}
-        <div id="" class="featured-queue-item{% if forloop.first %} next-image{% endif %}"
+        <div id="" class="featured-queue-item{% if forloop.first %} current-feature{% endif %}"
             style="order: {{forloop.counter}}">
             <img src="{{ image_url }}" data-image-url="{{ image_url }}" />
         </div>

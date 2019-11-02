@@ -75,22 +75,25 @@
     top: 50%;
     transform: translateY(-50%);
 
-    .feature-control-next,
-    .feature-control-previous {
-        border: 2px solid $gray;
+    .feature-control-button {
         color: $gray;
         border-radius: 50%;
         height: 50px;
         width: 50px;
         text-align: center;
-        line-height: 50px;
+        line-height: 48px;
         font-size: 25px;
         cursor: pointer;
 
         &:hover {
             transition: 0.25s;
-            border-color: $blue;
             color: $blue;
+        }
+
+        .fas {
+            margin: auto;
+            line-height: 48px;
+            font-size: 25px;
         }
     }
 
@@ -108,7 +111,7 @@
                 background-color: $blue;
             }
 
-            &.current {
+            &.current-circle-control {
                 background-color: $blue;
             }
         }
@@ -130,9 +133,128 @@
         margin: 0 10px;
         height: 100%;
 
+        &.current-feature {
+            display: none;
+        }
+
         img {
             height: 100%;
             width: auto;
         }
+    }
+}
+
+/**********************************************************
+* Progress Bar
+**********************************************************/
+.progress {
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    background: none;
+    margin: 0 auto;
+    box-shadow: none;
+    position: relative;
+
+    &.no-loading:hover {
+        &:after {
+            border-color: $blue;
+        }
+    }
+}
+
+.progress:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid $gray;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progress>span {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.progress .progress-left {
+    left: 0;
+}
+
+.progress .progress-bar {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border-width: 2px;
+    border-style: solid;
+    position: absolute;
+    top: 0;
+    border-color: $blue;
+}
+
+.progress .progress-left .progress-bar {
+    left: 100%;
+    border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
+    border-left: 0;
+    -webkit-transform-origin: center left;
+    transform-origin: center left;
+}
+
+.progress .progress-right {
+    right: 0;
+}
+
+.progress .progress-right .progress-bar {
+    left: -100%;
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    border-right: 0;
+    -webkit-transform-origin: center right;
+    transform-origin: center right;
+}
+
+.progress:not(.no-loading) {
+    &.pause-animation {
+
+        .progress-left .progress-bar,
+        .progress-right .progress-bar {
+            -webkit-animation-play-state: paused;
+            -moz-animation-play-state: paused;
+            -o-animation-play-state: paused;
+            animation-play-state: paused;
+        }
+    }
+
+    .progress-left .progress-bar {
+        animation: loading 2.5s linear forwards 2.5s;
+    }
+
+    .progress-right .progress-bar {
+        animation: loading 2.5s linear forwards;
+    }
+}
+
+@keyframes loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .progress {
+        margin-bottom: 20px;
     }
 }
