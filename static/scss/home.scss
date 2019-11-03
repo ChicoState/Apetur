@@ -132,9 +132,18 @@
         justify-content: space-between;
         margin: 0 10px;
         height: 100%;
+        position: relative;
 
         &.current-feature {
             display: none;
+        }
+
+        &::after {
+            content: "";
+            height: 100%;
+            width: 100%;
+            background-color: rgba($black, 0.2);
+            position: absolute;
         }
 
         img {
