@@ -22,7 +22,14 @@ body {
     background-color: $gray;
 
     &.show-color {
-        background: $gray;
+        background: $blue;
+
+        #setting-dropdown {
+            .dropdown-menu {
+                top: 71px !important;
+                padding-top: 0 !important;
+            }
+        }
     }
 }
 
@@ -198,7 +205,8 @@ body {
                 position: fixed;
                 height: 100%;
                 right: -250px;
-                top: 71px;
+                top: 0;
+                padding-top: 71px;
                 margin: 0;
                 z-index: -1;
 
@@ -232,7 +240,7 @@ body {
             top: 58px;
             left: initial;
             right: 0;
-            background-color: $dark-gray;
+            background-color: rgba($black, 0.85);
             border: none;
             border-radius: 0;
             text-align: right;

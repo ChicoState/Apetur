@@ -118,7 +118,7 @@ h1 {
     &.navstyle-semi-transparent {
         background: transparent;
 
-        &:hover {
+        &:not(.show-color):hover {
             background: rgba($gray, 0.5);
         }
     }
