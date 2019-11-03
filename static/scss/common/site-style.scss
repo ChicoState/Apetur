@@ -116,7 +116,11 @@ h1 {
 
     // semi transparent background color
     &.navstyle-semi-transparent {
-        background: rgba($gray, 0.5);
+        background: transparent;
+
+        &:hover {
+            background: rgba($gray, 0.5);
+        }
     }
 
     // semi transparent gradient background color
