@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Calendar{% endblock title %}
+
+{% block content%}
+
+<link rel="stylesheet" href="{{STATIC_FILE_URL}}vanilla-calendar-master/src/css/vanilla-calendar-min.css">
+<script src="{{STATIC_FILE_URL}}vanilla-calendar-master/src/js/vanilla-calendar-min.js"></script>
+
+<div id="myCalendar" class="vanilla-calendar">
+
+<script>
+    let myCalendar = new VanillaCalendar({
+        selector: "#myCalendar",
+        pastDates: false,
+        datesFilter: false,
+        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        shortWeekday: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        onSelect: (data, elem) => {},
+        date: new Date(),
+        todaysDate: new Date()
+    })
+</script>
+
+</div>
+{{ monthcalendar }}
+{% endblock content%}

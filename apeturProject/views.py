@@ -210,3 +210,10 @@ def browse(request):
 
 def profile(request):
     return render(request, 'profile.html')
+
+# schedule
+def schedule(request):
+    data = {
+        
+    }
+    return render(request, 'schedule.html')

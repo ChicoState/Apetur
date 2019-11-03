@@ -137,6 +137,40 @@ class File(models.Model):
     upload_date = models.DateField(auto_now=True)
     likes = models.PositiveIntegerField(default=0)
 
+class Schedule(models.Model):
+    photographer_id = models.ForeignKey(Photographer, on_delete = models.CASCADE, null = True)
+    date = models.DateField,
+    time = models.TextField,
+    fully_booked = models.BooleanField
+    
+    def get_photographer_id(self):
+        return self.photographer_id
+    def get_date(self):
+        return self.date
+    def get_time(self):
+        return self.time
+    def get_fully_booked(self):
+        return self.fully_booked
+
+
+class Event(models.Model):
+    event_type = models.TextField
+    event_date = models.TextField
+    photographer_id = models.ForeignKey(Photographer, on_delete = models.CASCADE, null = True)
+    client_id = models.ForeignKey(Client, on_delete = models.CASCADE, null = True)
+    time = models.TextField
+
+    def get_event_type(self):
+        return self.event_type
+    def get_event_date(self):
+        return self.event_date
+    def get_photographer_id(self):
+        return self.photographer_id
+    def get_client_id(self):
+        return self.client_id
+    def get_time(self):
+        return self.time
+
 
 """ Given a latitude, longitude, and radius (IN KM) we can find the surround addresses.
 Using these addresses photographers can be found.
