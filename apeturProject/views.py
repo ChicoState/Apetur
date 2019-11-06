@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from .models import Client
 from .models import Photographer
 from .models import find_photographer_in_radius
+from .models import retrieve_photographers_schedules
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -213,7 +214,10 @@ def profile(request):
 
 # schedule
 def schedule(request):
+    if request.method == "GET":
+        p_id = request.GET.get("p_id", False)
     data = {
-        
+        "json_data": retrieve_photographers_schedules(p_id),
+        "p_name": Photographer.objects.filter(id = p_id).first().get_full_name()
     }
-    return render(request, 'schedule.html')
+    return render(request, 'schedule.html', data)

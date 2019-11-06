@@ -139,9 +139,9 @@ class File(models.Model):
 
 class Schedule(models.Model):
     photographer_id = models.ForeignKey(Photographer, on_delete = models.CASCADE, null = True)
-    date = models.DateField,
-    time = models.TextField,
-    fully_booked = models.BooleanField
+    date = models.DateField(null = False)
+    time = models.TextField(null = False)
+    fully_booked = models.BooleanField(null = False)
     
     def get_photographer_id(self):
         return self.photographer_id
@@ -155,7 +155,7 @@ class Schedule(models.Model):
 
 class Event(models.Model):
     event_type = models.TextField
-    event_date = models.TextField
+    event_date = models.TextField   
     photographer_id = models.ForeignKey(Photographer, on_delete = models.CASCADE, null = True)
     client_id = models.ForeignKey(Client, on_delete = models.CASCADE, null = True)
     time = models.TextField
@@ -259,3 +259,19 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
             json_data.append(photographer_data)
     # print(json.dumps(json_data))
     return (photographer_list, json.dumps(json_data))
+
+
+""" Given a photograpgers id (p_id), create an array containing data objects storing the data in YEAR-MONTH-DAY format
+as well as the boolen determining whether or not that date is fully booked for the given photographer """
+def retrieve_photographers_schedules(p_id):
+    if p_id == False:  # Error checking. If p_id is False (meaning there was no p_id grabbed from GET) return empty string
+        return []
+    json_data = []
+    schedules = Schedule.objects.filter(photographer_id=p_id)  # this returns a list of schedule objects associated with the photograpger id
+    for entry in schedules:
+        data = {
+            "date": str(entry.date),
+            "fully_booked" : entry.fully_booked
+        }
+        json_data.append(data)
+    return json.dumps(json_data)
