@@ -94,22 +94,22 @@ let VanillaCalendar = (function () {
             })
         }
 
-        const selectDate = function () {
-            let activeDates = element.querySelectorAll('[data-calendar-status=active]')
-            activeDates.forEach(date => {
-                date.addEventListener('click', function () {
-                    removeActiveClass()
-                    let datas = this.dataset
-                    let data = {}
-                    if (datas.calendarDate)
-                        data.date = datas.calendarDate
-                    if (datas.calendarData)
-                        data.data = JSON.parse(datas.calendarData)
-                    opts.onSelect(data, this)
-                    this.classList.add('vanilla-calendar-date--selected')
-                })
-            })
-        }
+        /*  const selectDate = function () {
+              let activeDates = element.querySelectorAll('[data-calendar-status=active]')
+              activeDates.forEach(date => {
+                  date.addEventListener('click', function () {
+                      removeActiveClass()
+                      let datas = this.dataset
+                      let data = {}
+                      if (datas.calendarDate)
+                          data.date = datas.calendarDate
+                      if (datas.calendarData)
+                          data.data = JSON.parse(datas.calendarData)
+                      opts.onSelect(data, this)
+                      this.classList.add('vanilla-calendar-date--selected')
+                  })
+              })
+          }*/
 
         const createMonth = function () {
             clearCalendar()
@@ -122,7 +122,8 @@ let VanillaCalendar = (function () {
             opts.date.setDate(1)
             opts.date.setMonth(opts.date.getMonth() - 1)
             opts.month_label.innerHTML = opts.months[opts.date.getMonth()] + ' ' + opts.date.getFullYear()
-            selectDate()
+            //  setSchedule()
+            //  selectDate()
         }
 
         const setSchedule = function () {
@@ -131,9 +132,24 @@ let VanillaCalendar = (function () {
                 if (currentDate != null) {
                     currentDate.classList.remove("vanilla-calendar-not-available");
                     if (opts.schedule[i]["fully_booked"]) {
-                        currentDate.classList.add("vanilla-calendar-booked")
+                        currentDate.classList.add("vanilla-calendar-booked");
                     } else {
-                        currentDate.classList.add("vanilla-calendar-available")
+                        currentDate.addEventListener('click', function () {
+                            removeActiveClass();
+                            let datas = this.dataset;
+                            let data = {};
+                            if (datas.calendarDate)
+                                data.date = datas.calendarDate;
+                            if (datas.calendarData)
+                                data.data = JSON.parse(datas.calendarData);
+                            opts.onSelect(data, this)
+                            this.classList.add('vanilla-calendar-date--selected');
+                        });
+                        if (opts.schedule[i]["cur_num_of_bookings"] == 0) {
+                            currentDate.classList.add("vanilla-calendar-available");
+                        } else {
+                            currentDate.classList.add("vanilla-calendar-partially-booked");
+                        }
                     }
                 } // end null check
             } // end for

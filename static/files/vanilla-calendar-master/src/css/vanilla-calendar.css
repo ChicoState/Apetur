@@ -131,9 +131,16 @@
 }
 
 .vanilla-calendar .vanilla-calendar-booked {
+    cursor: default;
     background-color: red;
 }
 
 .vanilla-calendar .vanilla-calendar-not-available {
+    cursor: default;
     background-color: lightgray;
+}
+
+
+.vanilla-calendar .vanilla-calendar-partially-booked {
+    background-color: yellow;
 }
