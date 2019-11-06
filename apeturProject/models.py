@@ -142,7 +142,7 @@ class Schedule(models.Model):
     date = models.DateField(null = False)
     time = models.TextField(null = False)
     fully_booked = models.BooleanField(null = False)
-    
+
     def get_photographer_id(self):
         return self.photographer_id
     def get_date(self):
