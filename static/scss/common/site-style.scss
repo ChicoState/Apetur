@@ -118,8 +118,21 @@ h1 {
     &.navstyle-semi-transparent {
         background: transparent;
 
-        &:not(.show-color):hover {
-            background: rgba($gray, 0.5);
+        &:not(.show-color) {
+            &:hover {
+                background: rgba($gray, 0.5);
+            }
+        }
+
+        &.show-color {
+            #login_btn {
+                background-color: $white;
+                color: $blue;
+
+                &:hover {
+                    background-color: rgba($white, 0.9);
+                }
+            }
         }
     }
 

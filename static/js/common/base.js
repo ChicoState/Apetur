@@ -1,3 +1,8 @@
+// focus on the textbox when clicked on the search button
+$('.nav-search-cont').click(function () {
+    $(this).closest('.form-control').focus();
+})
+
 /*
  * Navbar Scroll Transition - START
  ********************************************/
@@ -11,8 +16,10 @@ $(document).scroll(function () {
         $scrollHeight = $navbar_selector.height();
 
         if ($(document).scrollTop() > $scrollHeight && !$nav_show) {
-            $navbar_selector.addClass('show-color');
-            $nav_show = true;
+            if ($('#settingDropdownCont .dropdown-toggle').attr("aria-expanded") == 'false') {
+                $navbar_selector.addClass('show-color');
+                $nav_show = true;
+            }
         } else if ($(document).scrollTop() < $scrollHeight && $nav_show) {
             $navbar_selector.removeClass('show-color');
             $nav_show = false;
@@ -46,3 +53,46 @@ $('.dropdown').on('hide.bs.dropdown', function () {
         dropdown_menu.stop(true, true).slideUp(250);
     }
 });
+
+$('#settingDropdownCont .dropdown-toggle').click(function () {
+    if (!$nav_show) {
+        if ($(this).attr("aria-expanded") == 'false') {
+            $('.navstyle-semi-transparent').addClass('show-color');
+        } else {
+            $('.navstyle-semi-transparent').removeClass('show-color');
+        }
+    }
+});
+
+$('#settingDropdownCont .dropdown-menu').click(function (e) {
+    e.stopPropagation();
+});
+
+$('#settingDropdownCont .user-profile-dropdown').click(function () {
+    if ($(this).siblings('.dropdown-menu').is(':visible')) {
+        $(this).siblings('.dropdown-menu')
+            .slideUp(250);
+    } else {
+        $(this).closest('.dropdown')
+            .trigger('show.bs.dropdown');
+    }
+    $(this).find('.fas').toggleClass('fa-angle-down fa-angle-up');
+});
+
+var input2 = document.getElementById('googleMapAutocompleteTextField2');
+var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+
+google.maps.event.addListener(autocomplete2, 'place_changed', function () {
+    var data = {
+        'lat': autocomplete2.getPlace().geometry.location.lat(),
+        'lng': autocomplete2.getPlace().geometry.location.lng(),
+        'r': document.getElementById("radius2").value
+    };
+    location.replace(window.location.origin + "/browse?lat=" + data["lat"] + "&lng=" + data["lng"] +
+        "&r=" +
+        data["r"]);
+})
+
+$(window).on('load', function () {
+    $('#googleMapAutocompletePacContainer').append($('.pac-container:eq(1)'));
+})

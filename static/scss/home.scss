@@ -35,13 +35,8 @@
         &:hover {
 
             .featured-user-pic {
-                padding: 0;
-                border: none;
                 transition: 0.25s;
-            }
-
-            .featured-user-name {
-                font-weight: bold;
+                background: $white;
             }
         }
 

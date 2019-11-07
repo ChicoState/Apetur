@@ -4,9 +4,8 @@ var options = {
         country: "us"
     }
 };
-var input = document.getElementById('searchTextField');
+var input = document.getElementById('googleMapAutocompleteTextField');
 var autocomplete = new google.maps.places.Autocomplete(input, options);
-
 
 google.maps.event.addListener(autocomplete, 'place_changed', function () {
     var data = {

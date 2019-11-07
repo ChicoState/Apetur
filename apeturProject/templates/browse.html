@@ -43,7 +43,7 @@
     </div>
 </div>
 {% endblock content%}
-{% block site_js %}
+{% block google_map_api_js %}
 <script>
     // Store the latitude and longtitue of the city that was returned from the search
     // This allows for centering of map around the city.
@@ -54,7 +54,5 @@
     var json_data = JSON.parse("{{json_data|escapejs}}");
 </script>
 <script src="{{ STATIC_URL }}js/map.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places&callback=initMap">
-</script>
-<script src="{{ STATIC_URL }}js/autocomplete_search.js"></script>
-{% endblock site_js %}
+{% endblock google_map_api_js %}
+{% block google_map_api_callback %}&callback=initMap{% endblock google_map_api_callback %}
