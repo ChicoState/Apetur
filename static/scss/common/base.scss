@@ -25,6 +25,11 @@ body {
     &.show-color {
         background: $blue;
 
+        .navbar .navbar-nav .nav-item .login_btn {
+            background-color: $white;
+            color: $blue;
+        }
+
         #settingDropdownCont {
             .dropdown-menu {
                 top: 71px !important;
@@ -84,16 +89,24 @@ body {
         transition: 0.25s;
     }
 
-    #signup_btn {
-        color: $white;
+    .nav-item {
+        .signup_btn.nav-link {
+            color: $white;
+            padding-left: 0;
 
-        @media (max-width: $sm) {
-            display: none;
+            @media (max-width: $md) {
+                display: none;
+            }
         }
-    }
 
-    #login_btn {
-        color: $white;
+        .login_btn.nav-link {
+            color: $white;
+            margin-right: 10px;
+
+            @media (max-width: $sm) {
+                display: none;
+            }
+        }
     }
 
     .nav-search-cont {
@@ -366,6 +379,18 @@ body {
                 .dropdown-hr {
                     border-color: rgba($black, 0.4);
                 }
+            }
+        }
+
+        .login_btn {
+            @media (min-width: $sm) {
+                display: none;
+            }
+        }
+
+        .signup_btn {
+            @media (min-width: $md) {
+                display: none;
             }
         }
     }

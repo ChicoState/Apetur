@@ -88,12 +88,12 @@
                 {% else %}
                 {% comment %} SIGNUP {% endcomment %}
                 <li class="nav-item">
-                    <a id="signup_btn" class="nav-link" href="/signup">signup</a>
+                    <a class="signup_btn nav-link" href="/signup">signup</a>
                 </li>
 
                 {% comment %} LOGIN {% endcomment %}
                 <li class="nav-item">
-                    <a id="login_btn" class="site-btn-round nav-link" href="/login">login</a>
+                    <a class="login_btn site-btn-round nav-link" href="/login">login</a>
                 </li>
                 {% endif %}
 
@@ -177,6 +177,16 @@
                         <li>
                             <a href="#">contact us</a>
                         </li>
+                        {% if not user.is_authenticated %}
+                        {% comment %} LOGIN {% endcomment %}
+                        <li class="mt-5">
+                            <a class="login_btn site-btn-round nav-link" href="/login">login</a>
+                        </li>
+                        {% comment %} SIGNUP {% endcomment %}
+                        <li>
+                            <a class="signup_btn nav-link" href="/signup">signup</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>

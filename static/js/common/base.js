@@ -54,6 +54,10 @@ $('.dropdown').on('hide.bs.dropdown', function () {
     }
 });
 
+
+/*
+ * Settings dropdown behavior - START
+ ********************************************/
 $('#settingDropdownCont .dropdown-toggle').click(function () {
     if (!$nav_show) {
         if ($(this).attr("aria-expanded") == 'false') {
@@ -78,7 +82,14 @@ $('#settingDropdownCont .user-profile-dropdown').click(function () {
     }
     $(this).find('.fas').toggleClass('fa-angle-down fa-angle-up');
 });
+/*
+ * Settings dropdown behavior - END
+ ********************************************/
 
+
+/*
+ * Adding second google map autocomplete - START
+ ********************************************/
 var input2 = document.getElementById('googleMapAutocompleteTextField2');
 var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
 
@@ -96,3 +107,6 @@ google.maps.event.addListener(autocomplete2, 'place_changed', function () {
 $(window).on('load', function () {
     $('#googleMapAutocompletePacContainer').append($('.pac-container:eq(1)'));
 })
+/*
+ * Adding second google map autocomplete - END
+ ********************************************/
