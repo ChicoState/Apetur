@@ -9,7 +9,9 @@
     --vanilla-calendar-selected-radius: 5px;
 }
 
-.vanilla-calendar *, .vanilla-calendar *:before, .vanilla-calendar *:after {
+.vanilla-calendar *,
+.vanilla-calendar *:before,
+.vanilla-calendar *:after {
     box-sizing: border-box;
 }
 
@@ -22,11 +24,13 @@
     overflow: hidden;
     width: 350px;
 }
+
 @media (max-width:1200px) {
     .vanilla-calendar {
         width: auto;
     }
 }
+
 .vanilla-calendar .vanilla-calendar-btn {
     -moz-user-select: none;
     -ms-user-select: none;
@@ -42,6 +46,7 @@
     overflow: visible;
     padding: 0;
     text-align: center;
+
     &:active {
         border-radius: var(--vanilla-calendar-border-radius);
         box-shadow: 0 0 0 2px rgba(var(--vanilla-calendar-today-bg-color), 0.1)
@@ -119,4 +124,23 @@
     border-radius: 0;
     cursor: not-allowed;
     opacity: 0.2;
+}
+
+.vanilla-calendar .vanilla-calendar-available {
+    background-color: green;
+}
+
+.vanilla-calendar .vanilla-calendar-booked {
+    cursor: default;
+    background-color: red;
+}
+
+.vanilla-calendar .vanilla-calendar-not-available {
+    cursor: default;
+    background-color: lightgray;
+}
+
+
+.vanilla-calendar .vanilla-calendar-partially-booked {
+    background-color: yellow;
 }
