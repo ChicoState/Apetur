@@ -24,6 +24,7 @@ body {
 
     &.show-color {
         background: $blue;
+        box-shadow: 0px 0px 10px rgba($black, 0.5);
 
         .navbar .navbar-nav .nav-item .login_btn {
             background-color: $white;
