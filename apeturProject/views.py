@@ -44,7 +44,24 @@ def home(request):
         settings.SITE_FILE_URL + "featured/graduation.jpg",
         settings.SITE_FILE_URL + "featured/wedding2.jpg"
     ]
-    return render(request, 'home.html', {'featured_images': featured_images})
+    tweets = [
+        "I dont know what to write, but this is for testing any way.",
+        "Another tweet that I am suppose to write for testing, but this one will be much longer.",
+        "Dont know what the word limit is for twitter, but thats okay for now."
+    ]
+    instagram_images = [
+        settings.SITE_FILE_URL + "featured/birthday.jpg",
+        settings.SITE_FILE_URL + "featured/wedding.jpg",
+        settings.SITE_FILE_URL + "featured/graduation.jpg",
+        settings.SITE_FILE_URL + "featured/wedding2.jpg"
+    ]
+    return render(request,
+                  'home.html',
+                  {
+                      'featured_images': featured_images,
+                      'connect_tweets': tweets,
+                      'connect_instagram': instagram_images
+                  })
 
 
 # log in
@@ -188,10 +205,10 @@ def browse(request):
         else:
             photographers = (
                 [], []
-            )  #tuple of empty lists if nothing is returned from search
+            )  # tuple of empty lists if nothing is returned from search
         data = {
             "photographers":
-            photographers[0],  #first element in tuple is photographer objects
+            photographers[0],  # first element in tuple is photographer objects
             "json_data":
             photographers[1],  # second element in tuple is json data
             "lat": latitude,

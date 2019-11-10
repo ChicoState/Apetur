@@ -30,8 +30,6 @@ $('.progress').mouseleave(function () {
 
 /**
  * The last element in the list of .featured-queue-item will be currently featured
- * 
- * @param {*} direction 
  */
 function featureRotation(direction = 'next') {
     var current_feature_order = $('.featured-queue-item').length;

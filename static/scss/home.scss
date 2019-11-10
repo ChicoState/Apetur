@@ -1,9 +1,14 @@
 @import 'common/_color.scss';
+@import 'common/grid';
 
 #site-wrapper {
     position: relative;
     max-width: none;
     margin: auto;
+
+    &>div {
+        margin-bottom: 150px;
+    }
 }
 
 #featured {
@@ -18,12 +23,6 @@
     width: 100%;
     height: 90%;
     position: relative;
-
-    img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
 
     .user-detail {
         position: absolute;
@@ -50,10 +49,7 @@
             padding: 3px;
 
             img {
-                width: 100%;
-                height: 100%;
                 border-radius: 50%;
-                object-fit: cover;
             }
         }
 
@@ -122,6 +118,10 @@
     display: flex;
     overflow: hidden;
 
+    @media (max-width: $sm) {
+        height: 100px;
+    }
+
     .featured-queue-item {
         display: inline-flex;
         justify-content: space-between;
@@ -176,7 +176,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 2px solid $gray;
+    border: 3px solid $gray;
     position: absolute;
     top: 0;
     left: 0;
@@ -199,7 +199,7 @@
     width: 100%;
     height: 100%;
     background: none;
-    border-width: 2px;
+    border-width: 3px;
     border-style: solid;
     position: absolute;
     top: 0;
@@ -264,5 +264,259 @@
 @media only screen and (max-width: 990px) {
     .progress {
         margin-bottom: 20px;
+    }
+}
+
+#featureOverview {
+    text-align: center;
+
+    @media (max-width: $md) {
+        .row .col-12:after {
+            display: none;
+        }
+    }
+
+    h2 {
+        font-weight: bold;
+    }
+
+    h5 {
+        font-size: 18px;
+        text-transform: capitalize;
+
+        .fas,
+        .far {
+            color: $blue;
+            padding-right: 10px;
+        }
+    }
+
+    a {
+        font-size: 12px;
+    }
+
+    .feature-detail {
+        color: $gray;
+        font-size: 12px;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .feature-overview-logo {
+        width: 50px;
+        height: auto;
+        margin: auto;
+
+        @media (min-width: $md) {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .feature-overview-profile {
+        &:after {
+            content: "";
+            width: 75px;
+            border-bottom: 1px solid $light_gray;
+            position: absolute;
+            right: -30%;
+            bottom: 10%;
+            transform: rotate(30deg);
+        }
+    }
+
+    .feature-overview-crm {
+        &:after {
+            content: "";
+            width: 75px;
+            border-bottom: 1px solid $light_gray;
+            position: absolute;
+            left: -30%;
+            bottom: 10%;
+            transform: rotate(150deg);
+        }
+    }
+
+    .feature-overview-photo {
+        &:after {
+            content: "";
+            width: 75px;
+            border-bottom: 1px solid $light_gray;
+            position: absolute;
+            right: -30%;
+            top: 10%;
+            transform: rotate(-30deg);
+        }
+    }
+
+    .feature-overview-geolocation {
+        &:after {
+            content: "";
+            width: 75px;
+            border-bottom: 1px solid $light_gray;
+            position: absolute;
+            left: -30%;
+            top: 10%;
+            transform: rotate(30deg);
+        }
+    }
+}
+
+#profile,
+#crm,
+#photos,
+#geolocation {
+    h1 {
+        text-align: center;
+    }
+}
+
+#crmVisual,
+#geolocationVisual {
+    @media (max-width: $md) {
+        order: 1;
+    }
+}
+
+#crmDetail,
+#geolocationDetail {
+    @media (max-width: $md) {
+        order: 2;
+    }
+}
+
+.feature-detail-get-started {
+    font-size: 12px;
+    padding: 5px 15px;
+    margin: 10px auto;
+    width: auto;
+}
+
+#getStarted {
+    text-align: center;
+
+    .btn {
+        @media (min-width: $sm) {
+            max-width: 300px;
+        }
+    }
+}
+
+#connect {
+    justify-content: space-between;
+
+    #connectAboutUs {
+        .connect-about-us-detail {
+            font-size: 12px;
+            color: $gray;
+        }
+
+        .connect-contacts {
+            .fas {
+                color: $blue;
+                padding-right: 10px;
+            }
+
+            .connect-contact-info {
+                font-size: 15px;
+            }
+        }
+
+        .connect-newsletter {
+            &:focus-within {
+                input[type="text"] {
+                    border-color: $gray;
+                    color: $gray;
+                    transition: 0.25s;
+                }
+            }
+
+            input[type="text"] {
+                width: 100%;
+                border-radius: 50px;
+                border: 1px solid $light_gray;
+                padding: 15px 120px 15px 30px;
+                color: $light_gray;
+
+                @media (max-width: $md) {
+                    padding: 10px 100px 10px 20px;
+                    font-size: 12px;
+                }
+            }
+
+            input[type="submit"] {
+                background: $blue;
+                border-radius: 25px;
+                position: absolute;
+                color: white;
+                padding: 10px 20px;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.25s;
+
+                &:hover {
+                    background: $dark_blue;
+                }
+
+                @media (max-width: $md) {
+                    font-size: 12px;
+                    padding: 7px 10px;
+                    right: 3px;
+                }
+            }
+        }
+    }
+
+    #connectTweet {
+        ul {
+            list-style: none;
+            padding-left: 30px;
+            margin-bottom: 0;
+        }
+
+        li {
+            position: relative;
+        }
+
+        .fa-twitter {
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            color: $gray;
+        }
+
+        .connect-tweet {
+            font-size: 12px;
+            color: $gray;
+        }
+    }
+
+    #connectInstagram {
+        .row {
+            @media (min-width: $md) and (max-width: $lg) {
+                max-height: 300px;
+                overflow-y: scroll;
+            }
+        }
+
+        .connect-instagram-image-cont {
+            padding-top: 50%;
+
+            @media (min-width: $md) and (max-width: $lg) {
+                padding-top: 100%;
+            }
+        }
+
+        .connect-instagram-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 5px;
+        }
     }
 }

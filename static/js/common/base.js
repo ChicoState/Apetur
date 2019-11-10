@@ -110,3 +110,12 @@ $(window).on('load', function () {
 /*
  * Adding second google map autocomplete - END
  ********************************************/
+
+$('.scroll-to').click(function (e) {
+    e.preventDefault();
+
+    var target = $(this).attr('href');
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $(target).offset().top - 100
+    }, 500);
+});
