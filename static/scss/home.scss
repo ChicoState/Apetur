@@ -380,6 +380,15 @@
     }
 }
 
+#profileDetail,
+#crmDetail,
+#photosDetail,
+#geolocationDetail {
+    @media (min-width: $md) {
+        font-size: 20px;
+    }
+}
+
 #crmDetail,
 #geolocationDetail {
     @media (max-width: $md) {
