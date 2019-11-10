@@ -7,7 +7,7 @@
     margin: auto;
 
     &>div {
-        margin-bottom: 150px;
+        margin-bottom: 100px;
     }
 }
 
@@ -302,17 +302,19 @@
         margin: auto;
     }
 
-    .feature-overview-logo {
-        width: 50px;
-        height: auto;
-        margin: auto;
-
+    .feature-overview-logo-cont {
         @media (min-width: $md) {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
         }
+    }
+
+    .feature-overview-logo {
+        width: 50px;
+        height: auto;
+        margin: auto;
     }
 
     .feature-overview-profile {
