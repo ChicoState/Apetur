@@ -183,7 +183,7 @@ def signup_user(request):
 
 def photographer_signup(request):
     if request.user.is_authenticated:
-        return render(request, 'usermanagement/photographer-signup.html')
+        return render(request, 'usermanagement/photographer_signup.html')
     else:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
