@@ -219,8 +219,6 @@ def browse(request):
 
 
 # profile
-
-
 def profile(request):
     return render(request, 'profile.html')
 
@@ -238,3 +236,11 @@ def schedule(request):
         "p_name": photographer_name
     }
     return render(request, 'schedule.html', data)
+
+
+# Account Settings
+def account_settings(request):
+    if request.user.is_authenticated:
+        return render(request, 'usermanagement/account_settings.html')
+    else:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))

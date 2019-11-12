@@ -22,7 +22,10 @@ urlpatterns = [
 
     # profile
     path('profile', views.profile),
-    
+
     # schedule
-    path('schedule', views.schedule)
+    path('schedule', views.schedule),
+
+    # settings
+    path('settings', views.account_settings)
 ]
