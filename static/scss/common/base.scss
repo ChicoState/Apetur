@@ -20,21 +20,32 @@ body {
     z-index: 1021;
     width: 100%;
     transition: 0.5s;
-    background-color: $gray;
+    background-color: $blue;
 
-    &.show-color {
-        background: $blue;
-        box-shadow: 0px 0px 10px rgba($black, 0.5);
-
+    &.navstyle-semi-transparent {
         .navbar .navbar-nav .nav-item .login_btn {
-            background-color: $white;
-            color: $blue;
+            background-color: $blue;
+            color: $white;
+
+            &:hover {
+                background-color: $dark_blue;
+            }
         }
 
-        #settingDropdownCont {
-            .dropdown-menu {
-                top: 71px !important;
-                padding-top: 10px !important;
+        &.show-color {
+            background: $blue;
+            box-shadow: 0px 0px 10px rgba($black, 0.5);
+
+            .navbar .navbar-nav .nav-item .login_btn {
+                background-color: $white;
+                color: $blue;
+            }
+
+            #settingDropdownCont {
+                .dropdown-menu {
+                    top: 71px !important;
+                    padding-top: 10px !important;
+                }
             }
         }
     }
@@ -101,11 +112,16 @@ body {
         }
 
         .login_btn.nav-link {
-            color: $white;
+            background-color: $white;
+            color: $blue;
             margin-right: 10px;
 
             @media (max-width: $sm) {
                 display: none;
+            }
+
+            &:hover {
+                background-color: $dark_white;
             }
         }
     }

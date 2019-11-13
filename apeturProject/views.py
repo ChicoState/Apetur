@@ -244,3 +244,8 @@ def account_settings(request):
         return render(request, 'usermanagement/account_settings.html')
     else:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+
+# Pricing
+def pricing(request):
+    return render(request, 'pricing.html')
