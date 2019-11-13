@@ -11,8 +11,7 @@
 
 {% block content%}
 <div class="input-group">
-    <input type="text" class="form-control" id="searchTextField" placeholder="Search" aria-label=""
-        aria-describedby="basic-addon1">
+    <input type="text" id="googleMapAutocompleteTextField" class="form-control">
     <select id="radius">
         <option value=25>25 mi</option>
         <option value=50>50 mi</option>
@@ -56,3 +55,6 @@
 <script src="{{ STATIC_URL }}js/map.js"></script>
 {% endblock google_map_api_js %}
 {% block google_map_api_callback %}&callback=initMap{% endblock google_map_api_callback %}
+{% block site_js %}
+<script src="{{ STATIC_URL }}js/browse.js"></script>
+{% endblock site_js %}

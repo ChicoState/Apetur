@@ -86,31 +86,6 @@ $('#settingDropdownCont .user-profile-dropdown').click(function () {
  * Settings dropdown behavior - END
  ********************************************/
 
-
-/*
- * Adding second google map autocomplete - START
- ********************************************/
-var input2 = document.getElementById('googleMapAutocompleteTextField2');
-var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
-
-google.maps.event.addListener(autocomplete2, 'place_changed', function () {
-    var data = {
-        'lat': autocomplete2.getPlace().geometry.location.lat(),
-        'lng': autocomplete2.getPlace().geometry.location.lng(),
-        'r': document.getElementById("radius2").value
-    };
-    location.replace(window.location.origin + "/browse?lat=" + data["lat"] + "&lng=" + data["lng"] +
-        "&r=" +
-        data["r"]);
-})
-
-$(window).on('load', function () {
-    $('#googleMapAutocompletePacContainer').append($('.pac-container:eq(1)'));
-})
-/*
- * Adding second google map autocomplete - END
- ********************************************/
-
 $('.scroll-to').click(function (e) {
     e.preventDefault();
 
