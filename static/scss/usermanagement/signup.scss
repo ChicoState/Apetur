@@ -19,7 +19,7 @@
     vertical-align: middle;
     justify-content: center;
     padding: 40px;
-    max-width: 800px;
+    max-width: 450px;
 
     @media (max-width: $md) {
         padding: 10px;
@@ -28,6 +28,7 @@
     form {
         background-color: white;
         padding: 50px 20px;
-        box-shadow: 0 5px 15px rgba($gray, 0.7);
+        box-shadow: 0 5px 10px rgba($gray, 0.7);
+        border-radius: 5px;
     }
 }
