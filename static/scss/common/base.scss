@@ -503,13 +503,13 @@ body {
 }
 
 // site background
-#site-background {
+#siteBackground {
     display: flex;
     flex-direction: column;
 }
 
 // site wrapper
-#site-wrapper {
+#siteWrapper {
     display: flex;
     flex-direction: column;
     max-width: $cont_width;

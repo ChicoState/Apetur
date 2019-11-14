@@ -1,0 +1,112 @@
+@import 'common/_color.scss';
+@import 'common/grid';
+
+#siteWrapper {
+    padding: 20px;
+}
+
+#siteTitle {
+    margin: auto;
+    margin: 0 auto;
+}
+
+.learn-more-btn {
+    width: auto;
+    margin: 40px auto;
+    padding: 5px 20px;
+    font-size: 15px;
+}
+
+.sub-plans-cont {
+    margin: 0 auto;
+}
+
+.sub-plan-cont {
+    padding: 20px;
+
+    @media (max-width: $sm) {
+        padding: 20px 0;
+    }
+
+    .sub-plan {
+        border: 1px solid $light_gray;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+
+        &:hover {
+            transition: 0.25s;
+            box-shadow: 0px 5px 15px rgba($gray, 0.7);
+
+            .sub-plan-banner {
+                transition: 0.25s;
+                box-shadow: 5px 0px 15px rgba($gray, 0.5);
+            }
+        }
+
+        h3 {
+            font-weight: bold;
+            color: $dark_gray;
+
+            @media (min-width: $lg) {
+                font-size: 22px;
+            }
+        }
+
+        .btn {
+            width: auto;
+            margin: 0 auto;
+            padding: 7px 40px;
+            font-size: 18px;
+        }
+
+        .sub-plan-price {
+            margin: 20px auto;
+
+            .sub-plan-price-interval {
+                color: $light_gray;
+                font-size: 0.7em;
+            }
+        }
+
+        .sub-plan-features {
+            list-style: none;
+            padding: 0;
+            color: $gray;
+            font-size: 15px;
+            line-height: 1.2em;
+
+            li {
+                margin: 10px auto;
+            }
+        }
+
+        .sub-plan-banner {
+            position: absolute;
+            color: $white;
+            font-size: 10px;
+            padding: 5px 10px;
+            transform: rotate(90deg);
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            text-transform: uppercase;
+
+            &.sub-plan-banner-popular {
+                top: 22px;
+                right: 0;
+                background-color: $red;
+            }
+
+            &.sub-plan-banner-new {
+                top: 9px;
+                right: 10px;
+                background-color: $yellow;
+            }
+        }
+    }
+}
