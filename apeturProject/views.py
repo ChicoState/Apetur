@@ -104,7 +104,6 @@ def signup_user(request):
     elif request.method == "POST":
         # get the inputs
         firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
         month = request.POST['month']
         day = request.POST['day']
         year = request.POST['year']
@@ -154,7 +153,6 @@ def signup_user(request):
         # creating the new user
         user = User.objects.create_user(email, email, password)
         user.first_name = firstname
-        user.last_name = lastname
         dob = year + "-" + month + "-" + day
         user.save()
         client = Client(user=user, dob=dob)
@@ -182,10 +180,10 @@ def signup_user(request):
 
 
 def photographer_signup(request):
-    if request.user.is_authenticated:
-        return render(request, 'usermanagement/photographer_signup.html')
-    else:
-        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    # if request.user.is_authenticated:
+    return render(request, 'usermanagement/photographer_signup.html')
+    # else:
+    #     return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
 # browse

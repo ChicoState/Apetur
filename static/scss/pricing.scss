@@ -7,6 +7,10 @@
 
 #siteTitle {
     margin: 0 auto 75px;
+
+    @media (max-width: $sm) {
+        margin-bottom: 30px;
+    }
 }
 
 .learn-more-btn {

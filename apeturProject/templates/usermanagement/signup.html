@@ -7,25 +7,52 @@
 {% endblock site_css %}
 
 {% block content %}
-<div class="signup-form-wrapper row m-0">
-    <div class="signup-form col">
+<div class="signup-form-wrapper row">
+    <div class="text-center col-12">
+        <h1>Create Account</h1>
+    </div>
+    <div class="signup-form col-12 col-md-6">
         <form id="signupForm" method="POST">
             {% csrf_token %}
             <div class="row">
-                <div class="col-12 pb-4">
-                    <h1>Welcome to Apetur!</h1>
-                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>First name</label>
                         <input type="text" name="firstname" class="form-control" aria-describedby="emailHelp"
                             placeholder="Enter first name" required>
                     </div>
+
                     <div class="form-group">
-                        <label>Last name</label>
-                        <input type="text" name="lastname" class="form-control" aria-describedby="emailHelp"
-                            placeholder="Enter last name" required>
+                        <label>Date of birth</label>
+
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select name="month" class="form-control" required>
+                                    <option value="" disabled selected hidden>MM</option>
+                                    {% for i in month_range %}
+                                    <option>{{ i|stringformat:"02d" }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select name="day" class="form-control" id="signupDate" required>
+                                    <option value="" disabled selected hidden>DD</option>
+                                    {% for i in date_range %}
+                                    <option>{{ i|stringformat:"02d" }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select name="year" class="form-control" required>
+                                    <option value="" disabled selected hidden>YYYY</option>
+                                    {% for i in year_range reversed %}
+                                    <option>{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="form-group">
                         <label>Email address</label>
                         <input type="email" name="email" class="form-control" aria-describedby="emailHelp"
@@ -58,10 +85,17 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Signup</button>
-                    <a href="/login"><small class="form-text">Already have an account?</small></a>
+                    <a href="/login"><small class="form-text pt-2">Already have an account?</small></a>
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="side-cont text-center d-flex col-12 col-md-6">
+        <div>
+            <div>Interested in becoming a photographer?</div>
+            <a href="/pricing" class="btn mt-3">Learn More</a>
+        </div>
     </div>
 </div>
 

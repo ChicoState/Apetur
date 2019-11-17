@@ -516,6 +516,7 @@ body {
     width: 100%;
     min-height: calc(100vh - 180px);
     margin: 40px auto;
+    padding: 20px;
 
     @media (max-width: $md) {
         margin: 20px auto;
