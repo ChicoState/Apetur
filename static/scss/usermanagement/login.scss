@@ -9,6 +9,12 @@
     background-repeat: no-repeat;
 }
 
+#siteWrapper {
+    @media (max-width: $sm) {
+        padding: 0;
+    }
+}
+
 .login-form-wrapper {
     flex: 1;
 }
@@ -21,8 +27,9 @@
     padding: 40px;
     max-width: 450px;
 
-    @media (max-width: $md) {
-        padding: 10px;
+    @media (max-width: $sm) {
+        padding: 0;
+        max-width: none;
     }
 
     form {
@@ -30,5 +37,9 @@
         padding: 50px 20px;
         box-shadow: 0 5px 10px rgba($gray, 0.7);
         border-radius: 5px;
+
+        @media (max-width: $sm) {
+            border-radius: 0;
+        }
     }
 }
