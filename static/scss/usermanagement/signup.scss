@@ -47,23 +47,8 @@
     }
 
     .btn {
-        padding: 10px 20px;
-    }
-
-    .form-group {
-        label {
-            font-size: 18px;
-        }
-
-        select {
-            height: 40px;
-        }
-
-        .form-control:not(select) {
-            font-size: 0.8em;
-            padding: 10px 15px;
-            height: auto;
-        }
+        font-size: 15px;
+        padding: 8px;
     }
 }
 

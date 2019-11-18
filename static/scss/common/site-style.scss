@@ -53,11 +53,17 @@ h1 {
 
 .form-group {
     label {
-        font-size: 20px;
+        font-size: 18px;
     }
 
-    .form-control {
-        height: 50px;
+    select {
+        height: 40px;
+    }
+
+    .form-control:not(select) {
+        font-size: 0.8em;
+        padding: 10px 15px;
+        height: auto;
     }
 }
 

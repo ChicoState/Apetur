@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}Signup{% endblock title %}
-{% block navbar_style %}navstyle-light navstyle-minimal{% endblock navbar_style %}
+{% block navbar_style %}navstyle-minimal{% endblock navbar_style %}
 {% block site_style %}sitestyle-no-space{% endblock site_style %}
 {% block site_css %}
 <link href="{{ STATIC_URL }}css/usermanagement/signup.css" media="screen" rel="stylesheet">
 {% endblock site_css %}
 
 {% block content %}
-<div class="signup-form-wrapper row">
-    <div class="text-center col-12">
-        <h1>Create Account</h1>
-    </div>
-    <div class="signup-form col-12 col-md-6">
-        <form id="signupForm" method="POST">
+<div class="signup-form-wrapper">
+    <form id="signupForm" class="row" method="POST">
+        <div class="text-center col-12">
+            <h1>Create Account</h1>
+        </div>
+        <div class="signup-form col-12 col-md-6">
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-12">
@@ -88,15 +88,15 @@
                     <a href="/login"><small class="form-text pt-2">Already have an account?</small></a>
                 </div>
             </div>
-        </form>
-    </div>
-
-    <div class="side-cont text-center d-flex col-12 col-md-6">
-        <div>
-            <div>Interested in becoming a photographer?</div>
-            <a href="/pricing" class="btn mt-3">Learn More</a>
         </div>
-    </div>
+
+        <div class="side-cont text-center d-flex col-12 col-md-6">
+            <div>
+                <div>Interested in becoming a photographer?</div>
+                <a href="/pricing" class="btn mt-3">Learn More</a>
+            </div>
+        </div>
+    </form>
 </div>
 
 {% endblock content %}

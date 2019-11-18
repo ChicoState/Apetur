@@ -24,8 +24,7 @@
     flex-direction: column;
     vertical-align: middle;
     justify-content: center;
-    padding: 40px;
-    max-width: 450px;
+    max-width: 400px;
 
     @media (max-width: $sm) {
         padding: 0;
@@ -41,5 +40,10 @@
         @media (max-width: $sm) {
             border-radius: 0;
         }
+    }
+
+    .btn {
+        font-size: 15px;
+        padding: 8px;
     }
 }
