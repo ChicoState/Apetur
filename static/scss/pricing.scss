@@ -116,7 +116,7 @@
 }
 
 #featuresCont {
-    .row:not(:first-child) {
+    .row:not(:first-of-type) {
         margin-top: 100px;
     }
 }
