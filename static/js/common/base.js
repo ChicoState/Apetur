@@ -90,7 +90,8 @@ $('.scroll-to').click(function (e) {
     e.preventDefault();
 
     var target = $(this).attr('href');
+    var navbar_offset = $('.navstyle-fixed').length > 0 ? $('.navstyle-fixed').first().height() : 0;
     $([document.documentElement, document.body]).animate({
-        scrollTop: $(target).offset().top - 100
+        scrollTop: $(target).offset().top - navbar_offset
     }, 500);
 });

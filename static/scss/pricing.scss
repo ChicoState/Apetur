@@ -5,14 +5,6 @@
     padding: 20px;
 }
 
-#siteTitle {
-    margin: 0 auto 75px;
-
-    @media (max-width: $sm) {
-        margin-bottom: 30px;
-    }
-}
-
 .learn-more-btn {
     width: auto;
     margin: 40px auto;
@@ -20,7 +12,16 @@
     font-size: 15px;
 }
 
+.feature-learn-more-btn,
+.plan-get-started-btn {
+    font-size: 12px;
+    padding: 5px 15px;
+    margin: 10px auto;
+    width: auto;
+}
+
 .sub-plans-cont {
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -110,6 +111,20 @@
                 right: 10px;
                 background-color: $yellow;
             }
+        }
+    }
+}
+
+#featuresCont {
+    .row:not(:first-child) {
+        margin-top: 100px;
+    }
+}
+
+#featureBranding {
+    @media (max-width: $md) {
+        .feature-detail {
+            order: 2;
         }
     }
 }
