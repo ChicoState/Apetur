@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Profile{% endblock title %}
+{% block navbar_style %}navstyle-fixed navstyle-semi-transparent{% endblock navbar_style %}
 
 {% block site_css %}
 <link href="{{ STATIC_URL }}css/profile.css" media="screen" rel="stylesheet">
@@ -8,32 +9,41 @@
 
 {% block content%}
 
-<div>
-    <h1>
-        {{user.get_full_name}}
-    </h1>
-    <div class="userbox">
-        <div class="profile_picture_border">
-            <div class="profile_picture">
-                <div class="picture">
-                    <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" />
-                </div>
-            </div>
-        </div>
-        <p> Welcome to {{user.first_name}}'s Profile </p>
-    </div>
-</div>
-<div class="gallery_container">
-    <h2>Gallery</h2>
-    <div class="gallery">
-        <div class="tags">
-            <h3>All</h3>
-        </div>
-        <div class="gallery_photos">
-            <div class="picture">
-            </div>
-        </div>
-    </div>
+
+<div class="profile_backsplash_container">
+    {% if gallery_images != NULL %}
+    <img class="profile_backsplash" id="myImg" href="{{gallery_images}}" src="{{ gallery_images }}" />
+    {% else %}
+    <i class="fas fa-camera"></i>
+    <i class="fas fa-plus"></i>
+    {% endif %}
 </div>
 
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+</div>
+<div class="user_display">
+    <div class="profile_picture_outer_border">
+        <div class="profile_picture_inner_border">
+            <!--{% if user.client.profile_pic %}
+            <img class="profile_picture_circle" src="{{ user.client.profile_pic }}" />
+            {% else %}
+            <span class="profile_character_circle">{{ user.get_short_name|make_list|first|upper }}</span>
+            {% endif %} uncomment -->
+            <img class="profile_icture_circle" src="/static/files/user_files/0/temp-profile-pic-reduced.jpg">
+        </div>
+    </div>
+    <div>
+        <a id="profile_btn" class="follow_btn">Follow</a>
+    </div>
+    <div>
+        <a id="profile_btn" class="message_btn">Message</a>
+    </div>
+</div>
 {% endblock content%}
+
+
+{% block site_js %}
+<script src="{{ STATIC_URL }}js/profile.js"></script>
+{% endblock site_js %}

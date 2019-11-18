@@ -206,7 +206,12 @@ def browse(request):
 
 
 # profile
-
-
 def profile(request):
-    return render(request, 'profile.html')
+    gallery_images = settings.USER_FILE_URL + "0/featured-photo.jpg"
+    
+    return render(
+        request,
+        'profile.html',
+        {
+            'gallery_images': gallery_images
+        })
