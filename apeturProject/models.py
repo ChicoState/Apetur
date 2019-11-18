@@ -105,7 +105,6 @@ class Photographer(models.Model):
         return self.client.get_full_address()
 
     """ Test function """
-
     def get_tags(self):
         return ["Tag1", "Tag2"]
 
@@ -120,8 +119,11 @@ class Photographer(models.Model):
 
 
 class Event_Type(models.Model):
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=255, unique=True)
     adult_content = models.BooleanField()
+
+    def __str__(self):
+        return self.name
 
 
 class File(models.Model):
@@ -133,6 +135,54 @@ class File(models.Model):
     adult_content = models.BooleanField()
     upload_date = models.DateField(auto_now=True)
     likes = models.PositiveIntegerField(default=0)
+
+
+class Schedule(models.Model):
+    photographer_id = models.ForeignKey(Photographer,
+                                        on_delete=models.CASCADE,
+                                        null=True)
+    date = models.DateField(null=False)
+    time = models.TextField(null=False)
+    fully_booked = models.BooleanField(null=False)
+    max_bookings = models.IntegerField(null=False)
+    cur_num_of_bookings = models.IntegerField(default=0, null=False)
+
+    def get_photographer_id(self):
+        return self.photographer_id
+
+    def get_date(self):
+        return self.date
+
+    def get_time(self):
+        return self.time
+
+    def get_fully_booked(self):
+        return self.fully_booked
+
+
+class Event(models.Model):
+    event_type = models.TextField
+    event_date = models.TextField
+    photographer_id = models.ForeignKey(Photographer,
+                                        on_delete=models.CASCADE,
+                                        null=True)
+    client_id = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
+    time = models.TextField
+
+    def get_event_type(self):
+        return self.event_type
+
+    def get_event_date(self):
+        return self.event_date
+
+    def get_photographer_id(self):
+        return self.photographer_id
+
+    def get_client_id(self):
+        return self.client_id
+
+    def get_time(self):
+        return self.time
 
 
 """ Given a latitude, longitude, and radius (IN KM) we can find the surround addresses.
@@ -205,7 +255,7 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
         current_address_id = current_address[0]
         query = Photographer.objects.all().filter(
             client__address__id=current_address_id).first(
-        )  # Query based on the addresss id
+            )  # Query based on the addresss id
         # If a result exists (its possible the address belongs to a client, we do not want to return that)
         if query != None:
             photographer_list.append(
@@ -222,3 +272,25 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
             json_data.append(photographer_data)
     # print(json.dumps(json_data))
     return (photographer_list, json.dumps(json_data))
+
+
+""" Given a photograpgers id (p_id), create an array containing data objects storing the data in YEAR-MONTH-DAY format
+as well as the boolen determining whether or not that date is fully booked for the given photographer """
+
+
+def retrieve_photographers_schedules(p_id):
+    if p_id == False:  # Error checking. If p_id is False (meaning there was no p_id grabbed from GET) return empty string
+        return []
+    json_data = []
+    schedules = Schedule.objects.filter(
+        photographer_id=p_id
+    )  # this returns a list of schedule objects associated with the photograpger id
+    for entry in schedules:
+        data = {
+            "date": str(entry.date),
+            "fully_booked": entry.fully_booked,
+            "max_bookings": entry.max_bookings,
+            "cur_num_of_bookings": entry.cur_num_of_bookings
+        }
+        json_data.append(data)
+    return json.dumps(json_data)

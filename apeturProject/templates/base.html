@@ -6,8 +6,7 @@
 <head>
     <title>{% block title %}{% endblock title %} | Apetur</title>
     {% block head_favicon %}
-    {% comment %}
-    <link href="{{ STATIC_URL }}images/favicon.ico" rel="icon" type="image/png"> {% endcomment %}
+    <link href="{{ STATIC_URL }}files/site/logo_blue.png" rel="icon" type="image/png">
     {% endblock head_favicon %}
     {% block head_meta %}
     {% block head_meta_charset %}
@@ -31,18 +30,24 @@
     <div class="navbar-container {% block navbar_style %}{% endblock navbar_style %}">
         <nav class="navbar navbar-expand-sm navbar-dark">
             <a id="logo_text" class="text-logo navbar-brand" href="/">Apetur.</a>
-            {% comment %} <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button> {% endcomment %}
             <ul class="navbar-nav ml-auto">
+                {% comment %} Search {% endcomment %}
+                <li class="nav-search-cont nav-item" tabindex="10">
+                    <a class="nav-search-btn nav-link">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <input type="text" id="googleMapAutocompleteTextFieldNavbar"
+                        class="nav-search-text-field form-control">
+                    <input type="hiddent" id="navbarRadius" class="d-none" value="25" />
+                </li>
+
                 {% comment %} USER PROFILE {% endcomment %}
                 {% if user.is_authenticated %}
-                <li class="dropdown">
-                    <div id="user-profile-dropdown" data-toggle="dropdown">
+                <li class="user-profile-cont dropdown">
+                    <div class="user-profile-dropdown" data-toggle="dropdown">
                         <div class="dropdown-toggle{% if NOTIFICATION_COUNT %} have-alert{% endif %}">
                             {% if user.client.profile_pic %}
-                            <img class="user-profile-pic" src="{{ user.client.profile_pic }}" />
+                            <img class="user-profile-pic" src="{{ USER_FILE_URL }}{{ user.client.profile_pic }}" />
                             {% else %}
                             <span class="user-profile-text">{{ user.get_short_name|make_list|first }}</span>
                             {% endif %}
@@ -58,6 +63,9 @@
                         <li>
                             <a href="/profile">my profile</a>
                         </li>
+                        <li>
+                            <a href="/settings">settings</a>
+                        </li>
                         <li class="notification">
                             <a href="/notification">notification</a>
                             {% if NOTIFICATION_COUNT %}
@@ -66,45 +74,129 @@
                             </div>
                             {% endif %}
                         </li>
+                        <li>
+                            <a href="#">analytics</a>
+                        </li>
+                        <li>
+                            <a href="#">help</a>
+                        </li>
+                        <li class="dropdown-hr"></li>
                         <li class="logout">
                             <a href="/logout">logout</a>
-                        </li>
-                    </ul>
-                </li>
-
-                {% comment %} SETTING {% endcomment %}
-                <li id="setting-dropdown" class="dropdown">
-                    <div class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fas fa-bars"></i>
-                        <i class="fas fa-times"></i>
-                    </div>
-                    <ul class="dropdown-menu slide">
-                        <li>
-                            <a href="/photographer-signup">become a photographer</a>
-                        </li>
-                        <li>
-                            <a href="/profile">setting</a>
                         </li>
                     </ul>
                 </li>
                 {% else %}
                 {% comment %} SIGNUP {% endcomment %}
                 <li class="nav-item">
-                    <a id="signup_btn" class="nav-link" href="/signup">signup</a>
+                    <a class="signup_btn nav-link" href="/signup">signup</a>
                 </li>
 
                 {% comment %} LOGIN {% endcomment %}
                 <li class="nav-item">
-                    <a id="login_btn" class="site-btn-round nav-link" href="/login">login</a>
+                    <a class="login_btn site-btn-round nav-link" href="/login">login</a>
                 </li>
                 {% endif %}
+
+                {% comment %} SETTING {% endcomment %}
+                <li id="settingDropdownCont" class="dropdown">
+                    <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <ul class="dropdown-menu slide">
+                        {% comment %} seasrch - mobile {% endcomment %}
+                        <li class="nav-search-cont nav-item" tabindex="10">
+                            <a class="nav-search-btn nav-link">
+                                <i class="fas fa-search"></i>
+                            </a>
+                            <input type="text" id="googleMapAutocompleteTextFieldNavbar2"
+                                class="nav-search-text-field form-control">
+                            <input type="hiddent" id="navbarRadius2" class="d-none" value="25" />
+                        </li>
+                        <li id="googleMapAutocompletePacContainer">
+                        </li>
+                        {% comment %} user profile - mobile {% endcomment %}
+                        {% if user.is_authenticated %}
+                        <li class="user-profile-cont dropdown">
+                            <div class="user-profile-dropdown" data-toggle="dropdown">
+                                <div class="dropdown-toggle{% if NOTIFICATION_COUNT %} have-alert{% endif %}">
+                                    {% if user.client.profile_pic %}
+                                    <img class="user-profile-pic"
+                                        src="{{ USER_FILE_URL }}{{ user.client.profile_pic }}" />
+                                    {% else %}
+                                    <span class="user-profile-text">{{ user.get_short_name|make_list|first }}</span>
+                                    {% endif %}
+                                </div>
+                                {% if NOTIFICATION_COUNT %}
+                                <div class="notification-badge">
+                                    {{ NOTIFICATION_COUNT }}
+                                </div>
+                                {% endif %}
+                                <div class="dropdown-user-name">
+                                    {{ user.get_short_name }}
+                                </div>
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/profile">my profile</a>
+                                </li>
+                                <li>
+                                    <a href="#">setting</a>
+                                </li>
+                                <li class="notification">
+                                    <a href="/notification">notification</a>
+                                    {% if NOTIFICATION_COUNT %}
+                                    <div class="notification-badge">
+                                        {{ NOTIFICATION_COUNT }}
+                                    </div>
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    <a href="#">analytics</a>
+                                </li>
+                                <li>
+                                    <a href="#">help</a>
+                                </li>
+                                <li class="dropdown-hr"></li>
+                                <li class="logout">
+                                    <a href="/logout">logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="/">home</a>
+                        </li>
+                        <li>
+                            <a href="#">about us</a>
+                        </li>
+                        <li>
+                            <a href="#">services</a>
+                        </li>
+                        <li>
+                            <a href="#">contact us</a>
+                        </li>
+                        {% if not user.is_authenticated %}
+                        {% comment %} LOGIN {% endcomment %}
+                        <li class="mt-5">
+                            <a class="login_btn site-btn-round nav-link" href="/login">login</a>
+                        </li>
+                        {% comment %} SIGNUP {% endcomment %}
+                        <li>
+                            <a class="signup_btn nav-link" href="/signup">signup</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>
 
     {# The Document Body #}
-    <div id="site-background" class="{% block site_style %}{% endblock site_style %}">
-        <div id="site-wrapper">
+    <div id="siteBackground" class="{% block site_style %}{% endblock site_style %}">
+        <div id="siteWrapper">
             {% block content %}
             if you see this, something is wrong!
             {% endblock content %}
@@ -161,6 +253,11 @@
 </script>
 <script src="{{ STATIC_URL }}js/lib/bootstrap-4.3.1-dist/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/941a2b004e.js" crossorigin="anonymous"></script>
+{% block google_map_api_js %}{% endblock google_map_api_js %}
+<script
+    src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places{% block google_map_api_callback %}{% endblock google_map_api_callback %}">
+</script>
+<script src="{{ STATIC_URL }}js/autocomplete_search.js"></script>
 <script src="{{ STATIC_URL }}js/common/base.js"></script>
 {% block site_js %}{% endblock site_js %}
 {% endblock footer_javascript_site %}

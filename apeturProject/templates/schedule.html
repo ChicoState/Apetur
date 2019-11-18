@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Calendar{% endblock title %}
+
+{% block content%}
+
+<link rel="stylesheet" href="{{STATIC_URL}}css/lib/vanilla-calendar.css">
+<script src="{{STATIC_URL}}js/lib/vanilla-calendar.js"></script>
+<h1>{{p_name}}</h1>
+<div id="myCalendar" class="vanilla-calendar">
+    <script>
+        var json_data = JSON.parse("{{json_data|escapejs}}");
+        console.log(json_data)
+    </script>
+
+    <script>
+        let myCalendar = new VanillaCalendar({
+            selector: "#myCalendar",
+            pastDates: false,
+            datesFilter: false,
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                'October', 'November', 'December'
+            ],
+            shortWeekday: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            onSelect: (data, elem) => {},
+            date: new Date(),
+            todaysDate: new Date(),
+            schedule: json_data
+        })
+        // myCalendar.setSchedule(json_data);
+    </script>
+
+</div>
+{{ monthcalendar }}
+{% endblock content%}

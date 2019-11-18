@@ -35,25 +35,35 @@ h1 {
 
 /* Bootstrap Restyle - Start
 *********************************************************************/
-.btn-primary {
+.btn {
     width: 100%;
-    height: 50px;
     background-color: $blue;
     border: none;
     font-size: 20px;
+    color: $white;
+    padding: 15px 20px;
+    border-radius: 30px;
+    cursor: pointer;
 
     &:hover {
+        color: $white;
         background-color: $dark_blue;
     }
 }
 
 .form-group {
     label {
-        font-size: 20px;
+        font-size: 18px;
     }
 
-    .form-control {
-        height: 50px;
+    select {
+        height: 40px;
+    }
+
+    .form-control:not(select) {
+        font-size: 0.8em;
+        padding: 10px 15px;
+        height: auto;
     }
 }
 
@@ -116,7 +126,24 @@ h1 {
 
     // semi transparent background color
     &.navstyle-semi-transparent {
-        background: rgba($gray, 0.5);
+        background: transparent;
+
+        &:not(.show-color) {
+            &:hover {
+                background: rgba($gray, 0.5);
+            }
+        }
+
+        &.show-color {
+            #login_btn {
+                background-color: $white;
+                color: $blue;
+
+                &:hover {
+                    background-color: rgba($white, 0.9);
+                }
+            }
+        }
     }
 
     // semi transparent gradient background color
@@ -181,6 +208,20 @@ h1 {
 .text-logo {
     font-weight: bold;
     color: $white;
+}
+
+.max-width {
+    max-width: $cont_width;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+}
+
+.img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* Site Styling - End

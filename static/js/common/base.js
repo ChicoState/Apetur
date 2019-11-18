@@ -1,3 +1,8 @@
+// focus on the textbox when clicked on the search button
+$('.nav-search-cont').click(function () {
+    $(this).closest('.form-control').focus();
+})
+
 /*
  * Navbar Scroll Transition - START
  ********************************************/
@@ -11,8 +16,10 @@ $(document).scroll(function () {
         $scrollHeight = $navbar_selector.height();
 
         if ($(document).scrollTop() > $scrollHeight && !$nav_show) {
-            $navbar_selector.addClass('show-color');
-            $nav_show = true;
+            if ($('#settingDropdownCont .dropdown-toggle').attr("aria-expanded") == 'false') {
+                $navbar_selector.addClass('show-color');
+                $nav_show = true;
+            }
         } else if ($(document).scrollTop() < $scrollHeight && $nav_show) {
             $navbar_selector.removeClass('show-color');
             $nav_show = false;
@@ -45,4 +52,46 @@ $('.dropdown').on('hide.bs.dropdown', function () {
     } else {
         dropdown_menu.stop(true, true).slideUp(250);
     }
+});
+
+
+/*
+ * Settings dropdown behavior - START
+ ********************************************/
+$('#settingDropdownCont .dropdown-toggle').click(function () {
+    if (!$nav_show) {
+        if ($(this).attr("aria-expanded") == 'false') {
+            $('.navstyle-semi-transparent').addClass('show-color');
+        } else {
+            $('.navstyle-semi-transparent').removeClass('show-color');
+        }
+    }
+});
+
+$('#settingDropdownCont .dropdown-menu').click(function (e) {
+    e.stopPropagation();
+});
+
+$('#settingDropdownCont .user-profile-dropdown').click(function () {
+    if ($(this).siblings('.dropdown-menu').is(':visible')) {
+        $(this).siblings('.dropdown-menu')
+            .slideUp(250);
+    } else {
+        $(this).closest('.dropdown')
+            .trigger('show.bs.dropdown');
+    }
+    $(this).find('.fas').toggleClass('fa-angle-down fa-angle-up');
+});
+/*
+ * Settings dropdown behavior - END
+ ********************************************/
+
+$('.scroll-to').click(function (e) {
+    e.preventDefault();
+
+    var target = $(this).attr('href');
+    var navbar_offset = $('.navstyle-fixed').length > 0 ? $('.navstyle-fixed').first().height() : 0;
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $(target).offset().top - navbar_offset
+    }, 500);
 });

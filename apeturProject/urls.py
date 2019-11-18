@@ -21,5 +21,14 @@ urlpatterns = [
     path('browse', views.browse),
 
     # profile
-    path('profile', views.profile)
+    path('profile', views.profile),
+
+    # schedule
+    path('schedule', views.schedule),
+
+    # settings
+    path('settings', views.account_settings),
+
+    # pricing
+    path('pricing', views.pricing)
 ]

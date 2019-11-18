@@ -3,24 +3,16 @@
 {% block navbar_style %}navstyle-fixed navstyle-semi-transparent{% endblock navbar_style %}
 {% block site_css %}
 <link href="{{ STATIC_URL }}css/home.css" media="screen" rel="stylesheet">
-<style>
-    /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-    #map {
-        min-height: 500px;
-        height: 100%;
-    }
-</style>
 {% endblock site_css %}
 
 {% block content %}
 <div id="featured">
     {% comment %} Currently featured {% endcomment %}
     <div id="featuringItem">
-        <img class="featuring-image" src="{{ featured_images|last }}" />
+        <img class="featuring-image img-cover" src="{{ featured_images|first }}" />
         <a class="user-detail" href="#">
             <div class="featured-user-pic">
-                <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" />
+                <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" class="img-cover" />
             </div>
             <div class="featured-user-name">
                 BobJoe
@@ -30,26 +22,44 @@
 
     {% comment %} Queue control {% endcomment %}
     <div id="featureControl">
-        <div class="feature-control-next">
+        <div class="progress blue feature-control-button feature-control-next" onclick="featureRotation('next')">
+            <span class="progress-left progress-end">
+                <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right progress-start">
+                <span class="progress-bar"></span>
+            </span>
             <i class="fas fa-angle-right"></i>
         </div>
 
         <div class="feature-control-selector">
             {% for image_url in featured_images %}
-            <div class="feature-control-circle {% if forloop.first %} current{% endif %}"
+            <div class="feature-control-circle {% if forloop.first %} current-circle-control{% endif %}"
                 data-image-url="{{ image_url }}"></div>
             {% endfor %}
         </div>
 
-        <div class="feature-control-previous">
+        <div class="progress no-loading blue feature-control-button feature-control-previous"
+            onclick="featureRotation('previous')">
+            <span class="progress-left">
+                <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                <span class="progress-bar"></span>
+            </span>
             <i class="fas fa-angle-left"></i>
         </div>
+
+        {% comment %} <div class="feature-control-button feature-control-previous"
+            onclick="featureRotation('previous')">
+            <i class="fas fa-angle-left"></i>
+        </div> {% endcomment %}
     </div>
 
     {% comment %} Featured item queue {% endcomment %}
     <div id="featuredQueue">
         {% for image_url in featured_images %}
-        <div id="" class="featured-queue-item{% if forloop.first %} next-image{% endif %}"
+        <div id="" class="featured-queue-item{% if forloop.first %} current-feature{% endif %}"
             style="order: {{forloop.counter}}">
             <img src="{{ image_url }}" data-image-url="{{ image_url }}" />
         </div>
@@ -57,8 +67,191 @@
     </div>
 </div>
 
-{% endblock content %}
+{% comment %} Feature Overview {% endcomment %}
+<div id="featureOverview" class="max-width row no-gutters">
+    <div class="col-12 mb-5">
+        <h2>everything you need in one place</h2>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="feature-overview-logo-cont mb-4 col-12">
+                <img src="{{ STATIC_URL }}files/site/logo_blue.png" class="feature-overview-logo" />
+            </div>
+            <div class="feature-overview-profile col-12 col-md-4 mt-4 mb-4">
+                <h5><i class="fas fa-users"></i>Personal Profile</h5>
+                <div class="feature-detail">Your very own personalized profile! Complete with contact info, booking
+                    calendar, about me,
+                    previous work, portfolio, social media accounts</div>
+                <a href="#profile" class="scroll-to">learn more</a>
+            </div>
+            <div class="feature-overview-crm col-12 col-md-4 offset-0 offset-md-4 mt-4 mb-4">
+                <h5><i class="fas fa-camera"></i>CRM (Client Relationship Management)</h5>
+                <div class="feature-detail">Find, schedule, book, and receive payments from clients before your
+                    photoshoot. Deliver proofs and
+                    final images once you're done. All without leaving out website!</div>
+                <a href="#crm" class="scroll-to">learn more</a>
+            </div>
+            <div class="feature-overview-photo col-12 col-md-4 mt-4 mb-4">
+                <h5><i class="far fa-image"></i>photos</h5>
+                <div class="feature-detail">Show off your best work on your profile. It's your first impression to a
+                    client, make it count! Have your photos featured on our home page and advertisments.*<br>* = Premium
+                    package required</div>
+                <a href="#photos" class="scroll-to">learn more</a>
+            </div>
+            <div class="feature-overview-geolocation col-12 col-md-4 offset-0 offset-md-4 mt-4 mb-4">
+                <h5><i class="fas fa-map-marker-alt"></i>geolocation</h5>
+                <div class="feature-detail">Clients can search for photographers based on their location. Whether its at
+                    home or at a destination, use our search tool to find a photographer near you!</div>
+                <a href="#geolocation" class="scroll-to">learn more</a>
+            </div>
+        </div>
+    </div>
+</div>
 
+{% comment %} Profile {% endcomment %}
+<div id="profile" class="max-width row no-gutters">
+    <div class="col-12 d-flex mb-4">
+        <h1 class="m-auto">Personal Profile</h1>
+    </div>
+    <div class="col-12 col-md-8">
+        <img src="{{ SITE_FILE_URL }}home/user_profile.png" class="img-cover" />
+    </div>
+    <div id="profileDetail" class="col-12 col-md-4 mb-4 mb-md-0 d-flex">
+        <div class="m-auto p-2">
+            Your very own personalized profile! Complete with contact info, booking
+            calendar, about me,
+            previous work, portfolio, social media accounts
+            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+        </div>
+    </div>
+</div>
+
+{% comment %} CRM (Client Relationship Management) {% endcomment %}
+<div id="crm" class="max-width row no-gutters">
+    <div class="col-12 d-flex mb-4">
+        <h1 class="m-auto">CRM</h1>
+    </div>
+    <div id="crmDetail" class="col-12 col-md-4 mb-4 mb-md-0 d-flex">
+        <div class="m-auto p-2">
+            Find, schedule, book, and receive payments from clients before your
+            photoshoot. Deliver proofs and
+            final images once you're done. All without leaving out website!
+            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+        </div>
+    </div>
+    <div id="crmVisual" class="col-12 col-md-8">
+        <img src="{{ SITE_FILE_URL }}home/crm.png" class="img-cover" />
+    </div>
+</div>
+
+{% comment %} Photos {% endcomment %}
+<div id="photos" class="max-width row no-gutters">
+    <div class="col-12 d-flex mb-4">
+        <h1 class="m-auto">Photos</h1>
+    </div>
+    <div class="col-12 col-md-8">
+        <img src="{{ SITE_FILE_URL }}home/photos.png" class="img-cover" />
+    </div>
+    <div id="photosDetail" class="col-12 col-md-4 mb-4 mb-md-0 d-flex">
+        <div class="m-auto p-2">
+            Show off your best work on your profile. It's your first impression to a
+            client, make it count! Have your photos featured on our home page and advertisments.*<br>* = Premium
+            package required
+            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+        </div>
+    </div>
+</div>
+
+{% comment %} Geolocation {% endcomment %}
+<div id="geolocation" class="max-width row no-gutters">
+    <div class="col-12 d-flex mb-4">
+        <h1 class="m-auto">Geolocation</h1>
+    </div>
+    <div id="geolocationDetail" class="col-12 col-md-4 mb-4 mb-md-0 d-flex">
+        <div class="m-auto p-2">
+            Clients can search for photographers based on their location. Whether its at
+            home or at a destination, use our search tool to find a photographer near you!
+            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+        </div>
+    </div>
+    <div id="geolocationVisual" class="col-12 col-md-8">
+        <img src="{{ SITE_FILE_URL }}home/geolocation.png" class="img-cover" />
+    </div>
+</div>
+
+{% comment %} Get Started {% endcomment %}
+{% if not user.is_authenticated %}
+<div id="getStarted" class="max-width row no-gutters">
+    <div class="col-12 mb-4">
+        <h1>Get Started</h1>
+    </div>
+    <div class="col-12 mb-2">
+        <h5>I am a ...</h5>
+    </div>
+    <div class="col-12 col-sm-6 p-2">
+        <a href="/signup" class="btn float-none float-sm-right">client</a>
+    </div>
+    <div class="col-12 col-sm-6 p-2">
+        <a href="/pricing" class="btn float-none float-sm-left">photographer</a>
+    </div>
+</div>
+{% endif %}
+
+{% comment %} Connect {% endcomment %}
+<div id="connect" class="max-width row no-gutters mb-0 p-4">
+    {% comment %} About Us {% endcomment %}
+    <div id="connectAboutUs" class="col-12 col-sm-6 col-md-4 mb-5 p-2">
+        <h5>About Us</h5>
+        <div class="row no-gutters">
+            <div class="connect-about-us-detail col-12 mb-5">
+                Some about us text goes here. It probably needs to be longer than this. But this is just a
+                placeholder
+                text for testing purpose. Thank you for reading!
+            </div>
+            <div class="col-12">
+                <div class="row no-gutters">
+                    <div class="connect-contacts col-12 mb-2">
+                        <i class="fas fa-phone-alt"></i>
+                        <span class="connect-contact-info">+1(123)-456-7890</span>
+                    </div>
+                    <div class="connect-contacts col-12 mb-4">
+                        <i class="fas fa-envelope"></i>
+                        <span class="connect-contact-info">apeturproject@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="connect-newsletter col-12">
+                <input type="text" name="news-letter" placeholder="sign up for newsletter" />
+                <input type="submit" value="sign up" />
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Latest Tweet {% endcomment %}
+    <div id="connectTweet" class="col-12 col-sm-6 col-md-4 mb-5 p-2">
+        <h5>Latest Tweet</h5>
+        <ul>
+            {% for tweet in connect_tweets %}
+            <li class="col-12 mb-2 p-0">
+                <i class="fab fa-twitter"></i>
+                <span class="connect-tweet">{{ tweet }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% comment %} Instagram {% endcomment %}
+    <div id="connectInstagram" class="col-sm-12 col-md-2 p-2">
+        <h5>Instagram</h5>
+        <div class="row no-gutters">
+            {% for image_url in connect_instagram %}
+            <div class="connect-instagram-image-cont col-6 col-md-12 col-lg-6">
+                <img src="{{ image_url }}" class="connect-instagram-image img-cover" />
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div> {% endblock content %}
 {% block site_js %}
 <script src="{{ STATIC_URL }}js/home.js"></script>
 {% endblock site_js %}

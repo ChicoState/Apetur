@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from .models import Client
 from .models import Photographer
 from .models import find_photographer_in_radius
+from .models import retrieve_photographers_schedules
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -43,12 +44,24 @@ def home(request):
         settings.SITE_FILE_URL + "featured/graduation.jpg",
         settings.SITE_FILE_URL + "featured/wedding2.jpg"
     ]
-    return render(
-        request,
-        'home.html',
-        {
-            'featured_images': featured_images
-        })
+    tweets = [
+        "I dont know what to write, but this is for testing any way.",
+        "Another tweet that I am suppose to write for testing, but this one will be much longer.",
+        "Dont know what the word limit is for twitter, but thats okay for now."
+    ]
+    instagram_images = [
+        settings.SITE_FILE_URL + "featured/birthday.jpg",
+        settings.SITE_FILE_URL + "featured/wedding.jpg",
+        settings.SITE_FILE_URL + "featured/graduation.jpg",
+        settings.SITE_FILE_URL + "featured/wedding2.jpg"
+    ]
+    return render(request,
+                  'home.html',
+                  {
+                      'featured_images': featured_images,
+                      'connect_tweets': tweets,
+                      'connect_instagram': instagram_images
+                  })
 
 
 # log in
@@ -91,7 +104,6 @@ def signup_user(request):
     elif request.method == "POST":
         # get the inputs
         firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
         month = request.POST['month']
         day = request.POST['day']
         year = request.POST['year']
@@ -141,7 +153,6 @@ def signup_user(request):
         # creating the new user
         user = User.objects.create_user(email, email, password)
         user.first_name = firstname
-        user.last_name = lastname
         dob = year + "-" + month + "-" + day
         user.save()
         client = Client(user=user, dob=dob)
@@ -169,10 +180,10 @@ def signup_user(request):
 
 
 def photographer_signup(request):
-    if request.user.is_authenticated:
-        return render(request, 'usermanagement/photographer-signup.html')
-    else:
-        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    # if request.user.is_authenticated:
+    return render(request, 'usermanagement/photographer_signup.html')
+    # else:
+    #     return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
 # browse
@@ -192,10 +203,10 @@ def browse(request):
         else:
             photographers = (
                 [], []
-            )  #tuple of empty lists if nothing is returned from search
+            )  # tuple of empty lists if nothing is returned from search
         data = {
             "photographers":
-            photographers[0],  #first element in tuple is photographer objects
+            photographers[0],  # first element in tuple is photographer objects
             "json_data":
             photographers[1],  # second element in tuple is json data
             "lat": latitude,
@@ -208,10 +219,38 @@ def browse(request):
 # profile
 def profile(request):
     gallery_images = settings.USER_FILE_URL + "0/featured-photo.jpg"
-    
     return render(
         request,
         'profile.html',
         {
             'gallery_images': gallery_images
         })
+    return render(request, 'profile.html')
+
+
+# schedule
+def schedule(request):
+    if request.method == "GET":
+        p_id = request.GET.get("p_id", False)
+        photographer_name = ""
+        if (p_id != False):
+            photographer_name = Photographer.objects.filter(
+                id=p_id).first().get_full_name()
+    data = {
+        "json_data": retrieve_photographers_schedules(p_id),
+        "p_name": photographer_name
+    }
+    return render(request, 'schedule.html', data)
+
+
+# Account Settings
+def account_settings(request):
+    if request.user.is_authenticated:
+        return render(request, 'usermanagement/account_settings.html')
+    else:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+
+# Pricing
+def pricing(request):
+    return render(request, 'pricing.html')
