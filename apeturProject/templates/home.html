@@ -59,7 +59,7 @@
     {% comment %} Featured item queue {% endcomment %}
     <div id="featuredQueue">
         {% for image_url in featured_images %}
-        <div id="" class="featured-queue-item{% if forloop.first %} current-feature{% endif %}"
+        <div class="featured-queue-item{% if forloop.first %} current-feature{% endif %}"
             style="order: {{forloop.counter}}">
             <img src="{{ image_url }}" data-image-url="{{ image_url }}" />
         </div>
