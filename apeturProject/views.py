@@ -222,11 +222,23 @@ def profile(request):
     followerCount = 12500000
     followingCount = 40000
     userQuote = 'Testing quote. Something very inspiring here. But let me just make it alot longer to test the text overflow'
-    galleryImageUrl = [
-        settings.SITE_FILE_URL + "featured/birthday.jpg",
-        settings.SITE_FILE_URL + "featured/wedding.jpg",
-        settings.SITE_FILE_URL + "featured/graduation.jpg",
-        settings.SITE_FILE_URL + "featured/wedding2.jpg"
+    galleryMedia = [
+        {
+            'event_type': 'birthday',
+            'url': settings.SITE_FILE_URL + "featured/birthday.jpg"
+        },
+        {
+            'event_type': 'wedding',
+            'url': settings.SITE_FILE_URL + "featured/wedding.jpg"
+        },
+        {
+            'event_type': 'graduation',
+            'url': settings.SITE_FILE_URL + "featured/graduation.jpg"
+        },
+        {
+            'event_type': 'wedding',
+            'url': settings.SITE_FILE_URL + "featured/wedding2.jpg"
+        }
     ]
     reviews = [
         {
@@ -294,7 +306,7 @@ def profile(request):
             'follower_count': followerCount,
             'following_count': followingCount,
             'user_quote': userQuote,
-            'gallery_image_url': galleryImageUrl,
+            'gallery_media': galleryMedia,
             'reviews': reviews,
             'review_summaries': reviewSummaries
         })

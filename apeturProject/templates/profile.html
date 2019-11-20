@@ -98,9 +98,46 @@
     <div id="profileGallery" class="profile-sections">
         <div class="max-width">
             <div class="row no-gutters">
-                {% for image_url in gallery_image_url %}
-                <div class="profile-gallery-image col-12 col-sm-6 col-md-4 col-lg-3">
-                    <img src="{{ image_url }}" class="modal-popup-image" />
+                {% comment %} gallery filter {% endcomment %}
+                <div id="galleryFilterCont" class="col-12">
+                    <div id="filterEventTypeCont" class="row">
+                        <div class="filter-event-type col-3">
+                            <div class="btn selected" data-event-type="all">
+                                all
+                            </div>
+                        </div>
+                        <div class="filter-event-type col-3">
+                            <div class="btn" data-event-type="birthday">
+                                <span class="filter-event-type-text">
+                                    birthday
+                                </span>
+                                <i class="fas fa-birthday-cake"></i>
+                            </div>
+                        </div>
+                        <div class="filter-event-type col-3">
+                            <div class="btn" data-event-type="wedding">
+                                <span class="filter-event-type-text">
+                                    wedding
+                                </span>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                        </div>
+                        <div class="filter-event-type col-3">
+                            <div class="btn" data-event-type="graduation">
+                                <span class='filter-event-type-text'>
+                                    graduation
+                                </span>
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} gallery media {% endcomment %}
+                {% for media in gallery_media %}
+                <div class="profile-gallery-image col-12 col-sm-6 col-md-4 col-lg-3"
+                    data-event-type="{{ media.event_type }}">
+                    <img src="{{ media.url }}" class="modal-popup-image" />
                 </div>
                 {% endfor %}
             </div>
@@ -133,7 +170,7 @@
                                         </div>
 
                                         <div class="review-type-date col-12">
-                                            {{ review.event_type }} shot at {{ review.event_date|date:'F' }},
+                                            <b>{{ review.event_type }}</b> shot at {{ review.event_date|date:'F' }},
                                             {{ review.event_date|date:'Y' }}
                                         </div>
                                         <div class="review-comment col-12">

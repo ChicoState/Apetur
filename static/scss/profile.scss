@@ -240,6 +240,47 @@ h3 {
         }
     }
 
+    #galleryFilterCont {
+        margin: 20px 0;
+
+        #filterEventTypeCont {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+
+            .filter-event-type {
+                .btn {
+                    font-size: 12px;
+                    padding: 5px 10px;
+
+                    &:not(.selected) {
+                        background-color: transparent;
+                        border: 1px solid $blue;
+                        color: $blue;
+
+                        &:hover {
+                            background-color: rgba($blue, 0.3);
+                        }
+                    }
+
+                    .filter-event-type-text {
+                        @media (max-width: $sm) {
+                            display: none;
+                        }
+                    }
+
+                    i {
+                        display: none;
+
+                        @media (max-width: $sm) {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     .profile-gallery-image {
         padding: 5px;
         cursor: pointer;

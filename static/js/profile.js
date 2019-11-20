@@ -71,3 +71,28 @@ function updateProfileSectionPosition(target) {
         height: $(target.data('target-section')).height()
     });
 }
+
+/**
+ * add click event to event type filters
+ */
+$('.filter-event-type .btn').click(function () {
+    // if the button that was clicked was already selected
+    if ($(this).hasClass('selected'))
+        return;
+
+    var selectedEventType = $(this).data('event-type');
+    $('.filter-event-type .btn.selected').removeClass('selected');
+    $(this).addClass('selected');
+
+    if (selectedEventType == 'all') {
+        $('.profile-gallery-image').show();
+    } else {
+        $('.profile-gallery-image').each(function () {
+            if ($(this).data('event-type') != selectedEventType) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        })
+    }
+})
