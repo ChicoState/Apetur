@@ -219,13 +219,65 @@ def browse(request):
 # profile
 def profile(request):
     gallery_images = settings.USER_FILE_URL + "0/featured-photo.jpg"
+    followerCount = 12500000
+    followingCount = 40000
+    userQuote = 'Testing quote. Something very inspiring here. But let me just make it alot longer to test the text overflow'
+    galleryImageUrl = [
+        settings.SITE_FILE_URL + "featured/birthday.jpg",
+        settings.SITE_FILE_URL + "featured/wedding.jpg",
+        settings.SITE_FILE_URL + "featured/graduation.jpg",
+        settings.SITE_FILE_URL + "featured/wedding2.jpg"
+    ]
+    reviews = [
+        {
+            'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
+            'name': 'stanley',
+            'rating': 4.3,
+            'comment': 'this is just a testing review form an imaginary user named stanley. But I need to make this comment much much longer for testing purpose. mainly to test the text overflow'
+        },
+        {
+            'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
+            'name': 'martin',
+            'rating': 3.64,
+            'comment': 'It changed my life and now I am naming my first born after.'
+        },
+        {
+            'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
+            'name': 'david',
+            'rating': 4,
+            'comment': 'I dont know about how the functionality work. for how it looks, its a five'
+        },
+        {
+            'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
+            'name': 'jacob autrey',
+            'rating': 4.5,
+            'comment': 'very nice'
+        },
+        {
+            'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
+            'name': 'jacob borilliar',
+            'rating': 1,
+            'comment': 'designed by complete garbage designer'
+        },
+        {
+            'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
+            'name': 'saul',
+            'rating': 1,
+            'comment': 'Smell like stanley'
+        }
+    ]
+
     return render(
         request,
         'profile.html',
         {
-            'gallery_images': gallery_images
+            'gallery_images': gallery_images,
+            'follower_count': followerCount,
+            'following_count': followingCount,
+            'user_quote': userQuote,
+            'gallery_image_url': galleryImageUrl,
+            'reviews': reviews,
         })
-    return render(request, 'profile.html')
 
 
 # schedule

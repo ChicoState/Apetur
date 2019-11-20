@@ -1,48 +1,152 @@
 {% extends 'base.html' %}
 {% block title %}Profile{% endblock title %}
 {% block navbar_style %}navstyle-fixed navstyle-semi-transparent{% endblock navbar_style %}
-
 {% block site_css %}
 <link href="{{ STATIC_URL }}css/profile.css" media="screen" rel="stylesheet">
 {% endblock site_css %}
 
-
 {% block content%}
-
-
-<div class="profile_backsplash_container">
+<div class="profile-backsplash-container">
     {% if gallery_images != NULL %}
-    <img class="profile_backsplash" id="myImg" href="{{gallery_images}}" src="{{ gallery_images }}" />
+    <img class="profile-backsplash modal-popup-image" href="{{ gallery_images }}" src="{{ gallery_images }}" />
     {% else %}
     <i class="fas fa-camera"></i>
     <i class="fas fa-plus"></i>
     {% endif %}
 </div>
 
-<div id="myModal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="img01">
-</div>
-<div class="user_display">
-    <div class="profile_picture_outer_border">
-        <div class="profile_picture_inner_border">
-            <!--{% if user.client.profile_pic %}
-            <img class="profile_picture_circle" src="{{ user.client.profile_pic }}" />
-            {% else %}
-            <span class="profile_character_circle">{{ user.get_short_name|make_list|first|upper }}</span>
-            {% endif %} uncomment -->
-            <img class="profile_icture_circle" src="/static/files/user_files/0/temp-profile-pic-reduced.jpg">
+<div class="user-display max-width">
+    <div class="profile-picture-outer-border">
+        <div class="profile-picture-inner-border">
+            <img class="profile-icture-circle" src="/static/files/user_files/0/temp-profile-pic-reduced.jpg">
         </div>
     </div>
-    <div>
-        <a id="profile_btn" class="follow_btn">Follow</a>
-    </div>
-    <div>
-        <a id="profile_btn" class="message_btn">Message</a>
+    <div class="row">
+        <div class="profile-detail col-12 col-md-8">
+            <h2 class="font-weight-bold">{{ user.get_short_name }}</h2>
+            {% load formater %}
+            <div>{{ follower_count|number_format }} follower / {{ following_count|number_format }} following</div>
+            {% if user_quote != '' %}
+            <div class="user_quote">{{ user_quote }}</div>
+            {% endif %}
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-12">
+                    <a class="profile-btn btn">Follow</a>
+                </div>
+                <div class="col-12 col-sm-6 col-md-12">
+                    <a class="profile-btn btn">Message</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-{% endblock content%}
 
+{% comment %} profile nav {% endcomment %}
+<div id="profileNavCont">
+    <div id="profileNav" class="row text-center">
+        <div class="col-4" data-target-section="#profileSchedule">
+            schedule
+        </div>
+        <div class="col-4 selected" data-target-section="#profileGallery">
+            gallery
+        </div>
+        <div class="col-4" data-target-section="#profileReview">
+            review
+        </div>
+        <div id="profileNavUnerline"></div>
+    </div>
+</div>
+
+<div id="profileSectionsCont">
+    {% comment %} About {% endcomment %}
+    <div id="profileSchedule" class="profile-sections">
+        <div class="max-width">
+            <link rel="stylesheet" href="{{STATIC_URL}}css/lib/vanilla-calendar.css">
+            <script src="{{STATIC_URL}}js/lib/vanilla-calendar.js"></script>
+            <h1>{{p_name}}</h1>
+            <div id="myCalendar" class="vanilla-calendar">
+                <script>
+                    var json_data = JSON.parse("{{json_data|escapejs}}");
+                    console.log(json_data)
+                </script>
+
+                <script>
+                    let myCalendar = new VanillaCalendar({
+                        selector: "#myCalendar",
+                        pastDates: false,
+                        datesFilter: false,
+                        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+                            'September',
+                            'October', 'November', 'December'
+                        ],
+                        shortWeekday: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: (data, elem) => {},
+                        date: new Date(),
+                        todaysDate: new Date(),
+                        schedule: json_data
+                    })
+                    // myCalendar.setSchedule(json_data);
+                </script>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Gallery {% endcomment %}
+    <div id="profileGallery" class="profile-sections">
+        <div class="max-width">
+            <div class="row no-gutters">
+                {% for image_url in gallery_image_url %}
+                <div class="profile-gallery-image col-12 col-sm-6 col-md-4 col-lg-3">
+                    <img src="{{ image_url }}" class="modal-popup-image" />
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Review {% endcomment %}
+    <div id="profileReview" class="profile-sections">
+        <div class="max-width">
+            <div class="row no-gutters">
+                {% for review in reviews %}
+                <div class="user-review col-12">
+                    <div class="row no-gutters">
+                        <div class="review-profile-pic col-3 col-md-2 col-lg-1">
+                            <img src="{{ review.profile_pic }}" />
+                        </div>
+
+                        <div class="col-9 col-md-10 col-lg-11">
+                            <div class="row no-gutters">
+                                <div class="review-profile-user-detail col-12">
+                                    <div class="review-name">
+                                        {{ review.name }}
+                                    </div>
+
+                                    <div class="review-rating">
+                                        {{ review.rating }}
+                                    </div>
+                                </div>
+
+                                <div class="review-comment col-12">
+                                    {{ review.comment }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="imagePopupModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+{% endblock content%}
 
 {% block site_js %}
 <script src="{{ STATIC_URL }}js/profile.js"></script>

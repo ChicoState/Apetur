@@ -121,7 +121,9 @@
             Your very own personalized profile! Complete with contact info, booking
             calendar, about me,
             previous work, portfolio, social media accounts
+            {% if not user.is_authenticated %}
             <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -136,7 +138,9 @@
             Find, schedule, book, and receive payments from clients before your
             photoshoot. Deliver proofs and
             final images once you're done. All without leaving out website!
+            {% if not user.is_authenticated %}
             <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            {% endif %}
         </div>
     </div>
     <div id="crmVisual" class="col-12 col-md-8">
@@ -157,7 +161,9 @@
             Show off your best work on your profile. It's your first impression to a
             client, make it count! Have your photos featured on our home page and advertisments.*<br>* = Premium
             package required
+            {% if not user.is_authenticated %}
             <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -171,7 +177,9 @@
         <div class="m-auto p-2">
             Clients can search for photographers based on their location. Whether its at
             home or at a destination, use our search tool to find a photographer near you!
+            {% if not user.is_authenticated %}
             <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            {% endif %}
         </div>
     </div>
     <div id="geolocationVisual" class="col-12 col-md-8">

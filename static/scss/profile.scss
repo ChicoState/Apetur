@@ -1,11 +1,20 @@
 @import 'common/_color.scss';
+@import 'common/grid';
 
-.profile_backsplash {
+#siteWrapper {
+    position: relative;
+    max-width: 100vw;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+}
+
+.profile-backsplash {
     cursor: pointer;
     transition: 0.3s;
 }
 
-.profile_backsplash:hover {
+.profile-backsplash:hover {
     opacity: 0.9;
 }
 
@@ -29,20 +38,26 @@
     }
 }
 
+.profile-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    padding: 20px 50px;
 
+    @media (max-width: $md) {
+        padding: 15px;
+    }
+}
 
-#profile_btn {
-    width: 100px;
-    height: 20px;
-    background-color: $blue;
-    color: $white;
-    border-radius: 25px;
-    padding: 5px 30px;
-    cursor: pointer;
+.profile-btn {
+    color: $white !important;
+    margin: 5px;
+    font-size: 15px;
+    padding: 10px 20px;
 
-    &:hover {
-        background-color: $dark_blue;
-        box-shadow: 0 2px 10px rgba($gray, 0.5);
+    @media (max-width: $sm) {
+        margin: 5px 0;
     }
 }
 
@@ -68,13 +83,11 @@ h3 {
     margin: auto;
 }
 
-.profile_backsplash_container {
+.profile-backsplash-container {
     width: 100%;
-    height: 600px;
+    height: 70vh;
     display: flex;
-    //overflow: hidden;
     justify-content: center;
-    //position: relative;
     text-align: center;
     border: 1px solid rgba(0, 0, 0, .2);
 
@@ -97,38 +110,47 @@ h3 {
 
     .fa-plus {
         font-size: 50px;
-        //position: relative;
         line-height: 640px;
     }
 }
 
-.user_display {
+.user-display {
     width: 100%;
-    height: 200px;
-    //border: 1px solid rgba(0, 0, 0, .2);
     text-align: center;
     display: inline-block;
+    position: relative;
 
-    .profile_picture_outer_border {
+    &>.row {
+        @media (max-width: $md) {
+            width: 100%;
+            padding-top: 25px;
+            margin: auto;
+        }
+    }
+
+    .profile-picture-outer-border {
         position: relative;
-        width: 250px;
-        height: 250px;
-        border-radius: 125px;
-        //border: 1px solid rgba(0, 0, 0, .2);
-        left: 240px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        left: 20px;
         top: -50px;
         background-color: white;
         float: left;
         padding: 10px;
 
-        .profile_picture_inner_border {
-            width: 230px;
-            height: 230px;
+        @media (max-width: $md) {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            padding: 5px;
+        }
+
+        .profile-picture-inner-border {
+            width: 100%;
+            height: 100%;
             background-color: white;
-            //position: absolute;
-            //left: 25px;
-            //top: 25px;
-            border-radius: 115px;
+            border-radius: 50%;
             background-clip: padding-box;
             border: 1px solid rgba(0, 0, 0, .1);
             text-align: center;
@@ -138,7 +160,6 @@ h3 {
 
             img {
                 width: 100%;
-                /* or any custom size */
                 margin: auto;
                 display: block;
                 height: 100%;
@@ -146,7 +167,7 @@ h3 {
                 border-radius: 50%;
             }
 
-            .profile_character_circle {
+            .profile-character-circle {
                 object-fit: cover;
                 position: relative;
                 top: 20px;
@@ -159,13 +180,135 @@ h3 {
             }
         }
     }
+
+    .user_quote {
+        font-size: 12px;
+        color: $gray;
+        margin-top: 10px;
+    }
 }
 
+#profileNavCont {
+    padding: 0 20px;
+}
+
+#profileNav {
+    max-width: 500px;
+    width: 100%;
+    margin: 25px auto 0;
+    position: relative;
+
+    .col-4 {
+        padding: 5px 20px;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    #profileNavUnerline {
+        width: 33%;
+        position: absolute;
+        bottom: 0;
+        left: 91px;
+        border-bottom: 1px solid $gray;
+        transition: 0.25s;
+    }
+}
+
+#profileSectionsCont {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px auto;
+    width: calc(300vw + 50px);
+    overflow: hidden;
+    position: relative;
+    left: calc(-100vw - 8px);
+    transition: 0.25s;
+
+    .profile-sections {
+        width: 100vw;
+        display: inline-block;
+    }
+
+    #profileGallery {
+        padding: 5px;
+    }
+
+    .profile-gallery-image {
+        padding: 5px;
+        cursor: pointer;
+        overflow: hidden;
+        transition: 0.25s;
+
+        &:hover {
+            transform: scale(1.025);
+        }
+
+        img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+}
+
+#profileReview {
+    .user-review {
+        width: 100%;
+        height: auto;
+        margin: 5px auto;
+        border-bottom: 1px solid $light_gray;
+        padding: 10px 0;
+    }
+
+    .review-profile-pic {
+        padding: 10px;
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+        }
+    }
+
+    .review-profile-user-detail {
+        text-align: left;
+        margin: auto;
+        padding: 10px;
+
+        &>div {
+            display: inline-block;
+        }
+
+        .review-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: $blue;
+        }
+
+        .review-rating {
+            font-size: 15px;
+            color: $gray;
+            margin: 0 10px;
+        }
+    }
+
+    .review-comment {
+        text-align: left;
+        margin: auto;
+        padding: 10px;
+    }
+}
+
+/*
+ * Modal
+ ********************************************/
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
-    padding-top: 100px;
+    z-index: 1030;
     left: 0;
     top: 0;
     width: 100%;
@@ -178,31 +321,30 @@ h3 {
 .modal-content {
     margin: auto;
     display: block;
-    width: 80%;
-    max-width: 1000px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background-color: transparent;
     -webkit-animation-name: zoom;
-    -webkit-animation-duration: 0.5s;
+    -webkit-animation-duration: 0.25s;
 }
 
 .close {
     position: absolute;
-    top: 100px;
-    right: 35px;
-    color: #f1f1f1;
+    top: 10px;
+    right: 15px;
+    color: $gray;
     font-size: 40px;
     font-weight: bold;
-    transition: 0.3s;
+    transition: 0.25s;
+    z-index: 1;
+    text-shadow: none;
 }
 
 .close:hover,
-close:focus {
-    color: #bbb;
+.close:focus {
+    color: $dark_gray;
     text-decoration: none;
     cursor: pointer;
-}
-
-@media only screen and (max-width: 700px) {
-    .model-content {
-        width: 100%;
-    }
 }

@@ -9,9 +9,7 @@
     --vanilla-calendar-selected-radius: 5px;
 }
 
-.vanilla-calendar *,
-.vanilla-calendar *:before,
-.vanilla-calendar *:after {
+.vanilla-calendar *, .vanilla-calendar *:before, .vanilla-calendar *:after {
     box-sizing: border-box;
 }
 
@@ -23,6 +21,7 @@
     margin: 0 auto;
     overflow: hidden;
     width: 350px;
+    height: 100%;
 }
 
 @media (max-width:1200px) {
@@ -46,7 +45,6 @@
     overflow: visible;
     padding: 0;
     text-align: center;
-
     &:active {
         border-radius: var(--vanilla-calendar-border-radius);
         box-shadow: 0 0 0 2px rgba(var(--vanilla-calendar-today-bg-color), 0.1)
@@ -92,7 +90,8 @@
     background-color: rgba(var(--vanilla-calendar-selected-bg-color), 0.3);
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 10px
+    padding-bottom: 10px;
+    height: 100%;
 }
 
 .vanilla-calendar .vanilla-calendar-date {
@@ -139,7 +138,6 @@
     cursor: default;
     background-color: lightgray;
 }
-
 
 .vanilla-calendar .vanilla-calendar-partially-booked {
     background-color: yellow;
