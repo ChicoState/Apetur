@@ -48,6 +48,10 @@
     @media (max-width: $md) {
         padding: 15px;
     }
+
+    .profile-detail-user-name {
+        color: $blue;
+    }
 }
 
 .profile-btn {
@@ -207,7 +211,7 @@ h3 {
     #profileNavUnerline {
         width: 33%;
         position: absolute;
-        bottom: 0;
+        bottom: -5px;
         left: 91px;
         border-bottom: 1px solid $gray;
         transition: 0.25s;
@@ -223,6 +227,7 @@ h3 {
     position: relative;
     left: calc(-100vw - 8px);
     transition: 0.25s;
+    align-items: flex-start;
 
     .profile-sections {
         width: 100vw;
@@ -230,7 +235,9 @@ h3 {
     }
 
     #profileGallery {
-        padding: 5px;
+        .max-width {
+            padding: 5px;
+        }
     }
 
     .profile-gallery-image {
@@ -241,6 +248,7 @@ h3 {
 
         &:hover {
             transform: scale(1.025);
+            opacity: 0.9;
         }
 
         img {
@@ -253,6 +261,12 @@ h3 {
 }
 
 #profileReview {
+    #userReviewsCont {
+        @media (max-width: $sm) {
+            order: 2;
+        }
+    }
+
     .user-review {
         width: 100%;
         height: auto;
@@ -276,7 +290,7 @@ h3 {
     .review-profile-user-detail {
         text-align: left;
         margin: auto;
-        padding: 10px;
+        padding: 0 10px;
 
         &>div {
             display: inline-block;
@@ -292,13 +306,49 @@ h3 {
             font-size: 15px;
             color: $gray;
             margin: 0 10px;
+            float: right;
         }
+    }
+
+    .review-type-date {
+        padding: 0 10px;
+        font-size: 12px;
+        color: $gray;
     }
 
     .review-comment {
         text-align: left;
         margin: auto;
         padding: 10px;
+    }
+
+    #ReviewSummaryCont {
+        padding: 20px;
+
+        @media (max-width: $sm) {
+            padding: 0 20px;
+        }
+    }
+
+    #reviewSummaryTable {
+        width: 100%;
+
+        .review_summary_key {
+            width: 10%;
+        }
+
+        .review_summary_value {
+            position: relative;
+
+            .review_summary_bar {
+                background-color: $blue;
+                height: 80%;
+                margin: 1%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
     }
 }
 
@@ -326,6 +376,7 @@ h3 {
     object-fit: contain;
     object-position: center;
     background-color: transparent;
+    border-radius: 0;
     -webkit-animation-name: zoom;
     -webkit-animation-duration: 0.25s;
 }
@@ -334,17 +385,27 @@ h3 {
     position: absolute;
     top: 10px;
     right: 15px;
-    color: $gray;
-    font-size: 40px;
+    color: #fff;
+    font-size: 30px;
     font-weight: bold;
     transition: 0.25s;
     z-index: 1;
     text-shadow: none;
-}
+    background-color: black;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
 
-.close:hover,
-.close:focus {
-    color: $dark_gray;
-    text-decoration: none;
-    cursor: pointer;
+    &:hover,
+    &:focus {
+        color: $dark_white;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .fas {
+        margin: auto;
+    }
 }

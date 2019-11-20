@@ -13,7 +13,7 @@ from .models import retrieve_photographers_schedules
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
-import datetime
+from datetime import datetime
 
 convert_to_miles = 1.609
 
@@ -121,8 +121,8 @@ def signup_user(request):
                     'date_range':
                     range(1, 32),
                     'year_range':
-                    range(datetime.datetime.now().year - 122,
-                          datetime.datetime.now().year),
+                    range(datetime.now().year - 122,
+                          datetime.now().year),
                     'signuperror':
                     True,
                     'passnotmatch':
@@ -141,8 +141,8 @@ def signup_user(request):
                     'date_range':
                     range(1, 32),
                     'year_range':
-                    range(datetime.datetime.now().year - 122,
-                          datetime.datetime.now().year),
+                    range(datetime.now().year - 122,
+                          datetime.now().year),
                     'signuperror':
                     True,
                     'emailexists':
@@ -173,8 +173,8 @@ def signup_user(request):
                 'date_range':
                 range(1, 32),
                 'year_range':
-                range(datetime.datetime.now().year - 122,
-                      datetime.datetime.now().year),
+                range(datetime.now().year - 122,
+                      datetime.now().year),
             },
         )
 
@@ -232,40 +232,59 @@ def profile(request):
         {
             'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
             'name': 'stanley',
+            'event_type': 'wedding',
+            'event_date': datetime.strptime('2019-11-15', "%Y-%m-%d").date(),
             'rating': 4.3,
             'comment': 'this is just a testing review form an imaginary user named stanley. But I need to make this comment much much longer for testing purpose. mainly to test the text overflow'
         },
         {
             'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
             'name': 'martin',
+            'event_type': 'birthday',
+            'event_date': datetime.strptime('2019-11-01', "%Y-%m-%d").date(),
             'rating': 3.64,
             'comment': 'It changed my life and now I am naming my first born after.'
         },
         {
             'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
             'name': 'david',
+            'event_type': 'wedding',
+            'event_date': datetime.strptime('2019-10-10', "%Y-%m-%d").date(),
             'rating': 4,
             'comment': 'I dont know about how the functionality work. for how it looks, its a five'
         },
         {
             'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
             'name': 'jacob autrey',
+            'event_type': 'wedding',
+            'event_date': datetime.strptime('2018-09-15', "%Y-%m-%d").date(),
             'rating': 4.5,
             'comment': 'very nice'
         },
         {
             'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
             'name': 'jacob borilliar',
+            'event_type': 'graduation',
+            'event_date': datetime.strptime('2018-08-01', "%Y-%m-%d").date(),
             'rating': 1,
             'comment': 'designed by complete garbage designer'
         },
         {
             'profile_pic': settings.USER_FILE_URL + '0/temp-profile-pic.jpg',
             'name': 'saul',
+            'event_type': 'birthday',
+            'event_date': datetime.strptime('2019-01-15', "%Y-%m-%d").date(),
             'rating': 1,
             'comment': 'Smell like stanley'
         }
     ]
+    reviewSummaries = {
+        '5': 70,
+        '4': 10,
+        '3': 10,
+        '2': 4,
+        '1': 6
+    }
 
     return render(
         request,
@@ -277,6 +296,7 @@ def profile(request):
             'user_quote': userQuote,
             'gallery_image_url': galleryImageUrl,
             'reviews': reviews,
+            'review_summaries': reviewSummaries
         })
 
 

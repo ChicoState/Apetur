@@ -67,6 +67,7 @@ function updateProfileSectionPosition(target) {
     var sectionPos = $(target.data('target-section')).position();
 
     $('#profileSectionsCont').css({
-        left: sectionPos.left * -1
+        left: sectionPos.left * -1,
+        height: $(target.data('target-section')).height()
     });
 }

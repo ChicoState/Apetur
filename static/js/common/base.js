@@ -11,6 +11,14 @@ $navbar_selector = $('.navbar-container');
 $have_transparent_nav = $navbar_selector.is('.navstyle-fixed, .navstyle-sticky') && !$navbar_selector.hasClass('.no-transition');
 
 $(document).scroll(function () {
+    navbarBackgroundTransition();
+});
+
+$(document).ready(function () {
+    navbarBackgroundTransition();
+});
+
+function navbarBackgroundTransition() {
     if ($have_transparent_nav) {
         // navbar background transition when scroll pass fetured section
         $scrollHeight = $navbar_selector.height();
@@ -25,7 +33,7 @@ $(document).scroll(function () {
             $nav_show = false;
         }
     }
-});
+}
 /*
  * Navbar Scroll Transition - END
  ********************************************/
