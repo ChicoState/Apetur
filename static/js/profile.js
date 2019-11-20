@@ -95,4 +95,9 @@ $('.filter-event-type .btn').click(function () {
             }
         })
     }
+
+    // adjust the height of the container when increasing/decreasing images
+    $('#profileSectionsCont').css({
+        height: $('#profileGallery').height()
+    });
 })
