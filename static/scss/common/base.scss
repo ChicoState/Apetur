@@ -533,6 +533,12 @@ body {
         align-self: center;
     }
 
+    .footer-logo-cont {
+        @media (max-width: $lg) {
+            margin: 20px;
+        }
+    }
+
     .text-logo {
         color: $gray;
     }
