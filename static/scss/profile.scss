@@ -132,7 +132,7 @@ h3 {
 .user-display {
     width: 100%;
     text-align: center;
-    display: inline-block;
+    display: flex;
     position: relative;
 
     &>.row {
@@ -144,6 +144,8 @@ h3 {
     }
 
     .profile-picture-outer-border {
+        display: flex;
+        flex-shrink: 0;
         position: relative;
         width: 200px;
         height: 200px;
@@ -151,7 +153,6 @@ h3 {
         left: 20px;
         top: -50px;
         background-color: white;
-        float: left;
         padding: 10px;
 
         @media (max-width: $md) {
