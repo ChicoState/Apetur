@@ -153,6 +153,6 @@ function updateProfileSectionPosition(target) {
 
     $('#profileSectionsCont').css({
         left: sectionPos.left * -1,
-        height: $(target.data('target-section')).height()
+        height: $('#' + target.data('target-section')).height()
     });
 }
