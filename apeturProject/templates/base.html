@@ -242,6 +242,13 @@
             </div>
         </div>
     </div>
+
+    {% comment %} Page Loading Container {% endcomment %}
+    <div id="pageLoadingCont">
+        <div id="pageLoadingBg">
+            <div class="spinner-border"></div>
+        </div>
+    </div>
 </body>
 
 {# Set of blocks that can be used to display JavaScript files #}
@@ -259,6 +266,7 @@
 </script>
 <script src="{{ STATIC_URL }}js/autocomplete_search.js"></script>
 <script src="{{ STATIC_URL }}js/common/base.js"></script>
+<script src="{{ STATIC_URL }}js/common/site-style.js"></script>
 {% block site_js %}{% endblock site_js %}
 {% endblock footer_javascript_site %}
 {% block footer_javascript_section %}{% endblock footer_javascript_section %}

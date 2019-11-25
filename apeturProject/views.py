@@ -218,6 +218,20 @@ def browse(request):
 
 # profile
 def profile(request):
+    # if no user_id where passed as url parameter
+    if request.method == 'GET' and 'user_id' in request.GET:
+        user_id = request.GET['user_id']
+        # check if user_id exist
+        if user_id:
+            user_id = int(user_id)
+    else:
+        # if user is not authenticated, redirect them to home
+        if request.user.is_authenticated:
+            # default user_id to current user's user id
+            user_id = request.user.id
+        else:
+            return redirect('/')
+
     gallery_images = settings.USER_FILE_URL + "0/featured-photo.jpg"
     followerCount = 12500000
     followingCount = 40000
@@ -246,7 +260,6 @@ def profile(request):
             'name': 'stanley',
             'event_type': 'wedding',
             'event_date': datetime.strptime('2019-11-15', "%Y-%m-%d").date(),
-            'rating': 4.3,
             'comment': 'this is just a testing review form an imaginary user named stanley. But I need to make this comment much much longer for testing purpose. mainly to test the text overflow'
         },
         {
@@ -254,7 +267,6 @@ def profile(request):
             'name': 'martin',
             'event_type': 'birthday',
             'event_date': datetime.strptime('2019-11-01', "%Y-%m-%d").date(),
-            'rating': 3.64,
             'comment': 'It changed my life and now I am naming my first born after.'
         },
         {
@@ -262,7 +274,6 @@ def profile(request):
             'name': 'david',
             'event_type': 'wedding',
             'event_date': datetime.strptime('2019-10-10', "%Y-%m-%d").date(),
-            'rating': 4,
             'comment': 'I dont know about how the functionality work. for how it looks, its a five'
         },
         {
@@ -270,7 +281,6 @@ def profile(request):
             'name': 'jacob autrey',
             'event_type': 'wedding',
             'event_date': datetime.strptime('2018-09-15', "%Y-%m-%d").date(),
-            'rating': 4.5,
             'comment': 'very nice'
         },
         {
@@ -278,7 +288,6 @@ def profile(request):
             'name': 'jacob borilliar',
             'event_type': 'graduation',
             'event_date': datetime.strptime('2018-08-01', "%Y-%m-%d").date(),
-            'rating': 1,
             'comment': 'designed by complete garbage designer'
         },
         {
@@ -286,17 +295,17 @@ def profile(request):
             'name': 'saul',
             'event_type': 'birthday',
             'event_date': datetime.strptime('2019-01-15', "%Y-%m-%d").date(),
-            'rating': 1,
             'comment': 'Smell like stanley'
         }
     ]
-    reviewSummaries = {
-        '5': 70,
-        '4': 10,
-        '3': 10,
-        '2': 4,
-        '1': 6
+
+    photographerStat = {
+        'portraits': 65,
+        'wedding': 30,
+        'birthday': 90
     }
+
+    profileAbout = "testing text. more testing text. like I need a really really really long testing test for a profile about me section"
 
     return render(
         request,
@@ -308,7 +317,8 @@ def profile(request):
             'user_quote': userQuote,
             'gallery_media': galleryMedia,
             'reviews': reviews,
-            'review_summaries': reviewSummaries
+            'photographer_stat': photographerStat,
+            'profile_about': profileAbout
         })
 
 

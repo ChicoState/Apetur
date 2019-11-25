@@ -103,3 +103,26 @@ $('.scroll-to').click(function (e) {
         scrollTop: $(target).offset().top - navbar_offset
     }, 500);
 });
+
+
+/*
+ * Page Loading Container - START
+ ********************************************/
+function showLoadingOnLoad() {
+    showLoading();
+
+    $(window).on('load', function () {
+        hideLoading();
+    });
+}
+
+function showLoading() {
+    $('#pageLoadingCont').show();
+}
+
+function hideLoading() {
+    $('#pageLoadingCont').delay(250).fadeOut();
+}
+/*
+ * Page Loading Container - END
+ ********************************************/

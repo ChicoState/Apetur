@@ -49,8 +49,19 @@
         padding: 15px;
     }
 
-    .profile-detail-user-name {
+    #profileDetailUserName {
         color: $blue;
+    }
+}
+
+#profileDetailFollowCont {
+    font-size: 12px;
+
+    #profileDetailFollowBtn {
+        width: auto;
+        padding: 2px 10px;
+        font-size: inherit;
+        margin-left: 10px;
     }
 }
 
@@ -201,11 +212,17 @@ h3 {
     width: 100%;
     margin: 25px auto 0;
     position: relative;
+    display: flex;
+    justify-content: space-around;
 
-    .col-4 {
-        padding: 5px 20px;
+    .profile-nav-optiions {
+        padding: 5px 0;
         cursor: pointer;
         transition: 0.25s;
+
+        @media (max-width: $sm) {
+            font-size: 15px;
+        }
     }
 
     #profileNavUnerline {
@@ -222,10 +239,8 @@ h3 {
     display: flex;
     justify-content: space-between;
     margin: 25px auto;
-    width: calc(300vw + 50px);
     overflow: hidden;
     position: relative;
-    left: calc(-100vw - 8px);
     transition: 0.25s;
     align-items: flex-start;
 
@@ -342,13 +357,6 @@ h3 {
             font-weight: bold;
             color: $blue;
         }
-
-        .review-rating {
-            font-size: 15px;
-            color: $gray;
-            margin: 0 10px;
-            float: right;
-        }
     }
 
     .review-type-date {
@@ -363,31 +371,37 @@ h3 {
         padding: 10px;
     }
 
-    #ReviewSummaryCont {
-        padding: 20px;
+    #PhotographerStatCont {
+        .stat-cont-title {
+            font-size: 25px;
+            color: $blue;
+            font-weight: bold;
 
-        @media (max-width: $sm) {
-            padding: 0 20px;
-        }
-    }
-
-    #reviewSummaryTable {
-        width: 100%;
-
-        .review_summary_key {
-            width: 10%;
+            @media (max-width: $sm) {
+                text-align: center;
+            }
         }
 
-        .review_summary_value {
-            position: relative;
+        .stat_chart {
+            padding: 20px 0 10px;
 
-            .review_summary_bar {
-                background-color: $blue;
-                height: 80%;
-                margin: 1%;
-                position: absolute;
-                top: 0;
-                left: 0;
+            .progress-circle {
+                height: 60px;
+                width: 60px;
+
+                @media (min-width: $sm) {
+                    margin-left: 0 !important;
+                }
+
+                .progress-value {
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .stat_name {
+            @media (max-width: $sm) {
+                text-align: center;
             }
         }
     }

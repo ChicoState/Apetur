@@ -220,7 +220,7 @@ body {
                     height: 100%;
                     display: inline-block;
                     text-align: center;
-                    line-height: 45px;
+                    line-height: 40px;
                     background-color: $white;
                     border-radius: 50%;
                     color: $blue;
@@ -577,5 +577,28 @@ body {
         .pac-item-query {
             color: $white;
         }
+    }
+}
+
+// page loading container and animation
+#pageLoadingCont {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+
+    #pageLoadingBg {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        background-color: rgba($black, 0.95);
+    }
+
+    .spinner-border {
+        color: $blue;
+        margin: auto;
     }
 }
