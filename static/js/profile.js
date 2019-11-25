@@ -22,6 +22,9 @@ span.onclick = function () {
  ********************************************/
 
 
+/*
+ * Adjust Section When Resizing - START
+ ********************************************/
 var rtime;
 var timeout = false;
 var delta = 200;
@@ -48,10 +51,20 @@ function resizeend() {
         hideLoading();
     }
 }
+/*
+ * Adjust Section When Resizing - END
+ ********************************************/
 
-// $('#profileNav > div').click(function () {
-//     updateProfileSectionPosition($(this));
-// });
+/**
+ * add click event to book btn
+ */
+$('#bookBtn').click(function () {
+    var target = $('[data-target-section="profileSchedule"]');
+
+    if (target.length > 0) {
+        updateProfileSectionPosition(target);
+    }
+})
 
 /**
  * add click event to event type filters
