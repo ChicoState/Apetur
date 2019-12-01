@@ -122,7 +122,7 @@
             calendar, about me,
             previous work, portfolio, social media accounts
             {% if not user.is_authenticated %}
-            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            <a href="#joinCommunity" class="scroll-to feature-detail-get-started d-table btn">get started</a>
             {% endif %}
         </div>
     </div>
@@ -139,7 +139,7 @@
             photoshoot. Deliver proofs and
             final images once you're done. All without leaving out website!
             {% if not user.is_authenticated %}
-            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            <a href="#joinCommunity" class="scroll-to feature-detail-get-started d-table btn">get started</a>
             {% endif %}
         </div>
     </div>
@@ -162,7 +162,7 @@
             client, make it count! Have your photos featured on our home page and advertisments.*<br>* = Premium
             package required
             {% if not user.is_authenticated %}
-            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            <a href="#joinCommunity" class="scroll-to feature-detail-get-started d-table btn">get started</a>
             {% endif %}
         </div>
     </div>
@@ -178,7 +178,7 @@
             Clients can search for photographers based on their location. Whether its at
             home or at a destination, use our search tool to find a photographer near you!
             {% if not user.is_authenticated %}
-            <a href="#getStarted" class="scroll-to feature-detail-get-started d-table btn">get started</a>
+            <a href="#joinCommunity" class="scroll-to feature-detail-get-started d-table btn">get started</a>
             {% endif %}
         </div>
     </div>
@@ -187,20 +187,18 @@
     </div>
 </div>
 
-{% comment %} Get Started {% endcomment %}
+{% comment %} Join {% endcomment %}
 {% if not user.is_authenticated %}
-<div id="getStarted" class="max-width row no-gutters">
-    <div class="col-12 mb-4">
-        <h1>Get Started</h1>
+<div id="joinCommunity" class="max-width row no-gutters mb-3">
+    <div class="col-12 mb-4 text-center">
+        <h2 class="font-weight-bold">Join Our Community Today</h2>
     </div>
-    <div class="col-12 mb-2">
-        <h5>I am a ...</h5>
+    <div class="col-12 mb-2 text-center">
+        we're always on the lookout for new aspiring photographers. Join our growing network of people turning their
+        passion into a profession.
     </div>
-    <div class="col-12 col-sm-6 p-2">
-        <a href="/signup" class="btn float-none float-sm-right">client</a>
-    </div>
-    <div class="col-12 col-sm-6 p-2">
-        <a href="/pricing" class="btn float-none float-sm-left">photographer</a>
+    <div class="col-12 p-2 d-flex">
+        <a href="/signup" class="btn float-none float-sm-right">sign up</a>
     </div>
 </div>
 {% endif %}
