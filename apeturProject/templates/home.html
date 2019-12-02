@@ -189,16 +189,18 @@
 
 {% comment %} Join {% endcomment %}
 {% if not user.is_authenticated %}
-<div id="joinCommunity" class="max-width row no-gutters mb-3">
-    <div class="col-12 mb-4 text-center">
-        <h2 class="font-weight-bold">Join Our Community Today</h2>
-    </div>
-    <div class="col-12 mb-2 text-center">
-        we're always on the lookout for new aspiring photographers. Join our growing network of people turning their
-        passion into a profession.
-    </div>
-    <div class="col-12 p-2 d-flex">
-        <a href="/signup" class="btn float-none float-sm-right">sign up</a>
+<div id="joinCommunity" class="row no-gutters mb-3">
+    <div class="max-width">
+        <div class="col-12 mb-4 text-center">
+            <h2 class="font-weight-bold">Join Our Community Today</h2>
+        </div>
+        <div id="joinCommunityBody" class="col-12 mb-2 text-center">
+            we're always on the lookout for new aspiring photographers. Join our growing network of people turning their
+            passion into a profession.
+        </div>
+        <div class="col-12 p-2 d-flex">
+            <a href="/signup" class="btn float-none float-sm-right">sign up</a>
+        </div>
     </div>
 </div>
 {% endif %}

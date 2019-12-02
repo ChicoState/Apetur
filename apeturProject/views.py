@@ -6,10 +6,7 @@ from pathlib import Path
 import simplejson as json
 # User
 from django.contrib.auth.models import User
-from .models import Client
-from .models import Photographer
-from .models import find_photographer_in_radius
-from .models import retrieve_photographers_schedules
+from .models import *
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -136,17 +133,11 @@ def signup_user(request):
                 request,
                 'usermanagement/signup.html',
                 {
-                    'month_range':
-                    range(1, 13),
-                    'date_range':
-                    range(1, 32),
-                    'year_range':
-                    range(datetime.now().year - 122,
-                          datetime.now().year),
-                    'signuperror':
-                    True,
-                    'emailexists':
-                    True
+                    'month_range': range(1, 13),
+                    'date_range': range(1, 32),
+                    'year_range': range(datetime.now().year - 122, datetime.now().year),
+                    'signuperror': True,
+                    'emailexists': True
                 },
             )
 
@@ -155,14 +146,65 @@ def signup_user(request):
         user.first_name = firstname
         dob = year + "-" + month + "-" + day
         user.save()
-        client = Client(user=user, dob=dob)
+
+        planSelected = request.POST['planSelected']
+        address = None
+        if planSelected:
+            streeAddress = request.POST['streeAddress']
+            city = request.POST['city']
+            state = request.POST['state']
+            zipCode = request.POST['zipCode']
+            country = request.POST['country']
+            lat = request.POST['lat']
+            lng = request.POST['lng']
+
+            address = Address(zip_code=zipCode, country_sn=country,
+                              state_sn=state, city_sn=city, latitude=lat, longitude=lng, street_address=streeAddress)
+            address.save()
+
+        client = Client(user=user, address=address, dob=dob)
         client.save()
+
+        if planSelected:
+            photographer = Photographer(client=client)
+            photographer.save()
 
         # log the user in
         username = get_user(email)
         user = authenticate(username=username, password=password)
         login(request, user)
         return redirect('/')
+    elif request.method == 'GET' and 'plan' in request.GET:
+        selectedPlan = request.GET.get("plan", 0)
+        planName = 'free'
+        planPrice = ''
+
+        if selectedPlan == '1':
+            planName = 'basic'
+            planPrice = '$10'
+        elif selectedPlan == '2':
+            planName = 'Professional'
+            planPrice = '$30'
+        elif selectedPlan == '3':
+            planName = 'Enterprise'
+            planPrice = '$125'
+
+        return render(
+            request,
+            'usermanagement/signup.html',
+            {
+                'month_range':
+                range(1, 13),
+                'date_range':
+                range(1, 32),
+                'year_range':
+                range(datetime.now().year - 122,
+                      datetime.now().year),
+                'selected_plan': selectedPlan,
+                'selected_plan_name': planName,
+                'selected_plan_price': planPrice,
+            }
+        )
     else:
         return render(
             request,

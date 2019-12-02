@@ -15,6 +15,12 @@
     margin: 50px auto;
 }
 
+#userInfoCont {
+    @media (max-width: $md) {
+        order: 2;
+    }
+}
+
 .signup-form-wrapper {
     flex: 1;
 
@@ -36,7 +42,7 @@
             position: absolute;
             right: 0;
             top: 50%;
-            height: 70%;
+            height: 80%;
             border: 1px solid rgba($gray, 0.7);
             transform: translateY(-50%);
         }
@@ -55,18 +61,24 @@
 .side-cont {
     position: relative;
 
+    @media (max-width: $md) {
+        order: 1;
+    }
+
     &>div {
         margin: auto;
+        width: 100%;
     }
 
     &::after {
         @media (max-width: $md) {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            bottom: 0;
+            left: 50%;
+            width: 90%;
             border: 1px solid rgba($gray, 0.7);
+            transform: translateX(-50%);
         }
     }
 
@@ -74,5 +86,53 @@
         width: auto;
         padding: 5px 20px;
         font-size: 12px;
+    }
+}
+
+#planSelectedCont {
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: calc(90% + 20px);
+        border: 1px solid rgba($gray, 0.7);
+        transform: translateX(-50%);
+    }
+
+    a {
+        font-size: 12px;
+    }
+
+    #planSelectedName {
+        font-size: 20px;
+
+        span {
+            color: $blue;
+            font-weight: bold;
+        }
+    }
+
+    #planSelectedPrice {
+        font-size: 15px;
+        ;
+    }
+}
+
+#autocompleteAddressCont {
+    display: none;
+    text-align: left;
+}
+
+#signupBtnCont {
+    flex-direction: column;
+
+    @media (max-width: $md) {
+        order: 3;
+    }
+
+    .btn {
+        padding: 10px;
+        max-width: 400px;
     }
 }
