@@ -97,9 +97,9 @@ class Client(models.Model):
 
 class Photographer(models.Model):
     client = models.OneToOneField(Client, on_delete=models.CASCADE)
-    bio = models.CharField(max_length=500)
-    radius = models.PositiveIntegerField(default=25)
-    tags = models.TextField()
+    bio = models.CharField(max_length=500, null=True)
+    radius = models.PositiveIntegerField(default=25, null=True)
+    tags = models.TextField(null=True)
 
     def get_address(self):
         return self.client.get_full_address()
