@@ -96,60 +96,14 @@ def logout_user(request):
 
 # sign up
 def signup_user(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.method != 'GET' and 'plan' not in request.GET:
         return redirect('/')
     elif request.method == "POST":
-        # get the inputs
-        firstname = request.POST['firstname']
-        month = request.POST['month']
-        day = request.POST['day']
-        year = request.POST['year']
-        email = request.POST['email']
-        password = request.POST['password']
-        repeatPassword = request.POST['repeatPassword']
+        planSelected = request.POST.get('planSelected', None)
 
-        if password != repeatPassword:
-            return render(
-                request,
-                'usermanagement/signup.html',
-                {
-                    'month_range':
-                    range(1, 13),
-                    'date_range':
-                    range(1, 32),
-                    'year_range':
-                    range(datetime.now().year - 122,
-                          datetime.now().year),
-                    'signuperror':
-                    True,
-                    'passnotmatch':
-                    True
-                },
-            )
-
-        username = get_user(email)
-        if username is not None:
-            return render(
-                request,
-                'usermanagement/signup.html',
-                {
-                    'month_range': range(1, 13),
-                    'date_range': range(1, 32),
-                    'year_range': range(datetime.now().year - 122, datetime.now().year),
-                    'signuperror': True,
-                    'emailexists': True
-                },
-            )
-
-        # creating the new user
-        user = User.objects.create_user(email, email, password)
-        user.first_name = firstname
-        dob = year + "-" + month + "-" + day
-        user.save()
-
-        planSelected = request.POST['planSelected']
+        # saveing the address
         address = None
-        if planSelected:
+        if planSelected is not None:
             streeAddress = request.POST['streeAddress']
             city = request.POST['city']
             state = request.POST['state']
@@ -162,19 +116,85 @@ def signup_user(request):
                               state_sn=state, city_sn=city, latitude=lat, longitude=lng, street_address=streeAddress)
             address.save()
 
-        client = Client(user=user, address=address, dob=dob)
-        client.save()
+        # creating new user and client if the user isn't already logged in
+        client = None
+        if request.user.is_authenticated:
+            client = request.user.client
+            client.address = address
+            client.save()
+        else:
+            # get the inputs
+            firstname = request.POST['firstname']
+            month = request.POST['month']
+            day = request.POST['day']
+            year = request.POST['year']
+            email = request.POST['email']
+            password = request.POST['password']
+            repeatPassword = request.POST['repeatPassword']
 
-        if planSelected:
+            if password != repeatPassword:
+                return render(
+                    request,
+                    'usermanagement/signup.html',
+                    {
+                        'month_range':
+                        range(1, 13),
+                        'date_range':
+                        range(1, 32),
+                        'year_range':
+                        range(datetime.now().year - 122,
+                              datetime.now().year),
+                        'signuperror':
+                        True,
+                        'passnotmatch':
+                        True
+                    },
+                )
+
+            username = get_user(email)
+            if username is not None:
+                return render(
+                    request,
+                    'usermanagement/signup.html',
+                    {
+                        'month_range': range(1, 13),
+                        'date_range': range(1, 32),
+                        'year_range': range(datetime.now().year - 122, datetime.now().year),
+                        'signuperror': True,
+                        'emailexists': True
+                    },
+                )
+
+            user = User.objects.create_user(email, email, password)
+            user.first_name = firstname
+            dob = year + "-" + month + "-" + day
+            user.save()
+            client = Client(user=user, address=address, dob=dob)
+            client.save()
+
+            # log the user in
+            username = get_user(email)
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+        if planSelected is not None:
             photographer = Photographer(client=client)
             photographer.save()
+            return redirect('/profile')
 
-        # log the user in
-        username = get_user(email)
-        user = authenticate(username=username, password=password)
-        login(request, user)
         return redirect('/')
     elif request.method == 'GET' and 'plan' in request.GET:
+        is_photographer = False
+
+        if request.user.is_authenticated:
+            try:
+                is_photographer = request.user.client.photographer is not None
+            except Photographer.DoesNotExist:
+                pass
+
+        if is_photographer:
+            return redirect('/')
+
         selectedPlan = request.GET.get("plan", 0)
         planName = 'free'
         planPrice = ''

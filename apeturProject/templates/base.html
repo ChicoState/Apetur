@@ -80,6 +80,11 @@
                         <li>
                             <a href="#">help</a>
                         </li>
+                        {% if not user.client.photographer %}
+                        <li>
+                            <a href="/pricing">become photographer</a>
+                        </li>
+                        {% endif %}
                         <li class="dropdown-hr"></li>
                         <li class="logout">
                             <a href="/logout">logout</a>
@@ -178,6 +183,7 @@
                         <li>
                             <a href="#">contact us</a>
                         </li>
+
                         {% if not user.is_authenticated %}
                         {% comment %} LOGIN {% endcomment %}
                         <li class="mt-5">

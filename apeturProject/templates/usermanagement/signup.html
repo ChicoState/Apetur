@@ -9,11 +9,17 @@
 {% block content %}
 <div class="signup-form-wrapper">
     <form id="signupForm" class="row" method="POST">
+        {% csrf_token %}
         <div class="text-center col-12">
-            <h1>Create Account</h1>
+            <h1>
+                {% if selected_plan and user.is_authenticated %}
+                Update Account
+                {% else %}
+                Create Account
+                {% endif %}</h1>
         </div>
+        {% if not user.client %}
         <div id="userInfoCont" class="signup-form col-12 col-md-6 pt-4 pt-md-0">
-            {% csrf_token %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -70,7 +76,7 @@
                     </div>
                 </div>
 
-                {% if not selected_plan >= '0' %}
+                {% if not selected_plan %}
                 <div class="col-12">
                     <div id="errorMsgCont"
                         class="alert alert-danger alert-dismissible{% if not signuperror %} d-none{% endif %}">
@@ -86,15 +92,19 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Signup</button>
+                    {% if not selected_plan and not user.is_authenticated %}
                     <a href="/login"><small class="form-text pt-2">Already have an account?</small></a>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>
         </div>
+        {% endif %}
 
-        <div class="side-cont text-center d-flex col-12 col-md-6">
-            {% if selected_plan >= '0' %}
-            <div class="row">
+        <div
+            class="side-cont text-center d-flex col-12 col-md-6{% if selected_plan and user.is_authenticated %} m-auto{% endif %}">
+            {% if selected_plan %}
+            <div class=" row">
                 {% comment %} Plan Selected {% endcomment %}
                 <div id="planSelectedCont" class="col-12 pb-4 p-0">
                     <div id="planSelectedName">
@@ -163,7 +173,7 @@
             {% endif %}
         </div>
 
-        {% if selected_plan >= '0' %}
+        {% if selected_plan %}
         <div id="signupBtnCont" class="col-12 d-flex">
             <div id="errorMsgCont"
                 class="alert alert-danger alert-dismissible{% if not signuperror %} d-none{% endif %}">
@@ -179,7 +189,9 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary m-auto">Signup</button>
+            {% if not selected_plan and not user.is_authenticated %}
             <a href="/login" class="m-auto"><small class="form-text pt-2">Already have an account?</small></a>
+            {% endif %}
         </div>
         {% endif %}
     </form>
