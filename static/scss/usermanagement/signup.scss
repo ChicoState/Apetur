@@ -124,6 +124,12 @@
     text-align: left;
 }
 
+#changeAddress {
+    cursor: pointer;
+    font-size: 15px;
+    color: $blue;
+}
+
 #signupBtnCont {
     flex-direction: column;
 
