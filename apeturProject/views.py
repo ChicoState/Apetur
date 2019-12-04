@@ -108,13 +108,13 @@ def signup_user(request):
         # saveing the address
         address = None
         if planSelected is not None:
-            streeAddress = request.POST['streeAddress']
-            city = request.POST['city']
-            state = request.POST['state']
-            zipCode = request.POST['zipCode']
-            country = request.POST['country']
-            lat = request.POST['lat']
-            lng = request.POST['lng']
+            streeAddress = request.POST.get('streeAddress', None)
+            city = request.POST.get('city', None)
+            state = request.POST.get('state', None)
+            zipCode = request.POST.get('zipCode', None)
+            country = request.POST.get('country', None)
+            lat = request.POST.get('lat', None)
+            lng = request.POST.get('lng', None)
 
             address = Address(zip_code=zipCode, country_sn=country,
                               state_sn=state, city_sn=city, latitude=lat, longitude=lng, street_address=streeAddress)
@@ -301,32 +301,37 @@ def profile(request):
     # Check for event form submission (creating an event) if not, create the form to pass to template
     if request.method == "POST":
         p_id = request.POST.get("p_id")
-        photographer_name = photographer_name = Photographer.objects.filter(id=p_id).first().get_full_name()
+        photographer_name = photographer_name = Photographer.objects.filter(
+            id=p_id).first().get_full_name()
 
         form = forms.CreateEvent(request.POST)
         if form.is_valid:
-            event_date_string = request.POST.get("event_date") # Grab the event date
+            event_date_string = request.POST.get(
+                "event_date")  # Grab the event date
             c_id = request.POST.get("c_id")  # Grab client id
             # if client id does not exist ask for log in
 
             # grab schedule via date and photographer id
-            schedule = Schedule.objects.filter(photographer_id = p_id, date = event_date_string)
+            schedule = Schedule.objects.filter(
+                photographer_id=p_id, date=event_date_string)
             schedule = schedule.first()
-            #schedule query returned an available schedule
+            # schedule query returned an available schedule
             if schedule:
                 # Create the event
                 # b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.') b.save()
-                event_type = Event_Type.objects.filter(id = request.POST.get("event_type")).first()
-                new_event = Event(event_type= event_type, schedule_id=schedule,client_id=c_id, start_time=request.POST.get("start_time"), end_time=request.POST.get("end_time"), confirmed = True)
+                event_type = Event_Type.objects.filter(
+                    id=request.POST.get("event_type")).first()
+                new_event = Event(event_type=event_type, schedule_id=schedule, client_id=c_id, start_time=request.POST.get(
+                    "start_time"), end_time=request.POST.get("end_time"), confirmed=True)
                 new_event.save()
     else:
         form = forms.CreateEvent()
 
     # Grab user data for according u_id
-    user = User.objects.filter(id = user_id).first()
+    user = User.objects.filter(id=user_id).first()
     user_name = user.get_short_name
 
-    #Need to check profile type (client or photographer)
+    # Need to check profile type (client or photographer)
     if is_photographer(user_id):
         account_type = "Photographer"
         p_id = get_photographer_id_from_user_id(user_id)
@@ -334,8 +339,7 @@ def profile(request):
         account_type = "Client"
         p_id = False
 
-
-    #If photographer, grab schedule data needed
+    # If photographer, grab schedule data needed
 
     gallery_images = settings.USER_FILE_URL + "0/featured-photo.jpg"
     followerCount = 12500000
@@ -424,12 +428,12 @@ def profile(request):
             'reviews': reviews,
             'photographer_stat': photographerStat,
             'profile_about': profileAbout,
-            'user_name' : user_name,
+            'user_name': user_name,
             "schedule_json_data": retrieve_photographers_events_and_schedule(p_id)[1],
-            "event_json_data" : retrieve_photographers_events_and_schedule(p_id)[0],
+            "event_json_data": retrieve_photographers_events_and_schedule(p_id)[0],
             "account_type": account_type,
             "form": form,
-            "p_id" : p_id
+            "p_id": p_id
         })
 
 
@@ -444,36 +448,40 @@ def schedule(request):
                 id=p_id).first().get_full_name()
     if request.method == "POST":
         p_id = request.POST.get("p_id")
-        photographer_name = photographer_name = Photographer.objects.filter(id=p_id).first().get_full_name()
+        photographer_name = photographer_name = Photographer.objects.filter(
+            id=p_id).first().get_full_name()
 
         form = forms.CreateEvent(request.POST)
         if form.is_valid:
-            event_date_string = request.POST.get("event_date") # Grab the event date
+            event_date_string = request.POST.get(
+                "event_date")  # Grab the event date
             c_id = request.POST.get("c_id")  # Grab client id
             # if client id does not exist ask for log in
 
             # grab schedule via date and photographer id
-            schedule = Schedule.objects.filter(photographer_id = p_id, date = event_date_string)
+            schedule = Schedule.objects.filter(
+                photographer_id=p_id, date=event_date_string)
             schedule = schedule.first()
-            #schedule query returned an available schedule
+            # schedule query returned an available schedule
             if schedule:
                 # Create the event
                 # b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.') b.save()
-                event_type = Event_Type.objects.filter(id = request.POST.get("event_type")).first()
-                new_event = Event(event_type= event_type, schedule_id=schedule,client_id=c_id, start_time=request.POST.get("start_time"), end_time=request.POST.get("end_time"), confirmed = True)
+                event_type = Event_Type.objects.filter(
+                    id=request.POST.get("event_type")).first()
+                new_event = Event(event_type=event_type, schedule_id=schedule, client_id=c_id, start_time=request.POST.get(
+                    "start_time"), end_time=request.POST.get("end_time"), confirmed=True)
                 new_event.save()
     else:
         form = forms.CreateEvent()
     data = {
         "schedule_json_data": retrieve_photographers_events_and_schedule(p_id)[1],
-        "event_json_data" : retrieve_photographers_events_and_schedule(p_id)[0],
+        "event_json_data": retrieve_photographers_events_and_schedule(p_id)[0],
         "p_name": photographer_name,
         "form": form,
         "p_id": int(p_id),
-        "username" : request.user.get_full_name()
+        "username": request.user.get_full_name()
     }
     return render(request, 'schedule.html', data)
-
 
 
 # Account Settings
@@ -487,4 +495,3 @@ def account_settings(request):
 # Pricing
 def pricing(request):
     return render(request, 'pricing.html')
-

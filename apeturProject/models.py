@@ -167,11 +167,12 @@ class Schedule(models.Model):
                                         on_delete=models.CASCADE,
                                         null=True)
     date = models.DateField(null=False)
-    time = models.TextField(null=False) # JSON representation of time fields
+    time = models.TextField(null=False)  # JSON representation of time fields
     fully_booked = models.BooleanField(null=False)
     max_bookings = models.IntegerField(null=False)
-    cur_num_of_bookings = models.IntegerField(default=0, null=False) #Can be derived from the amount of events
-    is_confirmed = models.BooleanField(null = False)
+    # Can be derived from the amount of events
+    cur_num_of_bookings = models.IntegerField(default=0, null=False)
+    is_confirmed = models.BooleanField(null=False)
 
     def get_photographer_id(self):
         return self.photographer_id
@@ -187,15 +188,18 @@ class Schedule(models.Model):
 
 
 class Event(models.Model):
-    event_type = models.ForeignKey(Event_Type, on_delete = models.CASCADE, null = True)
-    schedule_id = models.ForeignKey(Schedule,on_delete = models.CASCADE, null = False)
+    event_type = models.ForeignKey(
+        Event_Type, on_delete=models.CASCADE, null=True)
+    schedule_id = models.ForeignKey(
+        Schedule, on_delete=models.CASCADE, null=False)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=False)
-    start_time = models.TimeField(null = False)
+    start_time = models.TimeField(null=False)
     end_time = models.TimeField(null=False)
-    confirmed = models.BooleanField(null = False)
+    confirmed = models.BooleanField(null=False)
+
     def __str__(self):
         return self.event_type.name
-  
+
   #  def get_event_type(self):
    #     return self.event_type
 
@@ -207,24 +211,28 @@ class Event(models.Model):
 
     def get_client_name(self):
         return self.client.get_full_name()
-    
+
     def get_start_time(self):
         return self.start_time
-    
+
     def get_end_time(self):
         return self.end_time
 
     def is_confirmed(self):
         return self.confirmed
 
+
 class Message(models.Model):
     sender = models.OneToOneField(User, on_delete=models.CASCADE)
     sent_data = models.DateTimeField
     message = models.TextField()
 
+
 class Message_Group(models.Model):
     user_list = models.TextField()  # Comma seperated list of user ids
-    active_list = models.TextField() # Comma seprated list of 1's/0's that are related to user_list by index
+    # Comma seprated list of 1's/0's that are related to user_list by index
+    active_list = models.TextField()
+
 
 """ Given a latitude, longitude, and radius (IN KM) we can find the surround addresses.
 Using these addresses photographers can be found.
@@ -352,7 +360,7 @@ def retrieve_photographers_events_and_schedule(p_id):
         json_schedule_data.append(schedule_data)
         day_list = []
         events_on_day = Event.objects.filter(
-            schedule_id = schedule.id
+            schedule_id=schedule.id
         )
         for event in events_on_day:
             # Turn into "json-able" data to allow access in JS
@@ -367,10 +375,10 @@ def retrieve_photographers_events_and_schedule(p_id):
             if(event.is_confirmed()):
                 schedule_data["num_bookings"] = schedule_data["num_bookings"] + 1
             day_list.append(event_object)
-        if day_list: #If list is NOT empty
+        if day_list:  # If list is NOT empty
             events[str(schedule.date)] = day_list
     return (json.dumps(events), json.dumps(json_schedule_data))
-    
+
 
 def is_photographer(user_id):
     # Grab client object related to user_id
@@ -379,13 +387,14 @@ def is_photographer(user_id):
     # Check if there exists a photograper object related to that client
     # OneToOne relationship, just grab first result (it should only be one result)
     query_set = Photographer.objects.filter(client=client)
-    
-    if query_set: #If not empty
+
+    if query_set:  # If not empty
         return True
-    else: #If empty
+    else:  # If empty
         return False
-        
+
+
 def get_photographer_id_from_user_id(user_id):
-    client = Client.objects.filter(user=user_id).first()    
+    client = Client.objects.filter(user=user_id).first()
     p_id = Photographer.objects.filter(client=client).first().id
     return p_id

@@ -128,12 +128,13 @@
 
                         {% comment %} Stree Address {% endcomment %}
                         <div class="form-group">
-                            <input name="streeAddress" id="street_address" class="form-control" disabled="true" />
+                            <input name="streeAddress" id="street_address" class="form-control" readonly="readonly"
+                                required />
                         </div>
 
                         {% comment %} City {% endcomment %}
                         <div class="form-group">
-                            <input name="city" id="locality" class="form-control" disabled="true" />
+                            <input name="city" id="locality" class="form-control" readonly="readonly" required />
                         </div>
 
                         {% comment %} State / Zip Code / Country {% endcomment %}
@@ -141,17 +142,19 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <input name="state" id="administrative_area_level_1" class="form-control"
-                                        disabled="true" />
+                                        readonly="readonly" required />
                                 </div>
                             </div>
                             <div class="col-6 pr-0 pl-0">
                                 <div class="form-group">
-                                    <input name="zipCode" id="postal_code" class="form-control" disabled="true" />
+                                    <input name="zipCode" id="postal_code" class="form-control" readonly="readonly"
+                                        required />
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <input name="country" id="country" class="form-control" disabled="true" />
+                                    <input name="country" id="country" class="form-control" readonly="readonly"
+                                        required />
                                 </div>
                             </div>
                         </div>
