@@ -3,32 +3,49 @@
 
 {% block content%}
 
-<link rel="stylesheet" href="{{STATIC_URL}}css/lib/vanilla-calendar.css">
-<script src="{{STATIC_URL}}js/lib/vanilla-calendar.js"></script>
-<h1>{{p_name}}</h1>
-<div id="myCalendar" class="vanilla-calendar">
-    <script>
-        var json_data = JSON.parse("{{json_data|escapejs}}");
-        console.log(json_data)
+    <link rel="stylesheet" href="{{STATIC_FILE_URL}}vanilla-calendar-master/src/css/vanilla-calendar.css">
+    <script src="{{STATIC_FILE_URL}}vanilla-calendar-master/src/js/vanilla-calendar.js"></script>
+    <link href="{{STATIC_FILE_URL}}fullcalendar/packages/core/main.css" rel="stylesheet" />
+    <link href="{{STATIC_FILE_URL}}fullcalendar/packages/daygrid/main.css" rel="stylesheet" />
+    <link href="{{STATIC_FILE_URL}}fullcalendar/packages/timegrid/main.css" rel="stylesheet" />
+    <link href="{{STATIC_URL}}css/schedule.css" rel="stylesheet" />
+    <script src="{{STATIC_FILE_URL}}fullcalendar/packages/core/main.js"></script>
+    <script src="{{STATIC_FILE_URL}}fullcalendar/packages/daygrid/main.js"></script>
+    <script src="{{STATIC_FILE_URL}}fullcalendar/packages/timegrid/main.js"></script>
+    <script src="{{STATIC_FILE_URL}}fullcalendar/packages/interaction/main.js"></script>
+   
+   {% comment %} Load JSON data from views.py {% endcomment %}
+   <script>
+        var schedule_json_data = JSON.parse("{{schedule_json_data|escapejs}}");
+        var event_json_data = JSON.parse("{{event_json_data|escapejs}}");
     </script>
+    <p> p_id = {{p_id}}
+    <p> id = {{user.client.photographer.id}} </p>
+    {% if  user.client.photographer and user.client.photographer.id is p_id %}
+        <p> your schedule view </p>
 
-    <script>
-        let myCalendar = new VanillaCalendar({
-            selector: "#myCalendar",
-            pastDates: false,
-            datesFilter: false,
-            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                'October', 'November', 'December'
-            ],
-            shortWeekday: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            onSelect: (data, elem) => {},
-            date: new Date(),
-            todaysDate: new Date(),
-            schedule: json_data
-        })
-        // myCalendar.setSchedule(json_data);
-    </script>
+        <div id="calendar"></div>
+        <script src = "{{STATIC_URL}}js/photographer_schedule_view.js"> </script>
+    {% elif user.client %}
+        <p> client view </p>
+        <div id="client-calendar"></div>
+        <div id = "schedule-event-form-container" class = "modal">
+            <div class = "modal-content">
+                <h2>Schedule an event</h2>
+                <form class = "site-form" id = "schedule-event-form" action = "" method = "post">
+                    <input type = "text" name = "name" readonly = "readonly" value = {{username}}>
+                    <input type = "date" name = "event_date" id = "event_date" value = "2019-11-25" readonly = "readonly">
+                    <input type = "hidden" name = "p_id" value = {{p_id}} >
+                    <input type = "hidden" name = "c_id" value = {{user.client.id}}>
+                    {% csrf_token %}
+                    {{form}}
+                <input type  = "submit" value = "Create">
+                </form>
+            </div>
+        </div>
+        <script src = "{{STATIC_URL}}js/client_schedule_view.js"> </script>
+    {% endif %}
 
-</div>
+
 {{ monthcalendar }}
 {% endblock content%}

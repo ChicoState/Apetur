@@ -81,6 +81,8 @@
 {% endblock content%}
 {% block google_map_api_js %}
 <script>
+    // These variables are used in to map.js and js/autocomplete_search.js
+    
     // Store the latitude and longtitue of the city that was returned from the search
     // This allows for centering of map around the city.
     var city_lat = parseFloat("{{lat}}");

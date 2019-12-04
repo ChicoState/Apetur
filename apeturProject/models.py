@@ -167,10 +167,11 @@ class Schedule(models.Model):
                                         on_delete=models.CASCADE,
                                         null=True)
     date = models.DateField(null=False)
-    time = models.TextField(null=False)
+    time = models.TextField(null=False) # JSON representation of time fields
     fully_booked = models.BooleanField(null=False)
     max_bookings = models.IntegerField(null=False)
-    cur_num_of_bookings = models.IntegerField(null=False)
+    cur_num_of_bookings = models.IntegerField(default=0, null=False) #Can be derived from the amount of events
+    is_confirmed = models.BooleanField(null = False)
 
     def get_photographer_id(self):
         return self.photographer_id
@@ -186,19 +187,17 @@ class Schedule(models.Model):
 
 
 class Event(models.Model):
-    event_type = models.TextField
-    event_date = models.TextField
-    photographer_id = models.ForeignKey(Photographer,
-                                        on_delete=models.CASCADE,
-                                        null=True)
-    client_id = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
-    time = models.TextField
-
-    def get_event_type(self):
-        return self.event_type
-
-    def get_event_date(self):
-        return self.event_date
+    event_type = models.ForeignKey(Event_Type, on_delete = models.CASCADE, null = True)
+    schedule_id = models.ForeignKey(Schedule,on_delete = models.CASCADE, null = False)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=False)
+    start_time = models.TimeField(null = False)
+    end_time = models.TimeField(null=False)
+    confirmed = models.BooleanField(null = False)
+    def __str__(self):
+        return self.event_type.name
+  
+  #  def get_event_type(self):
+   #     return self.event_type
 
     def get_photographer_id(self):
         return self.photographer_id
@@ -206,9 +205,26 @@ class Event(models.Model):
     def get_client_id(self):
         return self.client_id
 
-    def get_time(self):
-        return self.time
+    def get_client_name(self):
+        return self.client.get_full_name()
+    
+    def get_start_time(self):
+        return self.start_time
+    
+    def get_end_time(self):
+        return self.end_time
 
+    def is_confirmed(self):
+        return self.confirmed
+
+class Message(models.Model):
+    sender = models.OneToOneField(User, on_delete=models.CASCADE)
+    sent_data = models.DateTimeField
+    message = models.TextField()
+
+class Message_Group(models.Model):
+    user_list = models.TextField()  # Comma seperated list of user ids
+    active_list = models.TextField() # Comma seprated list of 1's/0's that are related to user_list by index
 
 """ Given a latitude, longitude, and radius (IN KM) we can find the surround addresses.
 Using these addresses photographers can be found.
@@ -295,7 +311,6 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
                 "lng": photographer_list[-1].client.address.get_longitude()
             }
             json_data.append(photographer_data)
-    # print(json.dumps(json_data))
     return (photographer_list, json.dumps(json_data))
 
 
@@ -313,10 +328,45 @@ def retrieve_photographers_schedules(p_id):
     )  # this returns a list of schedule objects associated with the photograpger id
     for entry in schedules:
         data = {
-            "date": str(entry.date),
-            "fully_booked": entry.fully_booked,
-            "max_bookings": entry.max_bookings,
-            "cur_num_of_bookings": entry.cur_num_of_bookings
+            "date": str(entry.date)
         }
         json_data.append(data)
     return json.dumps(json_data)
+
+
+def retrieve_photographers_events_and_schedule(p_id):
+    events = {}  # Dictionary of lists
+    schedule_map = {}
+    json_schedule_data = []
+    photographers_schedules = Schedule.objects.filter(
+        photographer_id=p_id
+    )  # Returns a list of schedules for a photographer by day
+    for schedule in photographers_schedules:
+        schedule_data = {
+            "date": str(schedule.date),
+            "num_bookings": 0,
+            "max_bookings": schedule.max_bookings,
+            "fully_booked": schedule.fully_booked
+        }
+        schedule_map[str(schedule.date)] = schedule_data
+        json_schedule_data.append(schedule_data)
+        day_list = []
+        events_on_day = Event.objects.filter(
+            schedule_id = schedule.id
+        )
+        for event in events_on_day:
+            # Turn into "json-able" data to allow access in JS
+            event_object = {
+                "client_name": event.get_client_name(),
+                "start_time": str(event.get_start_time()),
+                "end_time": str(event.get_end_time()),
+                "id": event.id,
+                "confirmed": event.is_confirmed()
+            }
+            # Increment event counter for schedule data
+            if(event.is_confirmed()):
+                schedule_data["num_bookings"] = schedule_data["num_bookings"] + 1
+            day_list.append(event_object)
+        if day_list: #If list is NOT empty
+            events[str(schedule.date)] = day_list
+    return (json.dumps(events),json.dumps(json_schedule_data))
