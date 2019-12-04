@@ -1,0 +1,221 @@
+@import 'common/_color.scss';
+@import 'common/grid';
+
+#siteWrapper {
+    margin-top: 0;
+
+    @media (max-width: $md) {
+        padding: 10px;
+    }
+}
+
+#map {
+    min-height: 500px;
+    height: 100%;
+}
+
+#searchBar {
+    margin: 0 auto 20px;
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        right: 100px;
+        top: 50%;
+        height: 65%;
+        border-right: 1px solid $light_gray;
+        transform: translateY(-50%);
+    }
+
+    #googleMapAutocompleteTextField {
+        width: 100%;
+        padding: 10px 100px 10px 20px;
+        height: auto;
+        border-radius: 25px;
+        border-color: $light_gray;
+    }
+
+    #radius {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: auto;
+        border: none;
+    }
+}
+
+#searchResultCont {
+    display: flex;
+    max-height: 100vh;
+    position: relative;
+}
+
+#browsePhotographers {
+    width: 400px;
+    overflow: scroll;
+    padding: 0 10px;
+
+    @media (max-width: $md) {
+        width: 100%;
+    }
+
+    .browse-photographer-cont {
+        position: relative;
+        transition: 0.25s;
+
+        &:hover {
+            box-shadow: 0px 5px 12px $light_gray;
+        }
+
+        .profile-banner {
+            height: 100px;
+
+            @media (min-width: $sm) and (max-width: $md) {
+                height: 150px;
+            }
+
+            img {
+                height: 50%;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+
+        .profile-brief-detail-cont {
+            position: relative;
+            display: flex;
+            background-color: $light_white;
+
+            .profile-brief-pic-cont {
+                width: 100px;
+                height: 100px;
+                padding: 5px;
+                background-color: $light_white;
+                border-radius: 50%;
+                position: relative;
+                top: -25px;
+                left: 10px;
+                flex-shrink: 0;
+
+                .profile-brief-pic {
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+            }
+
+            .profile-brief-detail {
+                flex-grow: 1;
+                padding: 10px 30px 10px 20px;
+                flex-direction: column;
+
+                .profile-photographer-name {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .profile-photographer-bio {
+                    font-size: 12px;
+                }
+            }
+
+            .profile-breif-detail-toggle {
+                position: absolute;
+                right: 9px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: $blue;
+                font-size: 20px;
+            }
+        }
+
+        .profile-brief-more-detail-cont {
+            display: none;
+            padding: 10px;
+            background-color: $light_white;
+
+            .profile-breif-photoshot-type-cont {
+                display: flex;
+                justify-content: center;
+                text-align: center;
+
+                .photoshot-type-tag {
+                    padding: 5px 10px;
+                    color: $blue;
+                    border: 1px solid $blue;
+                    border-radius: 10px;
+                    font-size: 12px;
+                }
+            }
+
+            .profile-breif-detail-actions {
+                margin-top: 20px;
+                padding: 20px 0 10px;
+                width: 100%;
+                justify-content: space-evenly;
+                position: relative;
+
+                &:before {
+                    width: 95%;
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border-top: 1px solid $light_gray;
+                }
+
+                .btn {
+                    font-size: 15px;
+                    padding: 5px 10px;
+                }
+            }
+        }
+    }
+}
+
+#mapCont {
+    flex: 1 1 auto;
+    margin-left: 20px;
+
+    @media (max-width: $md) {
+        display: none;
+        width: 100%;
+        margin: 0;
+    }
+}
+
+#contentTypeToggle {
+    display: flex;
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+    font-size: 25px;
+    background-color: $blue;
+    color: $white;
+    padding: 10px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    cursor: pointer;
+
+    @media (min-width: $md) {
+        display: none;
+    }
+
+    .fa-user {
+        display: none;
+    }
+}

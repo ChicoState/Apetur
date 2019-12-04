@@ -153,6 +153,12 @@ body {
             position: absolute;
             left: 2px;
             padding: 6.5px 10px;
+            display: flex;
+            height: 100%;
+
+            .fa-search {
+                margin: auto;
+            }
         }
 
         .nav-search-text-field {

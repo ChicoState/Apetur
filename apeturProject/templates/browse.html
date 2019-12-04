@@ -1,45 +1,66 @@
 {% extends 'base.html' %}
 {% block title %}Browse{% endblock title %}
 {% block site_css %}
-<style>
-    #map {
-        min-height: 500px;
-        height: 100%;
-    }
-</style>
+<link href="{{ STATIC_URL }}css/browse.css" media="screen" rel="stylesheet">
 {% endblock site_css %}
+{% block navbar_style %}navstyle-sticky{% endblock navbar_style %}
 
 {% block content%}
-<div class="input-group">
+<div id="searchBar" class="input-group">
     <input type="text" id="googleMapAutocompleteTextField" class="form-control">
-    <select id="radius">
+    <select id="radius" class="form-control">
         <option value=25>25 mi</option>
         <option value=50>50 mi</option>
         <option value=75>75 mi</option>
     </select>
 </div>
 
-<div class="row">
-    <div class="col-sm-12 col-md-6">
+<div id="searchResultCont">
+    <div id="browsePhotographers">
         {% for p in photographers %}
-        <div class="container" id="card-test">
-            <div class="card text-black" style="max-width: 40rem;">
-                <div class="card-header"> {{p.get_address}}</div>
-                <div class="card-body">
-                    <h4 class="card-title">{{p.get_full_name}}</h4>
-                    <button onClick = "redirect_to_profile({{p.client.user.id}})"> View my profile </button>
-                    <h6 class="card-subtitle mb-2 text-muted"></h6>
-                    {% for tag in p.get_tags %}
-                        <span class=" badge badge-primary">{{tag}}</span>
-                    {% endfor %}
-                    <p class="card-text">{{p.get_bio}}</p>
+        <div class="browse-photographer-cont mb-4">
+            <div class="profile-banner">
+                <img src="{{ USER_FILE_URL }}0/featured-photo.jpg" />
+            </div>
+            <div class="profile-brief-detail-cont">
+                <div class="profile-brief-pic-cont">
+                    <div class="profile-brief-pic">
+                        <img src="{{ USER_FILE_URL }}0/temp-profile-pic.jpg" />
+                    </div>
+                </div>
+                <div class="profile-brief-detail row no-gutters">
+                    <div class="profile-photographer-name">{{p.get_full_name}}</div>
+                    {% if p.get_bio is not None %}
+                    <div class="profile-photographer-bio">{{p.get_bio}}</div>
+                    {% endif %}
+                </div>
+                <div class="profile-breif-detail-toggle">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="profile-brief-more-detail-cont">
+                <div class="profile-breif-photoshot-type-cont row">
+                    <div class="col-12">Photoshot Types:</div>
+                    <div class="photoshot-type-tag-cont col-12 mt-2">
+                        {% for tag in p.get_tags %}
+                        <span class="photoshot-type-tag">{{tag}}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="profile-breif-detail-actions row no-gutters">
+                    <div class="btn col-5">follow</div>
+                    <div class="btn col-5">learn more</div>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-    <div class="col-sm-12 col-md-6">
+    <div id="mapCont">
         <div id="map"></div>
+    </div>
+    <div id="contentTypeToggle">
+        <i class="fas fa-map-marked-alt"></i>
+        <i class="fas fa-user"></i>
     </div>
 </div>
 {% endblock content%}
