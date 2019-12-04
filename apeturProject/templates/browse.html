@@ -22,14 +22,15 @@
 <div class="row">
     <div class="col-sm-12 col-md-6">
         {% for p in photographers %}
-        <div clas="container" id="card-test">
+        <div class="container" id="card-test">
             <div class="card text-black" style="max-width: 40rem;">
                 <div class="card-header"> {{p.get_address}}</div>
                 <div class="card-body">
                     <h4 class="card-title">{{p.get_full_name}}</h4>
+                    <button onClick = "redirect_to_profile({{p.client.user.id}})"> View my profile </button>
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     {% for tag in p.get_tags %}
-                    <span class=" badge badge-primary">{{tag}}</span>
+                        <span class=" badge badge-primary">{{tag}}</span>
                     {% endfor %}
                     <p class="card-text">{{p.get_bio}}</p>
                 </div>

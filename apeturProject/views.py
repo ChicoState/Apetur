@@ -298,6 +298,45 @@ def profile(request):
         else:
             return redirect('/')
 
+    # Check for event form submission (creating an event) if not, create the form to pass to template
+    if request.method == "POST":
+        p_id = request.POST.get("p_id")
+        photographer_name = photographer_name = Photographer.objects.filter(id=p_id).first().get_full_name()
+
+        form = forms.CreateEvent(request.POST)
+        if form.is_valid:
+            event_date_string = request.POST.get("event_date") # Grab the event date
+            c_id = request.POST.get("c_id")  # Grab client id
+            # if client id does not exist ask for log in
+
+            # grab schedule via date and photographer id
+            schedule = Schedule.objects.filter(photographer_id = p_id, date = event_date_string)
+            schedule = schedule.first()
+            #schedule query returned an available schedule
+            if schedule:
+                # Create the event
+                # b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.') b.save()
+                event_type = Event_Type.objects.filter(id = request.POST.get("event_type")).first()
+                new_event = Event(event_type= event_type, schedule_id=schedule,client_id=c_id, start_time=request.POST.get("start_time"), end_time=request.POST.get("end_time"), confirmed = True)
+                new_event.save()
+    else:
+        form = forms.CreateEvent()
+
+    # Grab user data for according u_id
+    user = User.objects.filter(id = user_id).first()
+    user_name = user.get_short_name
+
+    #Need to check profile type (client or photographer)
+    if is_photographer(user_id):
+        account_type = "Photographer"
+        p_id = get_photographer_id_from_user_id(user_id)
+    else:
+        account_type = "Client"
+        p_id = False
+
+
+    #If photographer, grab schedule data needed
+
     gallery_images = settings.USER_FILE_URL + "0/featured-photo.jpg"
     followerCount = 12500000
     followingCount = 40000
@@ -384,7 +423,13 @@ def profile(request):
             'gallery_media': galleryMedia,
             'reviews': reviews,
             'photographer_stat': photographerStat,
-            'profile_about': profileAbout
+            'profile_about': profileAbout,
+            'user_name' : user_name,
+            "schedule_json_data": retrieve_photographers_events_and_schedule(p_id)[1],
+            "event_json_data" : retrieve_photographers_events_and_schedule(p_id)[0],
+            "account_type": account_type,
+            "form": form,
+            "p_id" : p_id
         })
 
 
@@ -417,8 +462,6 @@ def schedule(request):
                 event_type = Event_Type.objects.filter(id = request.POST.get("event_type")).first()
                 new_event = Event(event_type= event_type, schedule_id=schedule,client_id=c_id, start_time=request.POST.get("start_time"), end_time=request.POST.get("end_time"), confirmed = True)
                 new_event.save()
-        else:
-            print("not valid")
     else:
         form = forms.CreateEvent()
     data = {

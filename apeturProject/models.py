@@ -369,4 +369,23 @@ def retrieve_photographers_events_and_schedule(p_id):
             day_list.append(event_object)
         if day_list: #If list is NOT empty
             events[str(schedule.date)] = day_list
-    return (json.dumps(events),json.dumps(json_schedule_data))
+    return (json.dumps(events), json.dumps(json_schedule_data))
+    
+
+def is_photographer(user_id):
+    # Grab client object related to user_id
+    # OneToOne relationship, just grab first result (it should only be one result)
+    client = Client.objects.filter(user=user_id).first()
+    # Check if there exists a photograper object related to that client
+    # OneToOne relationship, just grab first result (it should only be one result)
+    query_set = Photographer.objects.filter(client=client)
+    
+    if query_set: #If not empty
+        return True
+    else: #If empty
+        return False
+        
+def get_photographer_id_from_user_id(user_id):
+    client = Client.objects.filter(user=user_id).first()    
+    p_id = Photographer.objects.filter(client=client).first().id
+    return p_id
