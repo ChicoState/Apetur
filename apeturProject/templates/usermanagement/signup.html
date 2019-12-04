@@ -1,30 +1,31 @@
 {% extends 'base.html' %}
 {% block title %}Signup{% endblock title %}
-{% block navbar_style %}navstyle-light navstyle-minimal{% endblock navbar_style %}
+{% block navbar_style %}navstyle-minimal{% endblock navbar_style %}
 {% block site_style %}sitestyle-no-space{% endblock site_style %}
 {% block site_css %}
 <link href="{{ STATIC_URL }}css/usermanagement/signup.css" media="screen" rel="stylesheet">
 {% endblock site_css %}
 
 {% block content %}
-<div class="signup-form-wrapper row m-0">
-    <div class="signup-form col">
-        <form id="signupForm" method="POST">
-            {% csrf_token %}
+<div class="signup-form-wrapper">
+    <form id="signupForm" class="row" method="POST">
+        {% csrf_token %}
+        <div class="text-center col-12">
+            <h1>
+                {% if selected_plan and user.is_authenticated %}
+                Update Account
+                {% else %}
+                Create Account
+                {% endif %}</h1>
+        </div>
+        {% if not user.client %}
+        <div id="userInfoCont" class="signup-form col-12 col-md-6 pt-4 pt-md-0">
             <div class="row">
-                <div class="col-12 pb-4">
-                    <h1>Welcome to Apetur!</h1>
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label>First name</label>
                         <input type="text" name="firstname" class="form-control" aria-describedby="emailHelp"
                             placeholder="Enter first name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Last name</label>
-                        <input type="text" name="lastname" class="form-control" aria-describedby="emailHelp"
-                            placeholder="Enter last name" required>
                     </div>
 
                     <div class="form-group">
@@ -57,9 +58,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-6">
                     <div class="form-group">
                         <label>Email address</label>
                         <input type="email" name="email" class="form-control" aria-describedby="emailHelp"
@@ -76,6 +75,8 @@
                             placeholder="Repeat password" required>
                     </div>
                 </div>
+
+                {% if not selected_plan %}
                 <div class="col-12">
                     <div id="errorMsgCont"
                         class="alert alert-danger alert-dismissible{% if not signuperror %} d-none{% endif %}">
@@ -91,15 +92,202 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Signup</button>
-                    <a href="/login"><small class="form-text">Already have an account?</small></a>
+                    {% if not selected_plan and not user.is_authenticated %}
+                    <a href="/login"><small class="form-text pt-2">Already have an account?</small></a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div
+            class="side-cont text-center d-flex col-12 col-md-6{% if selected_plan and user.is_authenticated %} m-auto{% endif %}">
+            {% if selected_plan %}
+            <div class=" row">
+                {% comment %} Plan Selected {% endcomment %}
+                <div id="planSelectedCont" class="col-12 pb-4 p-0">
+                    <div id="planSelectedName">
+                        Plan selected: <span>{{ selected_plan_name }}</span>
+                    </div>
+                    <div id="planSelectedPrice">
+                        {{ selected_plan_price }}
+                    </div>
+                    <a href="/pricing">change plan</a>
+                </div>
+                {% comment %} Address {% endcomment %}
+                <div id="addressCont" class="col-12 pt-4 p-0 text-left">
+                    <div id="locationField" class="form-group mb-4">
+                        <label>Full Address</label>
+                        <input id="autocomplete" class="form-control" placeholder="Enter your address"
+                            onFocus="geolocate()" type="text" autocomplete="off" />
+                    </div>
+
+                    <div id="autocompleteAddressCont" class="mb-4">
+                        <label>Address</label>
+
+                        {% comment %} Stree Address {% endcomment %}
+                        <div class="form-group">
+                            <input name="streeAddress" id="street_address" class="form-control" disabled="true" />
+                        </div>
+
+                        {% comment %} City {% endcomment %}
+                        <div class="form-group">
+                            <input name="city" id="locality" class="form-control" disabled="true" />
+                        </div>
+
+                        {% comment %} State / Zip Code / Country {% endcomment %}
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <input name="state" id="administrative_area_level_1" class="form-control"
+                                        disabled="true" />
+                                </div>
+                            </div>
+                            <div class="col-6 pr-0 pl-0">
+                                <div class="form-group">
+                                    <input name="zipCode" id="postal_code" class="form-control" disabled="true" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <input name="country" id="country" class="form-control" disabled="true" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="changeAddress">Change Address</div>
+                    </div>
+
+                    {% comment %} Latitude / Longitude {% endcomment %}
+                    <input id="autocomplete_lat" type="hidden" name="lat" />
+                    <input id="autocomplete_lng" type="hidden" name="lng" />
+
+                    {% comment %} plan {% endcomment %}
+                    <input id="planSelected" type="hidden" name="planSelected" value="{{ selected_plan }}" />
                 </div>
             </div>
-        </form>
-    </div>
+            {% else %}
+            <div>
+                <div>Interested in becoming a photographer?</div>
+                <a href="/pricing" class="btn mt-3">Learn More</a>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if selected_plan %}
+        <div id="signupBtnCont" class="col-12 d-flex">
+            <div id="errorMsgCont"
+                class="alert alert-danger alert-dismissible{% if not signuperror %} d-none{% endif %}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div id="errormsg">
+                    {% if emailexists %}
+                    This email is already in use
+                    {% elif passnotmatch %}
+                    Passwords do not match
+                    {% else %}
+                    Signup failed
+                    {% endif %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary m-auto">Signup</button>
+            {% if not selected_plan and not user.is_authenticated %}
+            <a href="/login" class="m-auto"><small class="form-text pt-2">Already have an account?</small></a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </form>
 </div>
+
+<script>
+    /**
+     * photographer address form
+     * 
+     * src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"
+     */
+    var placeSearch, autocomplete;
+
+    var componentForm = {
+        street_address: 'ling_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'short_name',
+        postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), {
+                types: ['geocode']
+            });
+
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components.
+        autocomplete.setFields(['address_component', 'geometry']);
+
+        // When the user selects an address from the drop-down, populate the
+        // address fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+            document.getElementById(component).value = '';
+            // document.getElementById(component).disabled = false;
+            $('#locationField').slideUp();
+            $('#autocompleteAddressCont').slideDown();
+        }
+
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]];
+                document.getElementById(addressType).value = val;
+            } else if (addressType == 'street_number') {
+                var val = place.address_components[i]['short_name'];
+                var curVal = document.getElementById('street_address').value;
+                document.getElementById('street_address').value = val + ' ' + curVal;
+            } else if (addressType == 'route') {
+                var val = place.address_components[i]['long_name'];
+                var curVal = document.getElementById('street_address').value;
+                document.getElementById('street_address').value = curVal + val;
+            }
+        }
+
+        // Get the latitude and longitude of the address
+        $('#autocomplete_lat').val(place.geometry.location.lat());
+        $('#autocomplete_lng').val(place.geometry.location.lng());
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+</script>
 
 {% endblock content %}
 
+{% block google_map_api_callback %}&callback=initAutocomplete{% endblock google_map_api_callback %}
 {% block site_js %}
 <script src="{{ STATIC_URL }}js/usermanagement/signup.js"></script>
 {% endblock site_js %}

@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% block title %}Pricing{% endblock title %}
+{% block navbar_style %}{% endblock navbar_style %}
+{% block site_style %}sitestyle-no-space{% endblock site_style %}
+{% block site_css %}
+<link href="{{ STATIC_URL }}css/pricing.css" media="screen" rel="stylesheet">
+{% endblock site_css %}
+
+{% block content %}
+{% comment %} palns {% endcomment %}
+<div id="subPlans" class="sub-plans-cont row">
+    <div class="col-12 text-center mt-2 mb-2">
+        <h1>Subscription Plans</h1>
+        <a href="#featuresCont" class="feature-learn-more-btn scroll-to d-table btn mt-4">Learn More</a>
+    </div>
+    {% comment %} Free {% endcomment %}
+    <div class="sub-plan-cont col-12 col-sm-6 col-lg-3">
+        <div class="sub-plan">
+            <h3>Free</h3>
+            <div class="sub-plan-price">
+            </div>
+            <ul class="sub-plan-features">
+                <li>
+                    <a href="#featureCommericalSite" class="scroll-to">
+                        1 non-commercial site
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featureBranding" class="scroll-to">
+                        Singleton Branding
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+            </ul>
+            <a href="/signup?plan=0" class="sub-plan-select-btn btn">select</a>
+        </div>
+    </div>
+
+    {% comment %} Basic {% endcomment %}
+    <div class="sub-plan-cont col-12 col-sm-6 col-lg-3">
+        <div class="sub-plan">
+            <h3>Basic</h3>
+            <div class="sub-plan-price">
+                $10
+                <div class="sub-plan-price-interval">per month</div>
+            </div>
+            <ul class="sub-plan-features">
+                <li>
+                    <a href="#featureCommericalSite" class="scroll-to">
+                        1 commercial site
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featureBranding" class="scroll-to">
+                        user your own branding
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+            </ul>
+            <a href="/signup?plan=1" class="sub-plan-select-btn btn">select</a>
+            <div class="sub-plan-banner sub-plan-banner-popular">popular</div>
+        </div>
+    </div>
+
+    {% comment %} Professional {% endcomment %}
+    <div class="sub-plan-cont col-12 col-sm-6 col-lg-3">
+        <div class="sub-plan">
+            <h3>Professional</h3>
+            <div class="sub-plan-price">
+                $30
+                <div class="sub-plan-price-interval">per month</div>
+            </div>
+            <ul class="sub-plan-features">
+                <li>
+                    <a href="#featureCommericalSite" class="scroll-to">
+                        10 commercial site
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featureBranding" class="scroll-to">
+                        user your own branding
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+            </ul>
+            <a href="/signup?plan=2" class="sub-plan-select-btn btn">select</a>
+        </div>
+    </div>
+
+    {% comment %} Enterprise {% endcomment %}
+    <div class="sub-plan-cont col-12 col-sm-6 col-lg-3">
+        <div class="sub-plan">
+            <h3>Enterprise</h3>
+            <div class="sub-plan-price">
+                $125
+                <div class="sub-plan-price-interval">per month</div>
+            </div>
+            <ul class="sub-plan-features">
+                <li>
+                    <a href="#featureCommericalSite" class="scroll-to">
+                        Unlimited commercial site
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featureBranding" class="scroll-to">
+                        Custom Authentication
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+            </ul>
+            <a href="/signup?plan=3" class="sub-plan-select-btn btn">select</a>
+            <div class="sub-plan-banner sub-plan-banner-new">new</div>
+        </div>
+    </div>
+</div>
+
+{% comment %} features {% endcomment %}
+<div id="featuresCont" class="row mt-5">
+    <div class="col-12 text-center mt-5 mb-4">
+        <h1>Features</h1>
+    </div>
+    <div class="col-12">
+        {% comment %} commercial site {% endcomment %}
+        <div id="featureCommericalSite" class="row">
+            <div class="col-12 text-center">
+                <h2 class="mt-2">Commercial Site</h2>
+            </div>
+            <div class="feature-visual col-12 col-md-8">
+                <img src="{{ SITE_FILE_URL }}home/crm.png" class="img-cover" />
+            </div>
+            <div class="feature-detail col-12 col-md-4 d-flex">
+                <div class="m-auto p-2">
+                    Detail on commerical site goes here. This is an sample text that is suppose to go on and on about
+                    what commerical site is
+                    <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} branding {% endcomment %}
+        <div id="featureBranding" class="row">
+            <div class="col-12 text-center">
+                <h2 class="mt-2">Branding</h2>
+            </div>
+            <div class="feature-detail col-12 col-md-4 d-flex">
+                <div class="m-auto p-2">
+                    Detail on branding goes here. This is an sample text that is suppose to go on and on about
+                    what commerical site is
+                    <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
+                </div>
+            </div>
+            <div class="feature-visual col-12 col-md-8">
+                <img src="{{ SITE_FILE_URL }}home/crm.png" class="img-cover" />
+            </div>
+        </div>
+
+        {% comment %} custom authentication {% endcomment %}
+        <div id="featureCustomAuthent" class="row">
+            <div class="col-12 text-center">
+                <h2 class="mt-2">Custom Authentication</h2>
+            </div>
+            <div class="feature-visual col-12 col-md-8">
+                <img src="{{ SITE_FILE_URL }}home/crm.png" class="img-cover" />
+            </div>
+            <div class="feature-detail col-12 col-md-4 d-flex">
+                <div class="m-auto p-2">
+                    Detail on custom authentication goes here. This is an sample text that is suppose to go on and on
+                    about
+                    what commerical site is
+                    <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block site_js %}
+{% endblock site_js %}

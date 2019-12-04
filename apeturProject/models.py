@@ -9,16 +9,16 @@ from decimal import Decimal
 
 
 class Address(models.Model):
-    zip_code = models.TextField()
-    country_sn = models.TextField()
-    state_sn = models.TextField()
-    city_sn = models.TextField()
+    zip_code = models.TextField(default='')
+    country_sn = models.TextField(default='')
+    state_sn = models.TextField(default='')
+    city_sn = models.TextField(default='')
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    street_address = models.TextField(
-    )  # street number and street name (ex: 123 Fake Street)
+    # street number and street name (ex: 123 Fake Street)
+    street_address = models.TextField(default='')
     street_address2 = models.TextField(
-        null=True, blank=True)  # Apt/Blg number/etc CAN BE NULL
+        null=True, default='', blank=True)  # Apt/Blg number/etc CAN BE NULL
 
     def get_country(self):
         return self.country_sn
@@ -58,7 +58,7 @@ class Client(models.Model):
                                    on_delete=models.CASCADE,
                                    null=True)
     dob = models.DateField(null=False, blank=False)
-    profile_pic = models.TextField(null=True, blank=True)
+    profile_pic = models.TextField(null=True, default='', blank=True)
 
     def get_city(self):
         if (self.address == None):
@@ -97,14 +97,15 @@ class Client(models.Model):
 
 class Photographer(models.Model):
     client = models.OneToOneField(Client, on_delete=models.CASCADE)
-    bio = models.CharField(max_length=500)
-    radius = models.PositiveIntegerField(default=25)
-    tags = models.TextField()
+    bio = models.CharField(max_length=500, null=True)
+    radius = models.PositiveIntegerField(default=25, null=True)
+    tags = models.TextField(null=True)
 
     def get_address(self):
         return self.client.get_full_address()
 
     """ Test function """
+
     def get_tags(self):
         return ["Tag1", "Tag2"]
 
@@ -119,22 +120,46 @@ class Photographer(models.Model):
 
 
 class Event_Type(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    adult_content = models.BooleanField()
+    name = models.CharField(max_length=255, default='', unique=True)
+    adult_content = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
 
-class File(models.Model):
-    photographer_id = models.ForeignKey(Photographer, on_delete=models.CASCADE)
+# store photographer taken/uploaded photos and videos
+class Photographer_File(models.Model):
+    photographer = models.ForeignKey(Photographer, on_delete=models.CASCADE)
     location = models.OneToOneField(Address, on_delete=models.CASCADE)
-    path = models.CharField(max_length=500)
-    is_featured = models.BooleanField()
-    in_gallery = models.BooleanField()
-    adult_content = models.BooleanField()
+    event_type = models.OneToOneField(
+        Event_Type, on_delete=models.DO_NOTHING, default='')
+    path = models.CharField(max_length=500, default='')
+    is_featured = models.BooleanField(default=False)
+    in_gallery = models.BooleanField(default=False)
     upload_date = models.DateField(auto_now=True)
-    likes = models.PositiveIntegerField(default=0)
+    likes = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.photographer.client.user.username
+
+
+# enum table for file types used for File table, such as profile pci and profile banner
+class File_Type(models.Model):
+    type_name = models.CharField(max_length=255, default='', unique=True)
+
+    def __str__(self):
+        return self.type_name
+
+
+# store all other file, such as profile pic and profile banner
+class File(models.Model):
+    file_type = models.ForeignKey(
+        File_Type, on_delete=models.CASCADE, default=None)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, default=None)
+    path = models.CharField(max_length=500, default='')
+
+    def __str__(self):
+        return self.client.user.username
 
 
 class Schedule(models.Model):
@@ -147,6 +172,7 @@ class Schedule(models.Model):
     max_bookings = models.IntegerField(null=False)
     cur_num_of_bookings = models.IntegerField(default=0, null=False) #Can be derived from the amount of events
     is_confirmed = models.BooleanField(null = False)
+
     def get_photographer_id(self):
         return self.photographer_id
 
@@ -270,7 +296,7 @@ def find_photographer_in_radius(input_lat, input_lng, radius):
         current_address_id = current_address[0]
         query = Photographer.objects.all().filter(
             client__address__id=current_address_id).first(
-            )  # Query based on the addresss id
+        )  # Query based on the addresss id
         # If a result exists (its possible the address belongs to a client, we do not want to return that)
         if query != None:
             photographer_list.append(
@@ -293,7 +319,8 @@ as well as the boolen determining whether or not that date is fully booked for t
 
 
 def retrieve_photographers_schedules(p_id):
-    if p_id == False:  # Error checking. If p_id is False (meaning there was no p_id grabbed from GET) return empty string
+    # Error checking. If p_id is False (meaning there was no p_id grabbed from GET) return empty string
+    if p_id == False:
         return []
     json_data = []
     schedules = Schedule.objects.filter(

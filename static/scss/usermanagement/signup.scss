@@ -2,15 +2,31 @@
 @import '../common/url';
 @import '../common/grid';
 
-#site-background {
+#siteBackground {
     background-image: url($site_file+'usermanagement/signup/signup-background-reduced.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
+#siteWrapper {
+    background-color: rgba($white, 0.8);
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+#userInfoCont {
+    @media (max-width: $md) {
+        order: 2;
+    }
+}
+
 .signup-form-wrapper {
     flex: 1;
+
+    &>div {
+        padding: 40px;
+    }
 }
 
 .signup-form {
@@ -18,16 +34,111 @@
     flex-direction: column;
     vertical-align: middle;
     justify-content: center;
-    padding: 40px;
-    max-width: 800px;
+    position: relative;
 
-    @media (max-width: $md) {
-        padding: 10px;
+    &::after {
+        @media (min-width: $md) {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            height: 80%;
+            border: 1px solid rgba($gray, 0.7);
+            transform: translateY(-50%);
+        }
     }
 
     form {
-        background-color: white;
-        padding: 50px 20px;
-        box-shadow: 0 5px 15px rgba($gray, 0.7);
+        margin: auto;
+    }
+
+    .btn {
+        font-size: 15px;
+        padding: 8px;
+    }
+}
+
+.side-cont {
+    position: relative;
+
+    @media (max-width: $md) {
+        order: 1;
+    }
+
+    &>div {
+        margin: auto;
+        width: 100%;
+    }
+
+    &::after {
+        @media (max-width: $md) {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 90%;
+            border: 1px solid rgba($gray, 0.7);
+            transform: translateX(-50%);
+        }
+    }
+
+    .btn {
+        width: auto;
+        padding: 5px 20px;
+        font-size: 12px;
+    }
+}
+
+#planSelectedCont {
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: calc(90% + 20px);
+        border: 1px solid rgba($gray, 0.7);
+        transform: translateX(-50%);
+    }
+
+    a {
+        font-size: 12px;
+    }
+
+    #planSelectedName {
+        font-size: 20px;
+
+        span {
+            color: $blue;
+            font-weight: bold;
+        }
+    }
+
+    #planSelectedPrice {
+        font-size: 15px;
+        ;
+    }
+}
+
+#autocompleteAddressCont {
+    display: none;
+    text-align: left;
+}
+
+#changeAddress {
+    cursor: pointer;
+    font-size: 15px;
+    color: $blue;
+}
+
+#signupBtnCont {
+    flex-direction: column;
+
+    @media (max-width: $md) {
+        order: 3;
+    }
+
+    .btn {
+        padding: 10px;
+        max-width: 400px;
     }
 }

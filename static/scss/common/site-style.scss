@@ -35,25 +35,35 @@ h1 {
 
 /* Bootstrap Restyle - Start
 *********************************************************************/
-.btn-primary {
+.btn {
     width: 100%;
-    height: 50px;
     background-color: $blue;
     border: none;
     font-size: 20px;
+    color: $white;
+    padding: 15px 20px;
+    border-radius: 30px;
+    cursor: pointer;
 
     &:hover {
+        color: $white;
         background-color: $dark_blue;
     }
 }
 
 .form-group {
     label {
-        font-size: 20px;
+        font-size: 18px;
     }
 
-    .form-control {
-        height: 50px;
+    select {
+        height: 40px;
+    }
+
+    .form-control:not(select) {
+        font-size: 0.8em;
+        padding: 10px 15px;
+        height: auto;
     }
 }
 
@@ -118,8 +128,21 @@ h1 {
     &.navstyle-semi-transparent {
         background: transparent;
 
-        &:not(.show-color):hover {
-            background: rgba($gray, 0.5);
+        &:not(.show-color) {
+            &:hover {
+                background: rgba($gray, 0.5);
+            }
+        }
+
+        &.show-color {
+            #login_btn {
+                background-color: $white;
+                color: $blue;
+
+                &:hover {
+                    background-color: rgba($white, 0.9);
+                }
+            }
         }
     }
 
@@ -187,5 +210,96 @@ h1 {
     color: $white;
 }
 
+.max-width {
+    max-width: $cont_width;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+}
+
+.img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
 /* Site Styling - End
+*********************************************************************/
+
+
+/* Modified Bootstrap Circle Progress Bar - Start
+*********************************************************************/
+.progress-circle {
+    width: 100px;
+    height: 100px;
+    background: none;
+    position: relative;
+
+    &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 6px solid $white;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &>span {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+    }
+
+    .progress-left {
+        left: 0;
+    }
+
+    .progress-bar {
+        color: $blue;
+        width: 100%;
+        height: 100%;
+        background: none;
+        border-width: 3px;
+        border-style: solid;
+        position: absolute;
+        top: 0;
+    }
+
+    .progress-left .progress-bar {
+        left: 100%;
+        border-top-right-radius: 80px;
+        border-bottom-right-radius: 80px;
+        border-left: 0;
+        -webkit-transform-origin: center left;
+        transform-origin: center left;
+    }
+
+    .progress-right {
+        right: 0;
+    }
+
+    .progress-right .progress-bar {
+        left: -100%;
+        border-top-left-radius: 80px;
+        border-bottom-left-radius: 80px;
+        border-right: 0;
+        -webkit-transform-origin: center right;
+        transform-origin: center right;
+    }
+
+    .progress-value {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 20px;
+    }
+}
+
+/* Modified Bootstrap Circle Progress Bar - End
 *********************************************************************/

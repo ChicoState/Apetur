@@ -6,3 +6,8 @@ $('#signupForm').submit(function (e) {
         $('#errormsg').html("Passwords do not match");
     }
 });
+
+$('#changeAddress').click(function () {
+    $('#locationField').slideDown();
+    $('#autocompleteAddressCont').slideUp();
+});

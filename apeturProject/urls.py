@@ -24,7 +24,13 @@ urlpatterns = [
 
     # profile
     path('profile', views.profile),
-    
+
     # schedule
-    path('schedule', views.schedule, name = "schedule")
+    path('schedule', views.schedule, name = "schedule"),
+
+    # settings
+    path('settings', views.account_settings),
+
+    # pricing
+    path('pricing', views.pricing)
 ]
