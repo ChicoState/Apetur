@@ -1,3 +1,5 @@
+sudo: enabled
+
 language: python
 
 python:
@@ -7,4 +9,6 @@ install:
   - pip install -r requirements.txt
 
 script:
-  -pytest
+  -manage.py makemigrations
+  -manage.py migrate
+  -manage.py runserver
