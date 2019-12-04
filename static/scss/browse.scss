@@ -54,7 +54,7 @@
 
 #browsePhotographers {
     width: 400px;
-    overflow: scroll;
+    overflow-y: scroll;
     padding: 0 10px;
 
     @media (max-width: $md) {
