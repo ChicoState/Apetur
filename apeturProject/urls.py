@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'apetur'
+
 urlpatterns = [
     # homepage
     path('', views.home),
@@ -24,5 +26,5 @@ urlpatterns = [
     path('profile', views.profile),
     
     # schedule
-    path('schedule', views.schedule)
+    path('schedule', views.schedule, name = "schedule")
 ]

@@ -6,14 +6,21 @@ from pathlib import Path
 import simplejson as json
 # User
 from django.contrib.auth.models import User
-from .models import Client
+from .models import *
+""" from .models import Client
 from .models import Photographer
 from .models import find_photographer_in_radius
 from .models import retrieve_photographers_schedules
+from .models import retrieve_photographers_events_and_schedule
+ """
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 import datetime
+
+# Forms
+from . import forms
+
 
 convert_to_miles = 1.609
 
@@ -212,12 +219,41 @@ def profile(request):
 def schedule(request):
     if request.method == "GET":
         p_id = request.GET.get("p_id", False)
+      #  event_date = request.GET.get("date",False)
         photographer_name = ""
         if (p_id != False):
             photographer_name = Photographer.objects.filter(
                 id=p_id).first().get_full_name()
+    if request.method == "POST":
+        p_id = request.POST.get("p_id")
+        photographer_name = photographer_name = Photographer.objects.filter(id=p_id).first().get_full_name()
+
+        form = forms.CreateEvent(request.POST)
+        if form.is_valid:
+            event_date_string = request.POST.get("event_date") # Grab the event date
+            c_id = request.POST.get("c_id")  # Grab client id
+            # if client id does not exist ask for log in
+
+            # grab schedule via date and photographer id
+            schedule = Schedule.objects.filter(photographer_id = p_id, date = event_date_string)
+            schedule = schedule.first()
+            #schedule query returned an available schedule
+            if schedule:
+                # Create the event
+                # b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.') b.save()
+                event_type = Event_Type.objects.filter(id = request.POST.get("event_type")).first()
+                new_event = Event(event_type= event_type, schedule_id=schedule,client_id=c_id, start_time=request.POST.get("start_time"), end_time=request.POST.get("end_time"), confirmed = True)
+                new_event.save()
+        else:
+            print("not valid")
+    else:
+        form = forms.CreateEvent()
     data = {
-        "json_data": retrieve_photographers_schedules(p_id),
-        "p_name": photographer_name
+        "schedule_json_data": retrieve_photographers_events_and_schedule(p_id)[1],
+        "event_json_data" : retrieve_photographers_events_and_schedule(p_id)[0],
+        "p_name": photographer_name,
+        "form": form,
+        "p_id": int(p_id),
+        "username" : request.user.get_full_name()
     }
-    return render(request, 'schedule.html', data)
+    return render(request, 'schedule.html', data,)
