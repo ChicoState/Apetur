@@ -284,7 +284,7 @@ def browse(request):
 
 # profile
 def profile(request):
-    # if no user_id where passed as url parameter
+    # if no user_id was passed as url parameter
     if request.method == 'GET' and 'user_id' in request.GET:
         user_id = request.GET['user_id']
         # check if user_id exist
@@ -318,11 +318,9 @@ def profile(request):
             # schedule query returned an available schedule
             if schedule:
                 # Create the event
-                # b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.') b.save()
-                event_type = Event_Type.objects.filter(
-                    id=request.POST.get("event_type")).first()
-                new_event = Event(event_type=event_type, schedule_id=schedule, client_id=c_id, start_time=request.POST.get(
-                    "start_time"), end_time=request.POST.get("end_time"), confirmed=True)
+                event_type = Event_Type.objects.filter(id = request.POST.get("event_type")).first()
+                new_event = Event(event_type= event_type, schedule_id=schedule,client_id=c_id, start_time=request.POST.get("start_time"), end_time=request.POST.get("end_time"), confirmed = True)
+
                 new_event.save()
     else:
         form = forms.CreateEvent()
