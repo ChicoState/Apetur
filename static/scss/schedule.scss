@@ -18,7 +18,6 @@
     cursor: pointer;
 }
 
-
 /* Pop up modal (event scheduler) CSS*/
 /* Background */
 .modal {
@@ -46,4 +45,65 @@
     padding: 20px;
     border: 1px solid #888;
     width: 60%;
+}
+
+
+/***********************************************
+ * Styling Overwrite
+ **********************************************/
+.fc-toolbar {
+    flex-flow: wrap;
+
+    // @media (max-width: $md) {
+    //     flex-direction: column;
+    // }
+
+    .fc-center {
+        margin: 10px 0;
+    }
+
+    .fc-left {
+        @media (max-width: $md) {
+            width: 100%;
+        }
+    }
+
+    .fc-center,
+    .fc-right {
+        @media (max-width: $sm) {
+            font-size: 12px;
+
+            .fc-button .fc-icon {
+                font-size: 1em;
+            }
+        }
+    }
+}
+
+.fc-button-primary {
+    border: none !important;
+    background-color: $blue !important;
+
+    &.fc-button-active {
+        background-color: $dark_blue !important;
+    }
+}
+
+.fc-widget-header {
+    @media(max-width: $sm) {
+        font-size: 0.9em;
+    }
+}
+
+.fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
+    margin-right: 5px;
+}
+
+.fc-scroller {
+    overflow: auto !important;
+    height: auto !important;
+}
+
+.fc-dayGrid-view .fc-body .fc-row {
+    min-height: 3em !important;
 }
