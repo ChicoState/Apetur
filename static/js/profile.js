@@ -155,4 +155,11 @@ function updateProfileSectionPosition(target) {
         left: sectionPos.left * -1,
         height: $('#' + target.data('target-section')).height()
     });
-}
+};
+
+/**
+ * Readjust the height of the container when selecting between calander views
+ */
+$('.fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button').click(function () {
+    updateProfileSectionPosition($('#profileNav .selected'));
+});

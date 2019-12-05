@@ -25,7 +25,7 @@
         <div class="profile-detail col-12 col-md-8">
             <h2 id="profileDetailUserName" class="font-weight-bold">{{ user_name }}</h2>
             {% if account_type == "Photographer" %}
-                <p class="font-weight-bold">{{account_type}}</p>
+            <p class="font-weight-bold">{{account_type}}</p>
             {% endif %}
             {% load formater %}
             <div id="profileDetailFollowCont">
@@ -60,11 +60,11 @@
 <div id="profileSectionsCont">
     {% comment %} schedule {% endcomment %}
     {% if account_type == "Photographer" %}
-        {% comment %} Load JSON data from views.py {% endcomment %}
-        <script>
-            var schedule_json_data = JSON.parse("{{schedule_json_data|escapejs}}");
-            var event_json_data = JSON.parse("{{event_json_data|escapejs}}");
-        </script>
+    {% comment %} Load JSON data from views.py {% endcomment %}
+    <script>
+        var schedule_json_data = JSON.parse("{{schedule_json_data|escapejs}}");
+        var event_json_data = JSON.parse("{{event_json_data|escapejs}}");
+    </script>
     <div id="profileSchedule" class="profile-sections" data-section-name="schedule">
         <div class="max-width">
             <link href="{{STATIC_FILE_URL}}fullcalendar/packages/core/main.css" rel="stylesheet" />
@@ -76,28 +76,28 @@
             <script src="{{STATIC_FILE_URL}}fullcalendar/packages/timegrid/main.js"></script>
             <script src="{{STATIC_FILE_URL}}fullcalendar/packages/interaction/main.js"></script>
             {% if user.client.photographer and user.client.photographer.id is p_id %}
-                <div id="calendar"></div>
-                <script src = "{{STATIC_URL}}js/photographer_schedule_view.js"> </script>
+            <div id="calendar"></div>
+            <script src="{{STATIC_URL}}js/photographer_schedule_view.js"> </script>
             {% elif user.client %}
-                <div id="client-calendar"></div>
-                <div id = "schedule-event-form-container" class = "modal">
-                    <div class = "modal-content">
-                        <h2>Schedule an event</h2>
-                        <form class = "site-form" id = "schedule-event-form" action = "" method = "post">
-                            <input type = "text" name = "name" readonly = "readonly" value = {{username}}>
-                            <input type = "date" name = "event_date" id = "event_date" value = "2019-11-25" readonly = "readonly">
-                            <input type = "hidden" name = "p_id" value = {{p_id}} >
-                            <input type = "hidden" name = "c_id" value = {{user.client.id}}>
-                            {% csrf_token %}
-                            {{form}}
-                        <input type  = "submit" value = "Create">
-                        </form>
-                    </div>
+            <div id="client-calendar"></div>
+            <div id="schedule-event-form-container" class="modal">
+                <div class="modal-content">
+                    <h2>Schedule an event</h2>
+                    <form class="site-form" id="schedule-event-form" action="" method="post">
+                        <input type="text" name="name" readonly="readonly" value={{username}}>
+                        <input type="date" name="event_date" id="event_date" value="2019-11-25" readonly="readonly">
+                        <input type="hidden" name="p_id" value={{p_id}}>
+                        <input type="hidden" name="c_id" value={{user.client.id}}>
+                        {% csrf_token %}
+                        {{form}}
+                        <input type="submit" value="Create">
+                    </form>
                 </div>
-                <script src = "{{STATIC_URL}}js/client_schedule_view.js"> </script>
-            {% endif %}
             </div>
+            <script src="{{STATIC_URL}}js/client_schedule_view.js"> </script>
+            {% endif %}
         </div>
+    </div>
     {% endif %}
 
     {% comment %} Gallery {% endcomment %}
