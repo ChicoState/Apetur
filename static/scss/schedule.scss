@@ -84,6 +84,10 @@
     border: none !important;
     background-color: $blue !important;
 
+    &:focus {
+        box-shadow: none !important;
+    }
+
     &.fc-button-active {
         background-color: $dark_blue !important;
     }
