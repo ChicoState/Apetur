@@ -1,13 +1,25 @@
 @import 'common/_color.scss';
 @import 'common/grid';
 
+.full-availability,
+.partial-availability {
+    cursor: pointer;
+}
+
 .full-availability {
     background-color: $green;
 
+    &:hover {
+        $background-color: $dark_green;
+    }
 }
 
 .partial-availability {
     background-color: $yellow;
+
+    &:hover {
+        $background-color: $dark_yellow;
+    }
 }
 
 .fully-booked {
@@ -20,33 +32,35 @@
 
 /* Pop up modal (event scheduler) CSS*/
 /* Background */
-.modal {
-    display: hidden;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-}
+#schedule-event-form-container {
+    z-index: 200;
 
-/* Inner content */
-.modal-content {
-    background-color: #fefefe;
-    margin: 10vh auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 60%;
-}
+    h1 {
+        color: $blue;
+    }
 
+    .modal-content {
+        max-width: 600px;
+        height: auto;
+        padding: 20px;
+        top: 70px;
+        background-color: $white;
+        border: none;
+        animation: none;
+
+        .close {
+            color: $red;
+
+            &:hover {
+                color: $dark_red;
+            }
+        }
+    }
+
+    button[type="submit"] {
+        padding: 10px;
+    }
+}
 
 /***********************************************
  * Styling Overwrite
@@ -83,9 +97,14 @@
 .fc-button-primary {
     border: none !important;
     background-color: $blue !important;
+    transition: 0.25s;
 
     &:focus {
         box-shadow: none !important;
+    }
+
+    &:hover:enabled {
+        background-color: $dark_blue !important;
     }
 
     &.fc-button-active {

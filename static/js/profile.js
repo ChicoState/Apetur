@@ -12,11 +12,9 @@ $('.modal-popup-image').each(function () {
     })
 });
 
-var span = document.getElementsByClassName("close")[0];
-
-span.onclick = function () {
-    modal.style.display = "none";
-}
+$('#imagePopupModal .close').click(function () {
+    $('#imagePopupModal').fadeOut(250);
+});
 /*
  * Modal - END
  ********************************************/

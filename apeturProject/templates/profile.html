@@ -82,19 +82,65 @@
             <div id="client-calendar"></div>
             <div id="schedule-event-form-container" class="modal">
                 <div class="modal-content">
-                    <h2>Schedule an event</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
                     <form class="site-form" id="schedule-event-form" action="" method="post">
-                        <input type="text" name="name" readonly="readonly" value={{username}}>
-                        <input type="date" name="event_date" id="event_date" value="2019-11-25" readonly="readonly">
-                        <input type="hidden" name="p_id" value={{p_id}}>
-                        <input type="hidden" name="c_id" value={{user.client.id}}>
                         {% csrf_token %}
-                        {{form}}
-                        <input type="submit" value="Create">
+
+                        <div class="row">
+                            <h1 class="col-12 mb-4">schedule event</h1>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>my name is</label>
+                                    <input type="text" name="name" readonly="readonly" class="form-control" {{if
+                                user.is_authenticated}} value={{ user.get_short_name }}{{endif}} />
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label>event date</label>
+                                    <input type="date" name="event_date" id="event_date" class="form-control"
+                                        value="2019-11-25" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label>event type</label>
+                                    {{ form.event_type }}
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label>start time</label>
+                                    {{ form.start_time }}
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label>end time</label>
+                                    {{ form.end_time }}
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="p_id" value={{p_id}} />
+                            <input type="hidden" name="c_id" value={{user.client.id}} />
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary m-auto">schedule</button>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
-            <script src="{{STATIC_URL}}js/client_schedule_view.js"> </script>
             {% endif %}
         </div>
     </div>
@@ -233,4 +279,5 @@
 
 {% block site_js %}
 <script src="{{ STATIC_URL }}js/profile.js"></script>
+<script src="{{STATIC_URL}}js/client_schedule_view.js"> </script>
 {% endblock site_js %}
