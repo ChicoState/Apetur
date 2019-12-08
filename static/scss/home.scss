@@ -481,6 +481,7 @@
                 font-weight: bold;
                 cursor: pointer;
                 transition: 0.25s;
+                border: 0;
 
                 &:hover {
                     background: $dark_blue;

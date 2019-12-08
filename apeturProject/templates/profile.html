@@ -2,6 +2,10 @@
 {% block title %}Profile{% endblock title %}
 {% block navbar_style %}navstyle-fixed navstyle-semi-transparent{% endblock navbar_style %}
 {% block site_css %}
+<link href="{{STATIC_FILE_URL}}fullcalendar/packages/core/main.css" rel="stylesheet" />
+<link href="{{STATIC_FILE_URL}}fullcalendar/packages/daygrid/main.css" rel="stylesheet" />
+<link href="{{STATIC_FILE_URL}}fullcalendar/packages/timegrid/main.css" rel="stylesheet" />
+<link href="{{STATIC_URL}}css/schedule.css" rel="stylesheet" />
 <link href="{{ STATIC_URL }}css/profile.css" media="screen" rel="stylesheet">
 {% endblock site_css %}
 
@@ -60,24 +64,10 @@
 <div id="profileSectionsCont">
     {% comment %} schedule {% endcomment %}
     {% if account_type == "Photographer" %}
-    {% comment %} Load JSON data from views.py {% endcomment %}
-    <script>
-        var schedule_json_data = JSON.parse("{{schedule_json_data|escapejs}}");
-        var event_json_data = JSON.parse("{{event_json_data|escapejs}}");
-    </script>
     <div id="profileSchedule" class="profile-sections" data-section-name="schedule">
         <div class="max-width">
-            <link href="{{STATIC_FILE_URL}}fullcalendar/packages/core/main.css" rel="stylesheet" />
-            <link href="{{STATIC_FILE_URL}}fullcalendar/packages/daygrid/main.css" rel="stylesheet" />
-            <link href="{{STATIC_FILE_URL}}fullcalendar/packages/timegrid/main.css" rel="stylesheet" />
-            <link href="{{STATIC_URL}}css/schedule.css" rel="stylesheet" />
-            <script src="{{STATIC_FILE_URL}}fullcalendar/packages/core/main.js"></script>
-            <script src="{{STATIC_FILE_URL}}fullcalendar/packages/daygrid/main.js"></script>
-            <script src="{{STATIC_FILE_URL}}fullcalendar/packages/timegrid/main.js"></script>
-            <script src="{{STATIC_FILE_URL}}fullcalendar/packages/interaction/main.js"></script>
             {% if user.client.photographer and user.client.photographer.id is p_id %}
             <div id="calendar"></div>
-            <script src="{{STATIC_URL}}js/photographer_schedule_view.js"> </script>
             {% elif user.client %}
             <div id="client-calendar"></div>
             <div id="schedule-event-form-container" class="modal">
@@ -278,6 +268,19 @@
 {% endblock content%}
 
 {% block site_js %}
+{% comment %} Load JSON data from views.py {% endcomment %}
+<script>
+    var schedule_json_data = JSON.parse("{{schedule_json_data|escapejs}}");
+    var event_json_data = JSON.parse("{{event_json_data|escapejs}}");
+</script>
+<script src="{{STATIC_FILE_URL}}fullcalendar/packages/core/main.js"></script>
+<script src="{{STATIC_FILE_URL}}fullcalendar/packages/daygrid/main.js"></script>
+<script src="{{STATIC_FILE_URL}}fullcalendar/packages/timegrid/main.js"></script>
+<script src="{{STATIC_FILE_URL}}fullcalendar/packages/interaction/main.js"></script>
+{% if user.client.photographer and user.client.photographer.id is p_id %}
+<script src="{{STATIC_URL}}js/photographer_schedule_view.js"> </script>
+{% else %}
+<script src="{{STATIC_URL}}js/client_schedule_view.js"></script>
+{% endif %}
 <script src="{{ STATIC_URL }}js/profile.js"></script>
-<script src="{{STATIC_URL}}js/client_schedule_view.js"> </script>
 {% endblock site_js %}
