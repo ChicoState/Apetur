@@ -12,6 +12,7 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 from datetime import datetime
 
+
 # Forms
 from . import forms
 
@@ -21,15 +22,12 @@ from urllib.parse import urlencode
 import requests
 import base64
 
-PAYPAL_CLIENT_SECRET = 'EHCVD1NeFbxNkp2RXv0LQ4Ynt1t16wTUZMvOCnJBhD9bKoNtIKoFvPfP8x13OmAI-PHGV2Xv3KOxT3Q6'
-PAYPAL_CLIENT_ID = 'AYTN1WSX_5mo5aLm4M60lHLOCoBv2MbkCmp3LZf-8mA56YPQ2vyKrW3zxTZOZ234E1-aq_Zt0JG_TU7e'
-
 convert_to_miles = 1.609
 
 
 def payment(request):
 
-    credentials = "%s:%s" % (PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
+    credentials = "%s:%s" % (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_CLIENT_SECRET)
     encode_credential = base64.b64encode(
         credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
 
@@ -44,9 +42,9 @@ def payment(request):
     url = 'https://api.sandbox.paypal.com/v1/oauth2/token'
     r = requests.post(url, headers=headers, data=param)
 
-    print(r.text)
+    #print(r.text)
     context = {
-        'PAYPAL_CLIENT_ID': PAYPAL_CLIENT_ID,
+        'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID,
         'auth_token': r.text
     }
 
