@@ -60,6 +60,11 @@
 
     &>.row {
         margin: auto;
+        justify-content: space-evenly;
+
+        @media (max-width: $md) {
+            flex-grow: 1;
+        }
 
         &>div {
             padding: 0;
@@ -80,7 +85,7 @@
 
 .profile-btn {
     color: $white !important;
-    margin: 5px;
+    margin: 5px 0;
     font-size: 15px;
     padding: 10px 20px;
 

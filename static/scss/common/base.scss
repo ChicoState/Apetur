@@ -15,6 +15,15 @@ body {
     min-height: 100%;
 }
 
+// disable all 'a' tags with disabled class
+a {
+    &.disabled {
+        pointer-events: none !important;
+        cursor: default !important;
+        color: rgba($gray, 0.5) !important;
+    }
+}
+
 // Navbar
 .navbar-container {
     z-index: 1021;

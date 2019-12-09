@@ -126,3 +126,9 @@ function hideLoading() {
 /*
  * Page Loading Container - END
  ********************************************/
+
+
+// disable all unused links
+$('a[href$="#"], a[href$=""]').each(function () {
+    $(this).addClass('disabled');
+})

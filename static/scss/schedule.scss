@@ -8,18 +8,10 @@
 
 .full-availability {
     background-color: $green;
-
-    &:hover {
-        $background-color: $dark_green;
-    }
 }
 
 .partial-availability {
-    background-color: $yellow;
-
-    &:hover {
-        $background-color: $dark_yellow;
-    }
+    background-color: $orange;
 }
 
 .fully-booked {
@@ -66,6 +58,7 @@
  * Styling Overwrite
  **********************************************/
 .fc-toolbar {
+    margin-bottom: 20px !important;
     flex-flow: wrap;
 
     // @media (max-width: $md) {
@@ -73,13 +66,17 @@
     // }
 
     .fc-center {
-        margin: 10px 0;
+        margin-top: 10px;
     }
 
     .fc-left {
         @media (max-width: $md) {
             width: 100%;
         }
+    }
+
+    .fc-right {
+        margin-top: 10px;
     }
 
     .fc-center,
@@ -112,14 +109,55 @@
     }
 }
 
+.fc-view-container {
+    // background: linear-gradient($dark_blue, $blue);
+    // color: $white;
+    // border-radius: 5px;
+    // padding: 10px 20px;
+
+    // th,
+    // td {
+    //     border: none;
+    // }
+
+    .fc-head-container {
+        &.fc-widget-header {
+            // padding: 20px 0;
+
+            .fc-row {
+                border-bottom: 1px solid white;
+                // padding-bottom: 20px;
+            }
+        }
+    }
+
+    .fc-today {
+        border-style: solid !important;
+        color: $white !important;
+
+        .fc-day-number {
+            border-radius: 50%;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+            background-color: rgba($black, 0.3);
+        }
+    }
+}
+
 .fc-widget-header {
     @media(max-width: $sm) {
         font-size: 0.9em;
     }
+
+    span {
+        margin: 10px 0;
+        display: block;
+    }
 }
 
 .fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
-    margin-right: 5px;
+    margin: 5px;
 }
 
 .fc-scroller {
