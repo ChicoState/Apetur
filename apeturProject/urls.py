@@ -4,6 +4,9 @@ from . import views
 app_name = 'apetur'
 
 urlpatterns = [
+    # payment
+    path('payment', views.payment),
+    
     # homepage
     path('', views.home),
 
@@ -32,5 +35,5 @@ urlpatterns = [
     path('settings', views.account_settings),
 
     # pricing
-    path('pricing', views.pricing)
+    #path('pricing', views.pricing)
 ]

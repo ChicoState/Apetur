@@ -15,9 +15,40 @@ from datetime import datetime
 # Forms
 from . import forms
 
+from urllib.request import urlopen, Request
+from urllib.parse import urlencode
+
+import requests
+import base64
+
+PAYPAL_CLIENT_SECRET = 'EHCVD1NeFbxNkp2RXv0LQ4Ynt1t16wTUZMvOCnJBhD9bKoNtIKoFvPfP8x13OmAI-PHGV2Xv3KOxT3Q6'
+PAYPAL_CLIENT_ID = 'AYTN1WSX_5mo5aLm4M60lHLOCoBv2MbkCmp3LZf-8mA56YPQ2vyKrW3zxTZOZ234E1-aq_Zt0JG_TU7e'
 
 convert_to_miles = 1.609
 
+def payment(request):
+        
+    credentials = "%s:%s" % (PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
+    encode_credential = base64.b64encode(credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
+
+    headers = {
+        "Authorization": ("Basic %s" % encode_credential),
+        'Accept': 'application/json',
+        'Accept-Language': 'en_US',
+    }
+    param = {
+        'grant_type': 'client_credentials',
+    }
+    url = 'https://api.sandbox.paypal.com/v1/oauth2/token'
+    r = requests.post(url, headers=headers, data=param)
+
+    print(r.text)
+    context = {
+        'PAYPAL_CLIENT_ID' : PAYPAL_CLIENT_ID,
+        'auth_token' : r.text
+    }
+
+    return render(request, 'payment.html', context)
 
 def get_user(email):
     try:
@@ -186,6 +217,7 @@ def signup_user(request):
             photographer.save()
             return redirect('/profile')
 
+
         return redirect('/')
     elif request.method == 'GET' and 'plan' in request.GET:
         is_photographer = False
@@ -246,10 +278,10 @@ def signup_user(request):
 
 
 def photographer_signup(request):
-    # if request.user.is_authenticated:
-    return render(request, 'usermanagement/photographer_signup.html')
-    # else:
-    #     return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if request.user.is_authenticated:
+        return render(request, 'usermanagement/photographer_signup.html')
+    else:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
 # browse
@@ -488,8 +520,3 @@ def account_settings(request):
         return render(request, 'usermanagement/account_settings.html')
     else:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-
-
-# Pricing
-def pricing(request):
-    return render(request, 'pricing.html')
