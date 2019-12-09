@@ -16,24 +16,29 @@
     {% comment %} Free {% endcomment %}
     <div class="sub-plan-cont col-12 col-sm-6 col-lg-3">
         <div class="sub-plan">
-            <h3>Free</h3>
+            <h3>Free Client Account</h3>
             <div class="sub-plan-price">
             </div>
             <ul class="sub-plan-features">
                 <li>
-                    <a href="#featureCommericalSite" class="scroll-to">
-                        1 non-commercial site
-                        <i class="fas fa-info-circle"></i>
+                    <a class="scroll-to">
+                        booking photo shot
                     </a>
                 </li>
                 <li>
-                    <a href="#featureBranding" class="scroll-to">
-                        Singleton Branding
+                    <a class="scroll-to">
+                        contact photographer
+                    </a>
+                </li>
+                <li>
+                    <a href="#personalProfile" class="scroll-to">
+                        personal profile page
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </li>
             </ul>
-            <a href="/signup?plan=0" class="sub-plan-select-btn btn">select</a>
+            <div class="sub-plan-price"></div>
+            <a href="/signup" class="sub-plan-select-btn btn">select</a>
         </div>
     </div>
 
@@ -47,14 +52,14 @@
             </div>
             <ul class="sub-plan-features">
                 <li>
-                    <a href="#featureCommericalSite" class="scroll-to">
-                        1 commercial site
+                    <a href="#personalProfile" class="scroll-to">
+                        personal profile
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#featureBranding" class="scroll-to">
-                        user your own branding
+                    <a href="#featureSearch" class="scroll-to">
+                        searchable by client
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </li>
@@ -74,14 +79,20 @@
             </div>
             <ul class="sub-plan-features">
                 <li>
-                    <a href="#featureCommericalSite" class="scroll-to">
-                        10 commercial site
+                    <a href="#personalProfile" class="scroll-to">
+                        personal profile
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#featureBranding" class="scroll-to">
-                        user your own branding
+                    <a href="#featureSearch" class="scroll-to">
+                        searchable by client
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featureClientProofing" class="scroll-to">
+                        client proofing
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </li>
@@ -100,14 +111,26 @@
             </div>
             <ul class="sub-plan-features">
                 <li>
-                    <a href="#featureCommericalSite" class="scroll-to">
-                        Unlimited commercial site
+                    <a href="#personalProfile" class="scroll-to">
+                        personal profile
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#featureBranding" class="scroll-to">
-                        Custom Authentication
+                    <a href="#featureSearch" class="scroll-to">
+                        searchable by client
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featureClientProofing" class="scroll-to">
+                        client proofing
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featureCustomBranding" class="scroll-to">
+                        branding
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </li>
@@ -125,52 +148,67 @@
     </div>
     <div class="col-12">
         {% comment %} commercial site {% endcomment %}
-        <div id="featureCommericalSite" class="row">
+        <div id="personalProfile" class="row">
             <div class="col-12 text-center">
-                <h2 class="mt-2">Commercial Site</h2>
-            </div>
-            <div class="feature-visual col-12 col-md-8">
-                <img src="{{ SITE_FILE_URL }}home/crm.png" class="img-cover" />
+                <h2 class="mt-2">PersonalProfile</h2>
             </div>
             <div class="feature-detail col-12 col-md-4 d-flex">
                 <div class="m-auto p-2">
-                    Detail on commerical site goes here. This is an sample text that is suppose to go on and on about
-                    what commerical site is
+                    Your very own personalized profile! Complete with contact info, booking calendar, about me, previous
+                    work, portfolio, social media accounts
                     <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
                 </div>
+            </div>
+            <div class="feature-visual col-12 col-md-8">
+                <img src="{{ SITE_FILE_URL }}home/user_profile.png" class="img-cover" />
+            </div>
+        </div>
+
+        {% comment %} search {% endcomment %}
+        <div id="featureSearch" class="row">
+            <div class="col-12 text-center">
+                <h2 class="mt-2">Search</h2>
+            </div>
+            <div class="feature-visual col-12 col-md-8">
+                <img src="{{ SITE_FILE_URL }}pricing/search.png" class="img-cover" />
+            </div>
+            <div class="feature-detail col-12 col-md-4 d-flex">
+                <div class="m-auto p-2">
+                    Attract new clients by being added to our geolocated search engine for photographers.
+                    <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} client proofing {% endcomment %}
+        <div id="featureClientProofing" class="row">
+            <div class="col-12 text-center">
+                <h2 class="mt-2">Client Proofing</h2>
+            </div>
+            <div class="feature-detail col-12 col-md-4 d-flex">
+                <div class="m-auto p-2">
+                    Upload photo for client approval through our password protected file uploader. Make any revision
+                    requested by client. Clients can download photo digitally or order prints.
+                    <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
+                </div>
+            </div>
+            <div class="feature-visual col-12 col-md-8">
+                <img src="{{ SITE_FILE_URL }}pricing/custom_branding.png" class="img-cover" />
             </div>
         </div>
 
         {% comment %} branding {% endcomment %}
-        <div id="featureBranding" class="row">
+        <div id="featureCustomBranding" class="row">
             <div class="col-12 text-center">
-                <h2 class="mt-2">Branding</h2>
+                <h2 class="mt-2">Custom Branding</h2>
+            </div>
+            <div class="feature-visual col-12 col-md-8">
+                <img src="{{ SITE_FILE_URL }}pricing/custom_branding.png" class="img-cover" />
             </div>
             <div class="feature-detail col-12 col-md-4 d-flex">
                 <div class="m-auto p-2">
-                    Detail on branding goes here. This is an sample text that is suppose to go on and on about
-                    what commerical site is
-                    <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
-                </div>
-            </div>
-            <div class="feature-visual col-12 col-md-8">
-                <img src="{{ SITE_FILE_URL }}home/crm.png" class="img-cover" />
-            </div>
-        </div>
-
-        {% comment %} custom authentication {% endcomment %}
-        <div id="featureCustomAuthent" class="row">
-            <div class="col-12 text-center">
-                <h2 class="mt-2">Custom Authentication</h2>
-            </div>
-            <div class="feature-visual col-12 col-md-8">
-                <img src="{{ SITE_FILE_URL }}home/crm.png" class="img-cover" />
-            </div>
-            <div class="feature-detail col-12 col-md-4 d-flex">
-                <div class="m-auto p-2">
-                    Detail on custom authentication goes here. This is an sample text that is suppose to go on and on
-                    about
-                    what commerical site is
+                    Stand out among other photographers and take your business to the next level with your own custom
+                    personal brand.
                     <a href="#subPlans" class="plan-get-started-btn scroll-to d-table btn">get started</a>
                 </div>
             </div>

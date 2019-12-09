@@ -240,6 +240,12 @@ a {
                     border-radius: 50%;
                     color: $blue;
                     font-weight: bold;
+                    display: flex;
+                    justify-content: center;
+
+                    div {
+                        margin: auto;
+                    }
                 }
             }
 
