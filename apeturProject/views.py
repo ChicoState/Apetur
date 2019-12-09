@@ -26,10 +26,12 @@ PAYPAL_CLIENT_ID = 'AYTN1WSX_5mo5aLm4M60lHLOCoBv2MbkCmp3LZf-8mA56YPQ2vyKrW3zxTZO
 
 convert_to_miles = 1.609
 
+
 def payment(request):
-        
+
     credentials = "%s:%s" % (PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
-    encode_credential = base64.b64encode(credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
+    encode_credential = base64.b64encode(
+        credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
 
     headers = {
         "Authorization": ("Basic %s" % encode_credential),
@@ -44,11 +46,12 @@ def payment(request):
 
     print(r.text)
     context = {
-        'PAYPAL_CLIENT_ID' : PAYPAL_CLIENT_ID,
-        'auth_token' : r.text
+        'PAYPAL_CLIENT_ID': PAYPAL_CLIENT_ID,
+        'auth_token': r.text
     }
 
     return render(request, 'payment.html', context)
+
 
 def get_user(email):
     try:
@@ -217,7 +220,6 @@ def signup_user(request):
             photographer.save()
             return redirect('/profile')
 
-
         return redirect('/')
     elif request.method == 'GET' and 'plan' in request.GET:
         is_photographer = False
@@ -350,8 +352,10 @@ def profile(request):
             # schedule query returned an available schedule
             if schedule:
                 # Create the event
-                event_type = Event_Type.objects.filter(id = request.POST.get("event_type")).first()
-                new_event = Event(event_type= event_type, schedule_id=schedule,client_id=c_id, start_time=request.POST.get("start_time"), end_time=request.POST.get("end_time"), confirmed = True)
+                event_type = Event_Type.objects.filter(
+                    id=request.POST.get("event_type")).first()
+                new_event = Event(event_type=event_type, schedule_id=schedule, client_id=c_id, start_time=request.POST.get(
+                    "start_time"), end_time=request.POST.get("end_time"), confirmed=True)
 
                 new_event.save()
     else:
@@ -520,3 +524,8 @@ def account_settings(request):
         return render(request, 'usermanagement/account_settings.html')
     else:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+
+# Pricing
+def pricing(request):
+    return render(request, 'pricing.html')
