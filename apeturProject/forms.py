@@ -13,3 +13,5 @@ class CreateEvent(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+        self.fields['start_time'].widget.attrs['placeholder'] = 'HH:MM:SS'
+        self.fields['end_time'].widget.attrs['placeholder'] = 'HH:MM:SS'
