@@ -28,14 +28,15 @@ var timeout = false;
 var delta = 200;
 var windowWidth = $(window).width();
 $(window).resize(function () {
-    showLoading()
     rtime = new Date();
     if (timeout === false && $(window).width() != windowWidth) {
-        timeout = true;
-        setTimeout(resizeend, delta);
+        showLoading()
 
         // Update the window width for next time
         windowWidth = $(window).width();
+        timeout = true;
+
+        setTimeout(resizeend, delta);
     }
 });
 
