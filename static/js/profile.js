@@ -33,6 +33,9 @@ $(window).resize(function () {
     if (timeout === false && $(window).width() != windowWidth) {
         timeout = true;
         setTimeout(resizeend, delta);
+
+        // Update the window width for next time
+        windowWidth = $(window).width();
     }
 });
 
