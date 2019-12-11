@@ -73,11 +73,33 @@ def global_settings(request):
 # homepage
 def home(request):
     featured_images = [
-        settings.SITE_FILE_URL + "featured/birthday.jpg",
-        settings.SITE_FILE_URL + "featured/wedding.jpg",
-        settings.SITE_FILE_URL + "featured/graduation.jpg",
-        settings.SITE_FILE_URL + "featured/wedding2.jpg"
+        {
+            "user_name": "Stanley",
+            "profile_pic": settings.USER_FILE_URL + "0/temp-profile-pic-reduced.jpg",
+            "image_url": settings.SITE_FILE_URL + "featured/birthday.jpg"
+        },
+        {
+            "user_name": "Sean",
+            "profile_pic": settings.USER_FILE_URL + "1/profile-pic.jpg",
+            "image_url": settings.SITE_FILE_URL + "featured/wedding.jpg"
+        },
+        {
+            "user_name": "Olivia",
+            "profile_pic": settings.USER_FILE_URL + "2/profile-pic.jpg",
+            "image_url": settings.SITE_FILE_URL + "featured/graduation.jpg"
+        },
+        {
+            "user_name": "Nathan",
+            "profile_pic": settings.USER_FILE_URL + "3/profile-pic.jpg",
+            "image_url": settings.SITE_FILE_URL + "featured/wedding2.jpg"
+        }
     ]
+    # featured_images = [
+    #     settings.SITE_FILE_URL + "featured/birthday.jpg",
+    #     settings.SITE_FILE_URL + "featured/wedding.jpg",
+    #     settings.SITE_FILE_URL + "featured/graduation.jpg",
+    #     settings.SITE_FILE_URL + "featured/wedding2.jpg"
+    # ]
     tweets = [
         "I dont know what to write, but this is for testing any way.",
         "Another tweet that I am suppose to write for testing, but this one will be much longer.",

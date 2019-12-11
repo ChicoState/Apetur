@@ -9,13 +9,13 @@
 <div id="featured">
     {% comment %} Currently featured {% endcomment %}
     <div id="featuringItem">
-        <img class="featuring-image img-cover" src="{{ featured_images|first }}" />
+        <img class="featuring-image img-cover" src="{{ featured_images.0.image_url }}" />
         <a class="user-detail" href="#">
             <div class="featured-user-pic">
-                <img src="{{ USER_FILE_URL }}0/temp-profile-pic-reduced.jpg" class="img-cover" />
+                <img src="{{ featured_images.0.profile_pic }}" class="img-cover" />
             </div>
             <div class="featured-user-name">
-                BobJoe
+                {{ featured_images.0.user_name }}
             </div>
         </a>
     </div>
@@ -33,9 +33,10 @@
         </div>
 
         <div class="feature-control-selector">
-            {% for image_url in featured_images %}
+            {% for image_data in featured_images %}
             <div class="feature-control-circle {% if forloop.first %} current-circle-control{% endif %}"
-                data-image-url="{{ image_url }}"></div>
+                data-photographer-name="{{ image_data.user_name }}" data-photographer-pic="{{ image_data.profile_pic }}"
+                data-image-url="{{ image_data.image_url }}"></div>
             {% endfor %}
         </div>
 
@@ -58,10 +59,11 @@
 
     {% comment %} Featured item queue {% endcomment %}
     <div id="featuredQueue">
-        {% for image_url in featured_images %}
+        {% for image_data in featured_images %}
         <div class="featured-queue-item{% if forloop.first %} current-feature{% endif %}"
             style="order: {{forloop.counter}}">
-            <img src="{{ image_url }}" data-image-url="{{ image_url }}" />
+            <img src="{{ image_data.image_url }}" data-photographer-name="{{ image_data.user_name }}"
+                data-photographer-pic="{{ image_data.profile_pic }}" data-image-url="{{ image_data.image_url }}" />
         </div>
         {% endfor %}
     </div>

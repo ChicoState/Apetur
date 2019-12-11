@@ -59,6 +59,10 @@ function featureRotation(direction = 'next') {
     cur_image.fadeOut('fast', function () {
         cur_image.attr('src', $('.current-feature img').data('image-url'))
             .fadeIn('fast');
+
+        // updating profile related datas
+        $('.user-detail .featured-user-pic img').attr('src', $('.current-feature img').data('photographer-pic'));
+        $('.user-detail .featured-user-name').text($('.current-feature img').data('photographer-name'));
     });
 
     // upating the circle control
