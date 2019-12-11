@@ -54,6 +54,10 @@ a {
                 .dropdown-menu {
                     top: 71px !important;
                     padding-top: 10px !important;
+
+                    .login_btn {
+                        padding: 10px 20px;
+                    }
                 }
             }
         }
@@ -409,7 +413,7 @@ a {
             }
 
             .dropdown-menu {
-                background-color: rgba($blue, 0.7);
+                background-color: rgba($blue, 0.5);
                 margin: 20px -30px;
                 padding-top: 10px;
 

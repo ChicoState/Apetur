@@ -18,6 +18,7 @@
     justify-content: center;
     height: 100vh;
     position: relative;
+    margin-bottom: 0 !important;
 }
 
 #featuringItem {
@@ -269,6 +270,7 @@
 }
 
 #featureOverview {
+    padding-top: 100px;
     text-align: center;
 
     @media (max-width: $md) {
