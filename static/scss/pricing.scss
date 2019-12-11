@@ -121,12 +121,11 @@
     }
 }
 
-#featureSearch,
-#featureCustomBranding {
+#personalProfile,
+#featureClientProofing {
     @media (max-width: $md) {
 
-        .feature-detail,
-            {
+        .feature-detail {
             order: 2;
         }
     }
