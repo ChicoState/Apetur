@@ -27,7 +27,8 @@ convert_to_miles = 1.609
 
 def payment(request):
 
-    credentials = "%s:%s" % (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_CLIENT_SECRET)
+    credentials = "%s:%s" % (settings.PAYPAL_CLIENT_ID,
+                             settings.PAYPAL_CLIENT_SECRET)
     encode_credential = base64.b64encode(
         credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
 
@@ -42,7 +43,7 @@ def payment(request):
     url = 'https://api.sandbox.paypal.com/v1/oauth2/token'
     r = requests.post(url, headers=headers, data=param)
 
-    #print(r.text)
+    # print(r.text)
     context = {
         'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID,
         'auth_token': r.text
@@ -393,6 +394,14 @@ def profile(request):
         {
             'event_type': 'wedding',
             'url': settings.SITE_FILE_URL + "featured/wedding2.jpg"
+        },
+        {
+            'event_type': 'wedding',
+            'url': settings.SITE_FILE_URL + "featured/man-and-woman-kissing.jpg"
+        },
+        {
+            'event_type': 'graduation',
+            'url': settings.SITE_FILE_URL + "featured/photo-of-man-wearing-graduation-cap.jpg"
         }
     ]
     reviews = [
