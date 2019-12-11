@@ -26,10 +26,11 @@ $('#imagePopupModal .close').click(function () {
 var rtime;
 var timeout = false;
 var delta = 200;
+var windowWidth = $(window).width();
 $(window).resize(function () {
     showLoading()
     rtime = new Date();
-    if (timeout === false) {
+    if (timeout === false && $(window).width() != windowWidth) {
         timeout = true;
         setTimeout(resizeend, delta);
     }
