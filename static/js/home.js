@@ -56,12 +56,13 @@ function featureRotation(direction = 'next') {
 
     // updating the image
     var cur_image = $('.featuring-image');
+    $('.user-detail .featured-user-pic img').fadeOut('fast');
     cur_image.fadeOut('fast', function () {
         cur_image.attr('src', $('.current-feature img').data('image-url'))
             .fadeIn('fast');
 
         // updating profile related datas
-        $('.user-detail .featured-user-pic img').attr('src', $('.current-feature img').data('photographer-pic'));
+        $('.user-detail .featured-user-pic img').attr('src', $('.current-feature img').data('photographer-pic')).fadeIn('fast');
         $('.user-detail .featured-user-name').text($('.current-feature img').data('photographer-name'));
     });
 
