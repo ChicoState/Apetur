@@ -6,8 +6,8 @@ showLoadingOnLoad();
 var input = document.getElementById('googleMapAutocompleteTextField');
 var autocomplete = new google.maps.places.Autocomplete(input, options);
 
-function redirect_to_profile(user_id){
-    location.replace(window.location.origin + "/profile?user_id=" + user_id);        
+function redirect_to_profile(user_id) {
+    location.replace(window.location.origin + "/profile?user_id=" + user_id);
 }
 
 google.maps.event.addListener(autocomplete, 'place_changed', function () {
@@ -51,12 +51,16 @@ $('#contentTypeToggle').click(function () {
 var rtime;
 var timeout = false;
 var delta = 200;
+var windowWidth = $(window).width();
 $(window).resize(function () {
-    showLoading()
-
     rtime = new Date();
-    if (timeout === false) {
+    if (timeout === false && $(window).width() != windowWidth) {
+        showLoading()
+
+        // Update the window width for next time
+        windowWidth = $(window).width();
         timeout = true;
+
         setTimeout(resizeend, delta);
     }
 });
